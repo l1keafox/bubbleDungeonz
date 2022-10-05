@@ -8,12 +8,17 @@ const userSchema = new Schema(
             unique:true,
             trim:true
         },
+        password:{
+            type:String,
+            required:true,
+        },
         email: {
             type:String,
             required:true,
             unique:true,
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please use a valid email.'],
-        }
+        },
+        joined: { type: Date, default: Date.now }
     },
     {
         toJSON: {

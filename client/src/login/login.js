@@ -1,12 +1,11 @@
+import bcrypt from 'bcryptjs'
 
-import React, { useEffect, useRef } from "react";
-
+const salt = bcrypt.genSaltSync(10);
 
 function handleLoginForm(email, password) {
+    const hashedPassword = bcrypt.hashSync(password) // hash created previously created upon sign up
 
-    console.log(email);
-    console.log(password);
-    fetch('http://localhost:3000/api/users/login', {
+    fetch('https://api.sampleapis.com/beers/ale', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -14,34 +13,7 @@ function handleLoginForm(email, password) {
       },
       body: JSON.stringify({
         email: email,
-        password: password,
+        password: hashedPassword,
       }),
     })
   }
-
-
-  function LoginElement() {
-    const emailInputRef = useRef();
-    const passwordInputRef = useRef();
-    const usernameInputRef = useRef();
-
-    return (
-      <div className="login">
-        <form>
-          <input style={{ padding: '15px', borderRadius: '10px', margin: '10px' }} ref={emailInputRef} type='email' placeholder='Email' />
-          <input style={{ padding: '15px', borderRadius: '10px', margin: '10px' }} ref={passwordInputRef} type='password' placeholder='Password' />
-          <button
-            type='submit'
-            style={{ padding: '15px', borderRadius: '10px', margin: '10px' }}
-            onClick={e => {
-              e.preventDefault()
-              handleLoginForm(emailInputRef.current.value,passwordInputRef.current.value)
-            }}>
-            Log In
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  export default LoginElement;

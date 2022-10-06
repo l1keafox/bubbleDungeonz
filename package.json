@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "concurrently \"cd client && npm start\" \"cd server && npm run server\" ",
+    "start:dev": "concurrently \"cd client && npm run build\" \"cd server && npm run server\" ",
     "start": "npm run build && cd server && node server.js",
     "server": "cd server server.js --ignore client",
     "build": "cd client && npm run build",

@@ -1,8 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import RegisterElement from './login/register';
-import LoginElement from './login/login';
-import React, { useEffect, useRef } from "react";
 
 
 
@@ -22,15 +19,9 @@ function App() {
         >
           Learn React
         </a>
-        <div>
-          <LoginElement />
-         <RegisterElement />
-        </div>
-        
       </header>
     </div>
   );
 }
-
 
 export default App;

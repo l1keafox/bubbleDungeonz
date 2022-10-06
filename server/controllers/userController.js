@@ -6,6 +6,8 @@ const saltRounds = 10;
 module.exports = {
     async register(req,res){
         try {
+            console.log(req.body.username);
+            console.log(req.body.email);
             const hashedPwd = await bcrypt.hash(req.body.password, saltRounds);
             const insertResult = await User.create({
               username: req.body.username,
@@ -20,13 +22,23 @@ module.exports = {
     },
     async login(req,res){
         try {
-            const user = await User.findOne({ username: req.body.username });
+            const user = await User.findOne({ email: req.body.email });
             console.log(user);
             if (user) {
               const cmp = await bcrypt.compare(req.body.password, user.password);
               if (cmp) {
                 //   ..... further code to maintain authentication like jwt or sessions
-                res.send("Auth Successful");
+                if(!req.session.loggedIn){
+                    console.log("logged in");
+                    req.session.save(() => {
+                        req.session.loggedIn = true;
+                        req.session.currentUser = user.id;
+                        req.session.currentUsername = user.username;
+                        res.send("Authentication passed");
+                    });
+                }else{
+                    console.log("already logged in");
+                }
               } else {
                 res.send("Wrong username or password.");
               }

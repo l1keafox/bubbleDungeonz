@@ -12,6 +12,10 @@
     "dependencies": {
         "bcrypt": "^5.0.1",
         "express": "^4.17.1",
+<<<<<<< HEAD
+=======
+        "express-session": "^1.17.3",
+>>>>>>> f4705077b6e653c8cc7d42ac1a7c5fca9507fb38
         "mongoose": "^6.6.5"
     },
     "devDependencies": {

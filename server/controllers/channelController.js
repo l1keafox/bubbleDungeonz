@@ -4,7 +4,7 @@ module.exports={
     getChannels(req,res){
         Channel.find().then((channels)=>res.json(channels))
     },
-    //gets set number of messages counting backwards from the most recent sent.)
+    //gets messages sent within a given time of the request (default ten minutes?)
     getXMessages(req,res){
         let numToFetch = parseInt(req.params.x);
         Channel.findById(req.params.channelId,function(err,channel){

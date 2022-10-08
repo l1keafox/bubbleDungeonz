@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
@@ -42,5 +41,3 @@ const startApolloServer = async (typeDefs, resolvers) => {
   })
   };
   startApolloServer(typeDefs, resolvers);
-=======
->>>>>>> e6918494c0a15b8a7668ee7b131fb99f93713df8

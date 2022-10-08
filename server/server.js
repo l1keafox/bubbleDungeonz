@@ -16,8 +16,8 @@ const server = new ApolloServer({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// If we're still using these, but I'll disable for now. -fox
-//app.use(routes);
+// Disable for now. -fox
+// app.use(routes);
 
 // no implmentaiton of ENV yet
 // if (process.env.NODE_ENV === 'production') {

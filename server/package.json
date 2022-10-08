@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-      "server": "node server.js --ignore client"
+        "server": "node server.js --ignore client"
     },
     "keywords": [],
     "author": "",
@@ -14,10 +14,10 @@
         "bcrypt": "^5.0.1",
         "express": "^4.17.1",
         "graphql": "^16.6.0",
-        "mongoose": "^6.6.5"
+        "mongoose": "^6.6.5",
+        "socket.io": "^4.5.2"
     },
     "devDependencies": {
-      "nodemon": "^2.0.4"
+        "nodemon": "^2.0.4"
     }
-  }
-  
+}

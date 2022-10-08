@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
+import { io } from "socket.io-client";
 import Auth from '../utils/auth';
 
 const Login = (props) => {
@@ -39,6 +40,17 @@ const Login = (props) => {
       password: '',
     });
   };
+const socket  = io('http://localhost:3002');
+
+// const socket = io("ws://localhost:3002");
+
+// // send a message to the server
+// socket.emit("hello from client", 5, "6", { 7: Uint8Array.from([8]) });
+
+// // receive a message from the server
+// socket.on("hello from server", (...args) => {
+//   // ...
+// });
 
   return (
     <main className="flex-row justify-center mb-4">

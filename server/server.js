@@ -13,6 +13,18 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
+
+//Io
+const http = require('http');
+const ioServer = http.createServer(app);
+const { Server } = require("socket.io");
+// This is cheating, I wish there was an way
+// to grab this server that is created.
+global.io = new Server(server, {
+});
+const ioPORT = process.env.PORT || 3002;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -34,10 +46,14 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
   
   db.once('open', () => {
+    ioServer.listen(ioPORT, () => {
+      console.log(`listening on http://localHost:${ioPORT} Also socket?`);
+    });    
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
     })
+
   })
   };
   startApolloServer(typeDefs, resolvers);

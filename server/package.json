@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "server": "node server.js --ignore client"
+      "server": "node server.js --ignore client"
     },
     "keywords": [],
     "author": "",
@@ -17,6 +17,7 @@
         "mongoose": "^6.6.5"
     },
     "devDependencies": {
-        "nodemon": "^2.0.4"
+      "nodemon": "^2.0.4"
     }
-}
+  }
+  

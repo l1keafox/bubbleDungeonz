@@ -8,7 +8,7 @@ type User {
     password: String
 }
 
-# Set up an Auth type to handle returning data from a profile creating or user login
+# Set up an Auth type to handle returning data from a user creating or user login
 type Auth {
   token: ID!
   user: User
@@ -21,8 +21,8 @@ type Query{
 }
 
 type Mutation {
-    # Set up mutations to handle creating a profile or logging into a profile and return Auth type
-    addProfile(name: String!, email: String!, password: String!): Auth
+    # Set up mutations to handle creating a user or logging into a user and return Auth type
+    addUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
   }
 

@@ -40,9 +40,9 @@ const Login = (props) => {
       password: '',
     });
   };
-const newSocket = io(`http://${window.location.hostname}:3002`);
+// const newSocket = io(`http://${window.location.hostname}:3002`);
 
-console.log(newSocket);
+// console.log(newSocket);
 // const socket = io("ws://localhost:3002");
 
 // // send a message to the server

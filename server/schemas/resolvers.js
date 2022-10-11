@@ -39,14 +39,17 @@ const resolvers = {
         channels: async () =>{
           return Channel.find();
         },
+        //Gets single channel by ID
         channel: async (parent, {channelId}) => {
           return Channel.findById({_id:channelId});
         },
+        //Gets channel with messages limited param limit value.
         channelMessages: async (parent, {channelId,limit}) => {
           let num = 50;
           if(limit){
             num = limit;
           }
+          //Slices messages sub-field on provided number (-1 to ensure latest messages are included)
           let channel = await Channel.findById(channelId,{messages:{$slice: ["$messages",(-1*num)]}});
           if(!channel){
             //todo add error to throw.
@@ -59,12 +62,12 @@ const resolvers = {
     },
   
     Mutation: {
-
+        //creates a channel, only needs channel name
         createChannel: async (parent,{channelName}) => {
           const channel = await Channel.create({channelName})
           return channel;
         },
-        //does it let us mix and match async and .then?
+        //adds a single message to a channel by id
         addMessageToChannel: async (parent,{channelId,messageText,username})=> {
           const task = await Channel.findOneAndUpdate(
             {_id: channelId},
@@ -73,6 +76,15 @@ const resolvers = {
           );
           return task;
         },
+        addChannelParticipant: async (parent,{channelId,userId})=>{
+          const task = await Channel.findOneAndUpdate(
+            {_id: channelId},
+            { $addToSet: { participants: {_id:userId} } },
+            { runValidators: true, new: true }
+          );
+          return task;
+        },
+        //adds a user to the database, used on signup.
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });
           const token = signToken(user);

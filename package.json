@@ -10,7 +10,8 @@
     "build": "cd client && npm run build",
     "install": "cd server && npm i && cd ../client && npm i",
     "client": "cd client && npm start",
-    "develop": "concurrently \"cd server && npm run develop\" \"cd client && npm start\""
+    "develop": "concurrently \"cd server && npm run develop\" \"cd client && npm start\"",
+    "seed": "cd server && npm run seed"
   },
   "repository": {
     "type": "git",

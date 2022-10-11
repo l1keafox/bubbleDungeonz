@@ -9,9 +9,10 @@ import { loggedIn } from "../../utils/auth";
 function HomePage() {
   return (
     <div className="homeViewContainer">
-      {/* scoreboard component */}
+      {/* scoreboard component - currently just placeholder */}
       <FeaturedScores />
-      {/* conditionally render login versus create user component */}
+      {/* button with event listener that changes state variable */}
+      {/* ternary operator conditionally renders <Login /> versus <CreateUser /> */}
       <Login />
     </div>
   );

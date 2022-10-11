@@ -10,7 +10,7 @@ const scoreSchema = new Schema({
 					type: Schema.Types.ObjectId,
 					ref: "user",
 				},
-				score: Int,
+				score: Number,
 				createdAt: {
 					type: Date,
 					default: Date.now,

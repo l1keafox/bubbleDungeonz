@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-      "server": "node server.js --ignore client"
+        "server": "node server.js --ignore client"
     },
     "keywords": [],
     "author": "",
@@ -12,13 +12,15 @@
     "dependencies": {
         "apollo-server-express": "^3.6.2",
         "bcrypt": "^5.0.1",
+        "cors": "^2.8.5",
         "express": "^4.17.1",
         "graphql": "^16.6.0",
+        "http": "^0.0.1-security",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.6.5"
+        "mongoose": "^6.6.5",
+        "socket.io": "^4.5.2"
     },
     "devDependencies": {
-      "nodemon": "^2.0.4"
+        "nodemon": "^2.0.4"
     }
-  }
-  
+}

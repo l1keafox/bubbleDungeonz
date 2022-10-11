@@ -1,1 +1,9 @@
 @import "../../utils/colors.css";
+
+.homeViewContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 2rem;
+}

@@ -5,24 +5,38 @@ import React, { useState } from "react";
 function CreateAccount() {
   const [userName, setUserName] = useState("");
   const [passWord, setPassWord] = useState("");
-  const [reTypePassWord, setReTypePassword] = useState("")
+  const [reTypePassWord, setReTypePassword] = useState("");
   const [email, setEmail] = useState("");
-  const errorMessage = 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { target } = e;
     const inputType = target.name;
-    const inputValue = target.value
+    const inputValue = target.value;
 
-    if (inputType === 'userName') {
-      setUserName(inputValue)
-    } else if (inputType === 'passWord') {
-      setPassWord(inputValue)
-    } else if (inputType === 'reTypePassWord') {
-      setReTypePassword(inputValue)
-    } else if (inputType === 'email') {
-      setEmail(inputValue)
+    if (inputType === "userName") {
+      setUserName(inputValue);
+    } else if (inputType === "passWord") {
+      setPassWord(inputValue);
+    } else if (inputType === "reTypePassWord") {
+      setReTypePassword(inputValue);
+    } else if (inputType === "email") {
+      setEmail(inputValue);
     }
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (passWord !== reTypePassWord) {
+      setErrorMessage("Passwords do not match.. Try Again!");
+    }
+    if (!userName) {
+      setErrorMessage("Username can not be blank.");
+    }
+    setUserName("");
+    setPassWord("");
+    setEmail("");
   };
 
   return (
@@ -34,7 +48,9 @@ function CreateAccount() {
         <input
           name="userName"
           type="text"
+          value={userName}
           className="form-control"
+          onChange={handleInputChange}
           placeholder="Username"
           aria-label="Username"
         ></input>
@@ -46,7 +62,9 @@ function CreateAccount() {
         <input
           name="passWord"
           type="text"
-          class="form-control"
+          value={passWord}
+          className="form-control"
+          onChange={handleInputChange}
           placeholder="Password"
           aria-label="Password"
         ></input>
@@ -58,7 +76,9 @@ function CreateAccount() {
         <input
           name="reTypePassWord"
           type="text"
-          class="form-control"
+          value={reTypePassWord}
+          className="form-control"
+          onChange={handleInputChange}
           placeholder="Re-Type Password"
           aria-label="Re-Type Password"
         ></input>
@@ -69,13 +89,18 @@ function CreateAccount() {
         </span>
         <input
           name="email"
+          value={email}
           type="text"
-          class="form-control"
+          className="form-control"
+          onChange={handleInputChange}
           placeholder="Email"
           aria-label="Email"
         ></input>
+        <button type="button" onClick={handleFormSubmit}></button>
       </div>
       <div></div>
     </div>
   );
 }
+
+export default CreateAccount;

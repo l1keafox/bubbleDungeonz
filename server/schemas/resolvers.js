@@ -76,6 +76,7 @@ const resolvers = {
           );
           return task;
         },
+        //adds a participant to the channel
         addChannelParticipant: async (parent,{channelId,userId})=>{
           const task = await Channel.findOneAndUpdate(
             {_id: channelId},

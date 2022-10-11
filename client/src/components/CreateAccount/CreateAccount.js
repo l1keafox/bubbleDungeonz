@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./CreateAccount.css";
 import React, { useState } from "react";
 
@@ -55,8 +54,8 @@ function CreateAccount() {
           aria-label="Username"
         ></input>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Password:
         </span>
         <input
@@ -69,8 +68,8 @@ function CreateAccount() {
           aria-label="Password"
         ></input>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Re-Type Password:
         </span>
         <input
@@ -83,8 +82,8 @@ function CreateAccount() {
           aria-label="Re-Type Password"
         ></input>
       </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Email:
         </span>
         <input

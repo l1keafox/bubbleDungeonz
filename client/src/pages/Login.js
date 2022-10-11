@@ -4,11 +4,13 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
+import { io } from "socket.io-client";
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ username: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
-
+  const newSocket = io(`http://${window.location.hostname}:3002`);
+  console.log(newSocket);
   // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -5,13 +5,29 @@ const settingsSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "user",
 	},
-	textColor: {
+	screenTextColor: {
+		type: String,
+		default: "orange1",
+	},
+	linkTextColor: {
+		type: String,
+		default: "lime",
+	},
+	chatTextColor: {
 		type: String,
 		default: "black",
 	},
 	background: {
 		type: String,
-		default: "blue",
+		default: "blue1",
+	},
+	chatWindow: {
+		type: String,
+		default: "red",
+	},
+	header: {
+		type: String,
+		default: "purple",
 	},
 	//  Other values to be added in to allow more customization
 });

@@ -15,10 +15,29 @@ const resolvers = {
         //Gets all channels
         channels: async () =>{
           return Channel.find();
-        }
+        },
+        channel: async (parent, {channelId}) => {
+          return Channel.findById({_id:channelId});
+        },
+
     },
   
     Mutation: {
+        createChannel: async (parent,{name}) => {
+          const channel = await Channel.create({name})
+        },
+        //does it let us mix and match async and .then?
+        addMessageToChannel: async (parent,{channelId,messageText,username})=> {
+          Channel.findOneAndUpdate(
+            {_id: channelId},
+            { $addToSet: { messages: {messageText,username} } },
+            { runValidators: true, new: true }
+          ).then((channel)=>
+            !channel
+            ? res.status(404).json({ message: 'No channel with this id!' })
+            : res.json(channel)
+          ).catch((err) => res.status(500).json(err));
+        },
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });
           const token = signToken(user);

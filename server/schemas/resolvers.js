@@ -42,20 +42,40 @@ const resolvers = {
         channel: async (parent, {channelId}) => {
           return Channel.findById({_id:channelId});
         },
+        messages: async (parent, {channelId,limit}) => {
+          let num = 50;
+          if(limit){
+            num = limit;
+          }
+          let channel = await Channel.findById(channelId);
+          if(!channel){
+            //todo add error to throw.
+            return;
+          }
+          if(channel.messages.length < num){
+            return channel.messages;
+          }else{
+            return (channel.messages.slice(-1*num));
+          }
+                       
+        }
 
     },
   
     Mutation: {
+
         createChannel: async (parent,{channelName}) => {
           const channel = await Channel.create({channelName})
+          return channel;
         },
         //does it let us mix and match async and .then?
         addMessageToChannel: async (parent,{channelId,messageText,username})=> {
-          Channel.findOneAndUpdate(
+          const task = await Channel.findOneAndUpdate(
             {_id: channelId},
             { $addToSet: { messages: {messageText,username} } },
             { runValidators: true, new: true }
           );
+          return task;
         },
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });

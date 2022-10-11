@@ -9,7 +9,8 @@ const resolvers = {
         },
         user: async () => {
             return User.findById({_id:userId});
-        }
+        },
+        
     },
   
     Mutation: {
@@ -19,11 +20,11 @@ const resolvers = {
     
           return { token, user };
         },
-        login: async (parent, { email, password }) => {
-          const user = await User.findOne({ email });
+        login: async (parent, { username, password }) => {
+          const user = await User.findOne({ username });
     
           if (!user) {
-            throw new AuthenticationError('No profile with this email found!');
+            throw new AuthenticationError('No profile with this username found!');
           }
     
           const correctPw = await user.isCorrectPassword(password);

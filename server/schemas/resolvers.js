@@ -48,14 +48,19 @@ const resolvers = {
     Mutation: {
         createChannel: async (parent,{channelName}) => {
           const channel = await Channel.create({channelName})
+          return channel;
         },
         //does it let us mix and match async and .then?
         addMessageToChannel: async (parent,{channelId,messageText,username})=> {
-          Channel.findOneAndUpdate(
+          console.log(messageText);
+          console.log(channelId);
+          console.log(username)
+          const task = await Channel.findOneAndUpdate(
             {_id: channelId},
             { $addToSet: { messages: {messageText,username} } },
             { runValidators: true, new: true }
           );
+          return task;
         },
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });

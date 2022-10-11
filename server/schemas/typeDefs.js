@@ -34,6 +34,7 @@ type Query{
     user(userId: ID!): User
     channels: [Channel]
     channel(channelId: ID!): Channel
+    messages(channelId:ID!,limit:Int): [Message]
 }
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth

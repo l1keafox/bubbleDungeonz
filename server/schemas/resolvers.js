@@ -42,10 +42,28 @@ const resolvers = {
         channel: async (parent, {channelId}) => {
           return Channel.findById({_id:channelId});
         },
+        messages: async (parent, {channelId,limit}) => {
+          let num = 50;
+          if(limit){
+            num = limit;
+          }
+          let channel = await Channel.findById(channelId);
+          if(!channel){
+            console.log("No channel with that ID");
+            return;
+          }
+          if(channel.messages.length < num){
+            return channel.messages;
+          }else{
+            return (channel.messages.slice(-1*num));
+          }
+                       
+        }
 
     },
   
     Mutation: {
+
         createChannel: async (parent,{channelName}) => {
           const channel = await Channel.create({channelName})
           return channel;

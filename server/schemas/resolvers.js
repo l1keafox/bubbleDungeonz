@@ -49,7 +49,7 @@ const resolvers = {
           }
           let channel = await Channel.findById(channelId);
           if(!channel){
-            console.log("No channel with that ID");
+            //todo add error to throw.
             return;
           }
           if(channel.messages.length < num){
@@ -70,9 +70,6 @@ const resolvers = {
         },
         //does it let us mix and match async and .then?
         addMessageToChannel: async (parent,{channelId,messageText,username})=> {
-          console.log(messageText);
-          console.log(channelId);
-          console.log(username)
           const task = await Channel.findOneAndUpdate(
             {_id: channelId},
             { $addToSet: { messages: {messageText,username} } },

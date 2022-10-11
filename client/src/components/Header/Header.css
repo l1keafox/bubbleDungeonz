@@ -1,7 +1,16 @@
+@import "../../utils/colors.css";
+
 .headerDiv {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  background-color: var(--purple);
+  padding: 1rem;
+}
+
+.headerTitle {
+  color: var(--orange1);
+  font-size: 2rem;
 }
 
 .navBar {
@@ -11,4 +20,12 @@
 
 .navLink {
   margin: 2rem;
+  color: var(--lime);
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 650px) {
+  .headerDiv {
+    flex-direction: column;
+  }
 }

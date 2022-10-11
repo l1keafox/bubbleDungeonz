@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 var GAME = {
     // set up some initial values
     WIDTH: 320,
@@ -69,9 +71,10 @@ var GAME = {
         // cycle through all entities and render to canvas
         if (this.localCache) {
           for (let gameObj of this.localCache) {
-            let color;
+            // let color;
     
-            let ditto = GAME.Draw.circle(
+            // let ditto = 
+            GAME.Draw.circle(
               gameObj.x,
               gameObj.y,
               gameObj.r,
@@ -109,5 +112,15 @@ var GAME = {
       },
     },
 
-  };
+};
+
+
+
+
+  const Canvas = (props) => {  
+    return (
+        <div>Filler element</div>
+        )
+  }
   
+export default Canvas;

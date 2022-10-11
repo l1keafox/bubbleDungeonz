@@ -1,4 +1,6 @@
 .createUserForm {
   margin: 25%;
 }
-/* .form input {} */
+.form input {
+  display: flexbox;
+}

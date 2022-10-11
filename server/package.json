@@ -5,7 +5,8 @@
     "main": "server.js",
     "scripts": {
         "server": "node server.js --ignore client",
-        "develop": "nodemon server.js"
+        "develop": "nodemon server.js",
+        "seed": "node seeders/seed.js"
     },
     "keywords": [],
     "author": "",

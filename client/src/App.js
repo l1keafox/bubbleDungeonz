@@ -9,12 +9,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import CreateAccount from "./components/CreateAccount/CreateAccount";
-
-
-
-
 import Header from "./components/Header/Header.js";
+import HomePage from "./pages/Home/HomePage.js";
 
 
 // Construct our main GraphQL API endpoint
@@ -42,16 +38,19 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
-      <Header />
-      <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+    <Router>
+      <ApolloProvider client={client}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />
           </div>
-        </div>
-      </Router>
-    </ApolloProvider>
+        </div> */}
+        </Routes>
+      </ApolloProvider>
+    </Router>
   );
 }
 

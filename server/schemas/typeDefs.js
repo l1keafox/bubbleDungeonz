@@ -34,7 +34,8 @@ type Query{
     user(userId: ID!): User
     channels: [Channel]
     channel(channelId: ID!): Channel
-    messages(channelId:ID!,limit:Int): [Message]
+    channelMessages(channelId:ID!,limit:Int): Channel
+    
 }
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
@@ -42,6 +43,7 @@ type Mutation {
     createChannel(channelName:String!):Channel
     addMessageToChannel(channelId:ID!,messageText:String!,username:String!):Channel
     removeUser: User
+    addChannelParticipant(channelId:ID!,userId:ID!):Channel
   }
 `;
 

@@ -29,7 +29,7 @@ const initIo = (app, cors) => {
 
   // Or we add all socket code here? Mmmm not too bad of an idea, because we can use this folder to store all socket stuff.
 
-  console.log("IO is set");
+  console.log("  -> server.io is initalized");
   return ioServer;
 };
 

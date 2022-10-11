@@ -50,7 +50,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
     })
-    ioServer.listen(ioPORT, () => {
+    ioServer.listen(ioPORT, () => { // IO port being opened.
       console.log(
         `Socket.io listening on http://localHost:${ioPORT}?`
       );

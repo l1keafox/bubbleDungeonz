@@ -1,16 +1,21 @@
-const { User } = require("../models");
+const { User, Channel } = require("../models");
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
+        //gets all users
         users: async () =>{
             return User.find();
         },
+        //Gets user by id
         user: async (parent, {userId}) => {
             return User.findById({_id:userId});
         },
-        
+        //Gets all channels
+        channels: async () =>{
+          return Channel.find();
+        }
     },
   
     Mutation: {

@@ -12,6 +12,7 @@ type Channel {
     channelName: String
     createdAt: Date
     participants: [User]!
+    messages: [Message]
 }
 
 type Message {
@@ -29,6 +30,8 @@ type Auth {
 type Query{
     users: [User]
     user(userId: ID!): User
+    channels: [Channel]
+    channel(channelId: ID!): Channel
 }
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth

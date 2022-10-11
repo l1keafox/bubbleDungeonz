@@ -42,22 +42,18 @@ const resolvers = {
         channel: async (parent, {channelId}) => {
           return Channel.findById({_id:channelId});
         },
-        messages: async (parent, {channelId,limit}) => {
+        channelMessages: async (parent, {channelId,limit}) => {
           let num = 50;
           if(limit){
             num = limit;
           }
-          let channel = await Channel.findById(channelId);
+          let channel = await Channel.findById(channelId,{messages:{$slice: ["$messages",(-1*num)]}});
           if(!channel){
             //todo add error to throw.
             return;
           }
-          if(channel.messages.length < num){
-            return channel.messages;
-          }else{
-            return (channel.messages.slice(-1*num));
-          }
-                       
+          return channel;
+        
         }
 
     },

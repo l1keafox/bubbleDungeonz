@@ -43,7 +43,7 @@ const Login = (props) => {
 
   return (
     <div className="loginCard">
-      <h4 className="loginCardTitle">Login</h4>
+      <h4 className="loginCardTitle">User Login</h4>
       {data ? (
         <p>
           Success! You may now head <Link to="/">back to the homepage.</Link>
@@ -82,7 +82,7 @@ const Login = (props) => {
               backgroundColor: "black",
             }}
           />
-          <button className="createNewAccountBtn">Create an Account</button>
+          <button className="createNewAccountBtn">Create Account</button>
         </form>
       )}
 

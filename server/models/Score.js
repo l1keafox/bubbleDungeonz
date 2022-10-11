@@ -4,20 +4,20 @@ const scoreSchema = new Schema({
 	game: {
 		type: String,
 		require: true,
-		score: [
-			{
-				user: {
-					type: Schema.Types.ObjectId,
-					ref: "user",
-				},
-				score: Number,
-				createdAt: {
-					type: Date,
-					default: Date.now,
-				},
-			},
-		],
 	},
+	scores: [
+		{
+			user: {
+				type: Schema.Types.ObjectId,
+				ref: "user",
+			},
+			score: Number,
+			createdAt: {
+				type: Date,
+				default: Date.now,
+			},
+		},
+	],
 });
 
 const Score = model("score", scoreSchema);

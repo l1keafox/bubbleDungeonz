@@ -24,6 +24,12 @@ type Message {
     username: String
 }
 
+type Score {
+    _id: ID
+    game: String
+    scores: [Score]
+}
+
 type Auth {
     token: ID!
     user:User

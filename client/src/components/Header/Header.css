@@ -1,0 +1,14 @@
+.headerDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navBar {
+  list-style: none;
+  display: flex;
+}
+
+.navLink {
+  margin: 2rem;
+}

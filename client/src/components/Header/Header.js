@@ -3,16 +3,17 @@ import "./Header.css";
 import { FaHamburger } from "react-icons/fa";
 
 function Header() {
+  //state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");
 
   return (
-    <div>
+    <div className="headerDiv">
       <h1>App Title</h1>
-      <ul>
-        <li>Home</li>
-        <li>Games</li>
-        <li>{logInOrOut}</li>
-        <li>
+      <ul className="navBar">
+        <li className="navLink">Home</li>
+        <li className="navLink">Games</li>
+        <li className="navLink">{logInOrOut}</li>
+        <li className="navLink">
           <FaHamburger></FaHamburger>
         </li>
       </ul>

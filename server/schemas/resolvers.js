@@ -6,6 +6,9 @@ const resolvers = {
     Query: {
         users: async () =>{
             return User.find();
+        },
+        user: async () => {
+            return User.findById({_id:userId});
         }
     },
   

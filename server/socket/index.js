@@ -17,15 +17,20 @@ const initIo = (app, cors) => {
       methods: ["GET", "POST"],
     },
   });
-io.on("connection", (socket) => {
-  console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+
+  // Just a connection based.
+
+  io.on("connection", (socket) => {
+    console.log("a user connected");
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
   });
-});  
+
+  // Or we add all socket code here? Mmmm not too bad of an idea, because we can use this folder to store all socket stuff.
+
   console.log("IO is set");
   return ioServer;
-
 };
 
-module.exports = { initIo, io };
+module.exports = { initIo, io }; // was trying to make it so io can be exported and used else where, but for waht ever reason this fails.

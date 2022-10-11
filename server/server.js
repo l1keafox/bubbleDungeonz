@@ -19,6 +19,7 @@ const server = new ApolloServer({
 });
 
 
+// Socket.io Stuff 
 const cors = require("cors"); // This is used for socket.io
 const ioPORT = process.env.PORT+1 || PORT+1; // The +1 to ioPort is questionable.
 const {initIo} = require('./socket/index'); // initIo to initalize the server, io later on just to grab the object.
@@ -54,7 +55,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
         `Socket.io listening on http://localHost:${ioPORT}?`
       );
     });
-
   })
   };
   

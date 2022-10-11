@@ -17,7 +17,7 @@ emitFrames - This is what socket IO will be emitting.
 
 // Engine variables.
 const FRAMES = 60; // Number of frames per sec
-const FramePerLoop = FRAMES/1000; // number of cycles per second. so every 16.67MS there will be an game loop.
+const FramePerLoop = Math.round( 1000/FRAMES ); // number of cycles per second. so every 16.67MS there will be an game loop.
 let engineIntervalID; // This will be assigned an id of a setInterval in the initEngine
 let gameData; // This gets declared as an object in initEngine.
 
@@ -39,6 +39,7 @@ function doGameLoop(){
 module.exports = { 
     init : function() {
         gameData = {};
+        console.log(`  -ENG> Started Choo Choo loop every ${FramePerLoop} ms`);
         engineIntervalID = setInterval(doGameLoop,FramePerLoop);
     },
     // this returns various methods too

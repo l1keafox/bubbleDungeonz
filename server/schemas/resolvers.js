@@ -1,19 +1,66 @@
-const { User } = require("../models");
+const { User, Channel } = require("../models");
 const { AuthenticationError } = require('apollo-server-express');
+const { GraphQLScalarType, Kind } = require('graphql');
 const { signToken } = require('../utils/auth');
 
+//this is a custom decoding strategy for dealing with dates.
+const dateScalar = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Date custom scalar type',
+  serialize(value) {
+    return value.getTime(); // Convert outgoing Date to integer for JSON
+  },
+  parseValue(value) {
+    return new Date(value); // Convert incoming integer to Date
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.INT) {
+      // Convert hard-coded AST string to integer and then to Date
+      return new Date(parseInt(ast.value, 10));
+    }
+    // Invalid hard-coded value (not an integer)
+    return null;
+  },
+});
+
 const resolvers = {
+    //specifies that when "Date" is the datatype dateScalar should be used to resolve it.
+    Date: dateScalar,
     Query: {
+        //gets all users
         users: async () =>{
             return User.find();
         },
+        //Gets user by id
         user: async (parent, {userId}) => {
             return User.findById({_id:userId});
         },
-        
+        //Gets all channels
+        channels: async () =>{
+          return Channel.find();
+        },
+        channel: async (parent, {channelId}) => {
+          return Channel.findById({_id:channelId});
+        },
+
     },
   
     Mutation: {
+        createChannel: async (parent,{channelName}) => {
+          const channel = await Channel.create({channelName})
+        },
+        //does it let us mix and match async and .then?
+        addMessageToChannel: async (parent,{channelId,messageText,username})=> {
+          Channel.findOneAndUpdate(
+            {_id: channelId},
+            { $addToSet: { messages: {messageText,username} } },
+            { runValidators: true, new: true }
+          ).then((channel)=>
+            !channel
+            ? res.status(404).json({ message: 'No channel with this id!' })
+            : res.json(channel)
+          ).catch((err) => res.status(500).json(err));
+        },
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });
           const token = signToken(user);

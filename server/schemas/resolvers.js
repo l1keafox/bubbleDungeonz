@@ -55,11 +55,7 @@ const resolvers = {
             {_id: channelId},
             { $addToSet: { messages: {messageText,username} } },
             { runValidators: true, new: true }
-          ).then((channel)=>
-            !channel
-            ? res.status(404).json({ message: 'No channel with this id!' })
-            : res.json(channel)
-          ).catch((err) => res.status(500).json(err));
+          );
         },
         addUser: async (parent, { username, email, password }) => {
           const user = await User.create({ username, email, password });

@@ -30,6 +30,7 @@ const typeDefs = gql`
 		scores: [{user: User, score: Int, createdAt: Date}]
 	}
 
+<<<<<<< HEAD
     type Setting {
         _id: ID
         user: User
@@ -62,6 +63,24 @@ const typeDefs = gql`
 		removeUser: User
 		addChannelParticipant(channelId: ID!, userId: ID!): Channel
 	}
+=======
+type Query{
+    users: [User]
+    user(userId: ID!): User
+    channels: [Channel]
+    channel(channelId: ID!): Channel
+    channelMessages(channelId:ID!,limit:Int): Channel
+    me: User
+}
+type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
+    createChannel(channelName:String!):Channel
+    addMessageToChannel(channelId:ID!,messageText:String!,username:String!):Channel
+    removeUser: User
+    addChannelParticipant(channelId:ID!,userId:ID!):Channel
+  }
+>>>>>>> main
 `;
 
 module.exports = typeDefs;

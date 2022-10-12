@@ -2,14 +2,13 @@ const { gql } = require("apollo-server-express");
 const { User, Channel, ScoreCard, Settings } = require("./../models");
 
 const typeDefs = gql`
-	scalar Date
-	type User {
-		_id: ID
-		username: String
-		email: String
-		settings: Settings
-		friends: [User]
-	}
+
+scalar Date
+type User {
+    _id: ID
+    username: String
+    email:String
+}
 
 	type Settings {
 		_id: ID
@@ -21,20 +20,47 @@ const typeDefs = gql`
 		header: String
 	}
 
-	type Channel {
-		_id: ID
-		channelName: String
-		createdAt: Date
-		participants: [User]!
-		messages: [Message]
-	}
 
-	type Message {
-		_id: ID
-		messageText: String
-		createdAt: Date
-		username: String
-	}
+type Channel {
+    _id: ID
+    channelName: String
+    createdAt: Date
+    participants: [User]
+    messages: [Message]
+}
+
+type Message {
+    _id: ID
+    messageText: String
+    createdAt: Date
+    username: String
+}
+
+type Auth {
+    token: ID!
+    user:User
+}
+
+type Query{
+    users: [User]
+    user(userId: ID!): User
+    channels: [Channel]
+    channel(channelId: ID!): Channel
+    channelMessages(channelId:ID!,limit:Int): Channel
+    memberChannels:[Channel]
+    me: User
+}
+type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
+    createChannel(channelName:String!):Channel
+    addMessageToChannel(channelId:ID!,messageText:String!):Channel
+    removeUser: User
+    addChannelParticipant(channelId:ID!,userId:ID!):Channel
+  }
+type Subscription {
+    messageAdded(channelId: ID!): Channel
+}
 
 	type ScoreCard {
 		_id: ID

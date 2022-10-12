@@ -89,6 +89,7 @@ const resolvers = {
 		},
 	},
 
+
 	Mutation: {
 		//creates a channel, only needs channel name
 		createChannel: async (parent, { channelName }) => {
@@ -125,7 +126,6 @@ const resolvers = {
 		addUser: async (parent, { username, email, password }) => {
 			const user = await User.create({ username, email, password });
 			const token = signToken(user);
-
 			return { token, user };
 		},
 		login: async (parent, { username, password }) => {

@@ -1,5 +1,8 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
+
+
+
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 
@@ -19,7 +22,6 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleware,
 });
-
 
 // Socket.io Stuff 
 const ioPORT = process.env.PORT+1 || PORT+1; // The +1 to ioPort is questionable.

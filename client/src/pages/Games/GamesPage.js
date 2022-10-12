@@ -2,11 +2,11 @@
 import React, { useState,useEffect } from "react";
 import Canvas from "../../components/Canvas/Canvas.js";
 
-function GamesPage({socket}) {
+function GamesPage() {
+
   return (
     <div className="gameViewContainer">
-      {/* socket={} */}
-      <Canvas socket={socket}/> 
+      <Canvas/> 
       </div>
   );
 }

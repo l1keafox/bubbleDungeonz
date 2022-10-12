@@ -34,9 +34,13 @@ function doGameLoop(){
         const data = thisGame.emitData();
         // let {io} = require('./../socket/');
         // io is on the global object because i(ray) couldn't figure out how to grab
-        // it from index.js. I am not proud of this
+        // it from socket/index.js. I am not proud of this
         // but if this can be fixed please let me know.
-        io.emit("bubbles",data);
+
+        // Also - channel should be more customized later on.
+        const channel = "bubbles"; 
+        
+        io.emit(channel,data);
     }
 }
 
@@ -49,6 +53,8 @@ module.exports = {
         gameData = {};
         console.log(`  -ENG> Started Choo Choo loop every ${FramePerLoop} ms`);
         engineIntervalID = setInterval(doGameLoop,FramePerLoop);
+        // THIS IS WHERE WE ADD mmoBUBBLE GAME - WHEN THE ENGINE INIT it starts this game, so it's always running 
+        // in the background server.
         this.addGame(mmoBubble);
     },
     // this returns various methods too

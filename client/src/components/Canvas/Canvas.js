@@ -1,94 +1,54 @@
 import React, { useState, useEffect, useRef } from "react";
-const requestAnimFrame = (function () {
-  return (
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function (callback) {
-      window.setTimeout(callback, 1000 / 30);
-    }
-  );
-})();
 
-const Canvas = ({ socket }) => {
+
+import io from "socket.io-client";
+
+const Canvas = () => {
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const newSocket = io(`http://${window.location.hostname}:3002`);
+    console.log(newSocket, "Creating?");
+    setSocket(newSocket);
+    return () => newSocket.close();
+  }, []);
+
   var GAME = {
     // set up some initial values
     WIDTH: 320,
     HEIGHT: 480,
-    nextBubble: 0,
-    entities: [],
-    // localCache: null, // this is what is filled in order to draw
-    // we'll set the rest of these
-    // in the init function
+
     RATIO: null,
     currentWidth: null,
     currentHeight: null,
-    canvas: null,
-    ctx: null,
+    canvas: null, // canvas is the element
+    ctx: null, // ctx is 2d rendering drawing enginge https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
     init: function () {
       // the proportion of width to height
       GAME.RATIO = GAME.WIDTH / GAME.HEIGHT;
-      // these will change when the screen is resized
       GAME.currentWidth = GAME.WIDTH;
       GAME.currentHeight = GAME.HEIGHT;
-      // this is our canvas element
-      //GAME.canvas = document.querySelector("#canvas");
       GAME.canvas = canvas.current;
-      // setting this is important
-      // otherwise the browser will
-      // default to 320 x 200
       console.log(canvas.current, "Init canvas?");
       GAME.canvas.width = GAME.WIDTH;
       GAME.canvas.height = GAME.HEIGHT;
-      // the canvas context enables us to
-      // interact with the canvas api
+
+      // ctx is 2d rendering drawing enginge https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
       GAME.ctx = GAME.canvas.getContext("2d");
 
-      // we're ready to resize
-      //GAME.resize();
-      GAME.loop();
-      //},
-      //  resize: function () {
-      //    GAME.currentHeight = window.innerHeight;
-      // resize the width in proportion
-      // to the new height
+      // resize
       GAME.currentWidth = GAME.currentHeight * GAME.RATIO;
 
-      // this will create some extra space on the
-      // page, allowing us to scroll past
-      // the address bar, thus hiding it.
-      if (GAME.android || GAME.ios) {
-        document.body.style.height = window.innerHeight + 50 + "px";
-      }
-
-      // set the new canvas style width and height
-      // note: our canvas is still 320 x 480, but
-      // we're essentially scaling it with CSS
       GAME.canvas.style.width = GAME.currentWidth + "px";
       GAME.canvas.style.height = GAME.currentHeight + "px";
 
-      // we use a timeout here because some mobile
-      // browsers don't fire if there is not
-      // a short delay
-      window.setTimeout(function () {
-        window.scrollTo(0, 1);
-      }, 1);
-    },
-    loop: function () {
-//      requestAnimFrame(GAME.loop);
-      GAME.render();
     },
     render: function (objects) {
       GAME.Draw.rect(0, 0, GAME.WIDTH, GAME.HEIGHT, "#036");
 
       // cycle through all entities and render to canvas
-//      console.log("render",this.localCache);
       if (objects) {
         for (let gameObj of objects) {
-          console.log(gameObj);
           // let color;
 
           // let ditto =
@@ -104,10 +64,8 @@ const Canvas = ({ socket }) => {
             gameObj.y - 1,
             "rgba(255,255,255,1)"
           );
-          //        console.log(ditto,gameObj.x,gameObj.y, gameObj.r);
         }
       }
-      //        window.scrollTo(0, document.body.scrollHeight);
     },
 
     Draw: {
@@ -136,38 +94,20 @@ const Canvas = ({ socket }) => {
     },
   };
 
-  //"bubbles"
   const canvas = useRef(null);
 
   useEffect(() => {
-    console.log("init once");
-    GAME.init();
-    //   // 👇️ use a ref (best)
-    //   const el2 = canvas.current;
-    //   console.log(el2);
-
-    //   // 👇️ use document.querySelector()
-    //   // should only be used when you can't set a ref prop on the element
-    //   // (you don't have access to the element)
-    //   const el = document.querySelector("#canvas");
-    //   console.log(el);
-
-  }, []);
-  useEffect(() => {
-  if (socket) {
-    
-
-
-socket.on("bubbles", (obj) => {
-  //console.log(obj,GAME.localCache);
-//        GAME.localCache = obj;
-  GAME.render(obj);
-    });
-  }
-}, []);
+//    console.log(socket, "Testing");
+    if (socket) {
+      console.log("connection made: init canvas");
+      GAME.init();
+      socket.on("bubbles", (obj) => {
+        GAME.render(obj);
+      });
+    }
+  }, [socket]);
 
   return <canvas ref={canvas} id="canvas"></canvas>;
 };
 
 export default Canvas;
-

@@ -9,7 +9,6 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
@@ -40,13 +39,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    const newSocket = io(`http://${window.location.hostname}:3002`);
-    console.log(newSocket,"Made?");
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, [setSocket]);
 
   return (
     <Router>
@@ -57,7 +49,7 @@ function App() {
             path="/"
             element={
               <ExistingUserProvider>
-                <GamesPage socket={socket} /> 
+                <HomePage /> 
               </ExistingUserProvider>
             }
           />

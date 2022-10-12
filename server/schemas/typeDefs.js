@@ -1,56 +1,61 @@
-const { gql } = require('apollo-server-express');
-const {User,Channel} = require('./../models');
+const { gql } = require("apollo-server-express");
+const { User, Channel } = require("./../models");
 
 const typeDefs = gql`
-scalar Date
-type User {
-    _id: ID
-    username: String
-    email:String
-}
+	scalar Date
+	type User {
+		_id: ID
+		username: String
+		email: String
+	}
 
-type Channel {
-    _id: ID
-    channelName: String
-    createdAt: Date
-    participants: [User]!
-    messages: [Message]
-}
+	type Channel {
+		_id: ID
+		channelName: String
+		createdAt: Date
+		participants: [User]!
+		messages: [Message]
+	}
 
-type Message {
-    _id: ID
-    messageText: String
-    createdAt: Date
-    username: String
-}
+	type Message {
+		_id: ID
+		messageText: String
+		createdAt: Date
+		username: String
+	}
 
-type Score {
-    _id: ID
-    game: String
-    scores: [Score]
-}
+	type Score {
+		_id: ID
+		game: String
+		scores: [Score]
+	}
 
-type Auth {
-    token: ID!
-    user:User
-}
+	type Auth {
+		token: ID!
+		user: User
+	}
 
-type Query{
-    users: [User]
-    user(userId: ID!): User
-    channels: [Channel]
-    channel(channelId: ID!): Channel
-    channelMessages(channelId:ID!,limit:Int): Channel
-    
-}
-type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
-    createChannel(channelName:String!):Channel
-    addMessageToChannel(channelId:ID!,messageText:String!,username:String!):Channel
-    removeUser: User
-    addChannelParticipant(channelId:ID!,userId:ID!):Channel
-  }
+	type Query {
+		users: [User]
+		user(userId: ID!): User
+		channels: [Channel]
+		channel(channelId: ID!): Channel
+		channelMessages(channelId: ID!, limit: Int): Channel
+		scores: [Score]
+		score(scoreId: ID!): Score
+	}
+	type Mutation {
+		addUser(username: String!, email: String!, password: String!): Auth
+		login(username: String!, password: String!): Auth
+		createChannel(channelName: String!): Channel
+		addMessageToChannel(
+			channelId: ID!
+			messageText: String!
+			username: String!
+		): Channel
+		removeUser: User
+		addChannelParticipant(channelId: ID!, userId: ID!): Channel
+	}
 `;
 
 module.exports = typeDefs;

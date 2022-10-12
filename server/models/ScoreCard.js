@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const scoreSchema = new Schema({
+const scoreCardSchema = new Schema({
 	game: {
 		type: String,
 		require: true,
@@ -20,6 +20,6 @@ const scoreSchema = new Schema({
 	],
 });
 
-const Score = model("score", scoreSchema);
+const ScoreCard = model("score", scoreCardSchema);
 
-module.exports = Score;
+module.exports = ScoreCard;

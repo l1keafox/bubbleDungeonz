@@ -79,12 +79,12 @@ const typeDefs = gql`
 		addScoreToScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
 		updateSettings(
 			userId: ID!
-			screenTextColor: String
-			linkTextColor: String
-			chatTextColor: String
-			background: String
-			chatWindow: String
-			header: String
+			screenTextColor: String!
+			linkTextColor: String!
+			chatTextColor: String!
+			background: String!
+			chatWindow: String!
+			header: String!
 		): User
 	}
 `;

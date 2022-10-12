@@ -130,18 +130,29 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
-		updateSettings: async (parent, args) => {
+		updateSettings: async (
+			parent,
+			{
+				userId,
+				screenTextColor,
+				linkTextColor,
+				chatTextColor,
+				background,
+				chatWindow,
+				header,
+			}
+		) => {
 			const settings = await User.findOneAndUpdate(
-				{ _id: args.userId },
+				{ _id: userId },
 				{
-					$addToSet: {
+					$set: {
 						settings: {
-							screenTextColor: args.screenTextColor,
-							linkTextColor: args.linkTextColor,
-							chatTextColor: args.chatTextColor,
-							background: args.background,
-							chatWindow: args.chatWindow,
-							header: args.header,
+							screenTextColor: screenTextColor,
+							linkTextColor: linkTextColor,
+							chatTextColor: chatTextColor,
+							background: background,
+							chatWindow: chatWindow,
+							header: header,
 						},
 					},
 				},

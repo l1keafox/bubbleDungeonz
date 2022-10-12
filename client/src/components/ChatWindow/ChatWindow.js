@@ -14,12 +14,17 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 
 
 export default function ChatWindow(props){
-    
+
     const [messages,setMessages] = useState([]);
     const [channelId,setChannelId] = useState(props.channelId);
     
 
-    const {loading,data} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}});
+    const {loading,error,data,startPolling,stopPolling} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}},);
+    useEffect(()=>{
+        startPolling(1000);
+    });
+    
+
     const channels = data?.channelMessages || [];
 
     function parseLinkInText(text){

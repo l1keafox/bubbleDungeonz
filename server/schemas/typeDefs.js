@@ -46,6 +46,9 @@ type Mutation {
     removeUser: User
     addChannelParticipant(channelId:ID!,userId:ID!):Channel
   }
+type Subscription {
+    messageAdded(channelId: ID!): Channel
+}
 `;
 
 module.exports = typeDefs;

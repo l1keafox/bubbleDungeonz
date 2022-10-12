@@ -1,5 +1,5 @@
 const { gql } = require("apollo-server-express");
-const { User, Channel } = require("./../models");
+const { User, Channel, ScoreCard } = require("./../models");
 
 const typeDefs = gql`
 	scalar Date
@@ -7,6 +7,8 @@ const typeDefs = gql`
 		_id: ID
 		username: String
 		email: String
+		setting: Settings
+		friends: [User]
 	}
 
 	type Channel {
@@ -28,17 +30,6 @@ const typeDefs = gql`
 		_id: ID
 		game: String
 		scores: [Score]
-	}
-
-	type Setting {
-		_id: ID
-		user: User
-		screenTextColor: String
-		linkTextColor: String
-		chatTextColor: String
-		background: String
-		chatWindow: String
-		header: String
 	}
 
 	type Auth {
@@ -66,6 +57,8 @@ const typeDefs = gql`
 		): Channel
 		removeUser: User
 		addChannelParticipant(channelId: ID!, userId: ID!): Channel
+		createScoreCard(game: String!): ScoreCard
+		addScoreToScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
 	}
 `;
 

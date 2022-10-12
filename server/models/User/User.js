@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Settings = require("./Settings");
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
@@ -29,6 +30,8 @@ const userSchema = new Schema(
 				ref: "user",
 			},
 		],
+		settings: Settings,
+
 		isAdmin: {
 			type: Boolean,
 			required: true,

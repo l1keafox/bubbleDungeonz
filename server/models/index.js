@@ -1,6 +1,5 @@
 const Channel = require("./Chat/Channel");
-const User = require("./User");
-const ScoreCard = require("./Score");
-const Settings = require("./Settings");
+const User = require("./User/User");
+const ScoreCard = require("./ScoreCard/ScoreCard");
 
-module.exports = { Channel, User, ScoreCard, Settings };
+module.exports = { Channel, User, ScoreCard };

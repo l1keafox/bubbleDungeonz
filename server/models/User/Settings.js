@@ -1,10 +1,6 @@
 const { Schema, model } = require("mongoose");
 
 const settingsSchema = new Schema({
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: "user",
-	},
 	screenTextColor: {
 		type: String,
 		default: "orange1",
@@ -34,6 +30,4 @@ const settingsSchema = new Schema({
 
 // To be put in at once setting schema and customization options ready on frontend
 
-const Settings = model("settings", settingsSchema);
-
-model.exports = Settings;
+module.exports = settingsSchema;

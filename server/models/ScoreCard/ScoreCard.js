@@ -9,6 +9,6 @@ const scoreCardSchema = new Schema({
 	scores: [Score],
 });
 
-const ScoreCard = model("score", scoreCardSchema);
+const ScoreCard = model("scoreCard", scoreCardSchema);
 
 module.exports = ScoreCard;

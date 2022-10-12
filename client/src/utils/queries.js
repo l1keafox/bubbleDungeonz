@@ -21,8 +21,8 @@ export const QUERY_SINGLE_USER = gql`
 `;
 
 export const GET_USER_CHANNELS = gql`
-  query Query($userId: ID!) {
-    memberChannels(userId: $userId) {
+  query MemberChannels {
+    memberChannels {
       _id
       channelName
     }

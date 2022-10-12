@@ -17,7 +17,7 @@ import CreateAccount from "./components/CreateAccount/CreateAccount";
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import ExistingUserProvider from "./utils/existingUserContext";
-
+import Settings from "./components/Settings/Settings";
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",

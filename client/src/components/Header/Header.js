@@ -6,6 +6,10 @@ import { FaHamburger } from "react-icons/fa";
 function Header() {
   //state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");
+  const openSettings = (e) => {
+    e.preventDefault();
+    console.log("here?")
+  };
 
   //need logic to conditionally render Login/Logout link based on user objects loggedIn state
 
@@ -21,7 +25,7 @@ function Header() {
         </Link>
         <li className="navLink hidden">Logout</li>
         <li className="navLink">
-          <FaHamburger></FaHamburger>
+          <FaHamburger onClick={ openSettings }></FaHamburger>
         </li>
       </ul>
     </div>

@@ -130,6 +130,25 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
+		updateSettings: async (parent, args) => {
+			const settings = await User.findOneAndUpdate(
+				{ _id: args.userId },
+				{
+					$addToSet: {
+						settings: {
+							screenTextColor: args.screenTextColor,
+							linkTextColor: args.linkTextColor,
+							chatTextColor: args.chatTextColor,
+							background: args.background,
+							chatWindow: args.chatWindow,
+							header: args.header,
+						},
+					},
+				},
+				{ runValidators: true, new: true }
+			);
+			return settings;
+		},
 	},
 };
 module.exports = resolvers;

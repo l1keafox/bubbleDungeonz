@@ -61,6 +61,7 @@ const typeDefs = gql`
 		channel(channelId: ID!): Channel
 		channelMessages(channelId: ID!, limit: Int): Channel
 		me: User
+		memberChannels: [Channel]
 		scoreCards: [ScoreCard]
 		scoreCard(scoreCardId: ID!): ScoreCard
 	}

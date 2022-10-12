@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
@@ -42,30 +42,20 @@ const client = new ApolloClient({
 });
 
 function App() {
-
   return (
     <Router>
       <ApolloProvider client={client}>
         <Header />
         <Routes>
-
-          {/* <Route path="/" element={<CreateAccount />} /> */}
-
           <Route
             path="/"
             element={
               <ExistingUserProvider>
-                <HomePage /> 
+                <HomePage />
               </ExistingUserProvider>
             }
           />
           <Route path="/games" element={<GamesPage />} />
-
-          {/* <div className="flex-column justify-flex-start min-100-vh">
-          <div className="container">
-            <CreateAccount />
-          </div>
-        </div> */}
         </Routes>
       </ApolloProvider>
     </Router>

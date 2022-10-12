@@ -19,3 +19,12 @@ export const QUERY_SINGLE_USER = gql`
         }
     }
 `;
+
+export const GET_USER_CHANNELS = gql`
+  query Query($userId: ID!) {
+    memberChannels(userId: $userId) {
+      _id
+      channelName
+    }
+  }
+`;

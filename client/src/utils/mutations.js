@@ -13,7 +13,16 @@ export const ADD_USER = gql`
     }
   }
 `;
-
+export const AUTH_USER_SESSION = gql`
+  mutation authUserSession($sessionId:ID!){
+    authUserSession(sessionId: $sessionId){
+      token
+      user {
+        username
+      }
+    }
+  }
+`;
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -34,14 +43,3 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
   }
 `;
 
-export const AUTH_USER_SESSION = gql`
-  mutation authSessId(userId:ID!){
-    authUserSession(userId:ID!){
-      token
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;

@@ -12,7 +12,7 @@ function GamePlay() {
     case "Bubble Trouble":
       game = <Canvas />;
       break;
-      deafult:
+      default:
       game = <Canvas />;
       break;
   }

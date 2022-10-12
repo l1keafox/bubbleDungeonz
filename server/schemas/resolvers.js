@@ -142,7 +142,8 @@ const resolvers = {
           },
         authUserSession:async(parent,args,context) =>{
           
-          console.log(context.user);
+          console.log(context.user, "something?");
+          return User.find();
         }
 
   },

@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 // import bubble from "./bubble.png";
+import { AUTH_USER_SESSION } from "../../utils/mutations";
+import { useMutation } from "@apollo/client";
 
 import bubble from "./../Canvas/bubble.PNG"
 import io from "socket.io-client";
 import color from "./../../utils/colors.css";
+
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
+  const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
+  
   useEffect(() => {
     const newSocket = io(`http://${window.location.hostname}:3002`);
     setSocket(newSocket);
     return () => newSocket.close();
   }, []);
-
+  
   var GAME = {
     // set up some initial values
     WIDTH: 320,
@@ -49,22 +54,7 @@ const Canvas = () => {
       // cycle through all entities and render to canvas
       if (objects) {
         for (let gameObj of objects) {
-          // let color;
-
-          // let ditto =
           GAME.Draw.img(bubble,gameObj.x,gameObj.y,gameObj.r,gameObj.r );
-          // GAME.Draw.circle(
-          //   gameObj.x,
-          //   gameObj.y,
-          //   gameObj.r,
-          //   "rgba(255,255,255,1)"
-          // );
-          // GAME.Draw.text(
-          //   gameObj.hits,
-          //   gameObj.x,
-          //   gameObj.y - 1,
-          //   "rgba(255,255,255,1)"
-          // );
         }
       }
     },
@@ -103,9 +93,24 @@ const Canvas = () => {
   };
 
   const canvas = useRef(null);
-
+  async function authMe(socketd){
+    console.log(socketd,"Session id auth");
+    try{
+    const { data } = await authUserSession({
+      variables: { sessionId: socketd },
+    });
+    //...formState
+    console.log(data);
+  }catch(err){
+      console.log(err);
+    }
+  }
   useEffect(() => {
     if (socket) {
+      // socket.on("connect", () => {
+      //   authMe(socket.id);
+      // });
+    
       GAME.init();
       socket.on("bubbles", (obj) => {
         GAME.render(obj);

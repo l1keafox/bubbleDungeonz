@@ -24,6 +24,15 @@
   color: var(--lime);
   font-size: 1.5rem;
 }
+.navLink:hover,
+.nav {
+  color: var(--fuscia);
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
 
 @media screen and (max-width: 650px) {
   .headerDiv {

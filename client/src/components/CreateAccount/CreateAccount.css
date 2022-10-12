@@ -17,6 +17,7 @@
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(var(--navy) 0%, var(--purple) 100%);
+  box-shadow: 3px 3px 3px 3px var(--navy);
 }
 
 .createUserCardTitle {
@@ -52,7 +53,7 @@
 .inputGroupText {
   font-family: "Press Start 2P";
   /* background-color: var(--navy); */
-  color: var(--lime);
+  color: var(--orange1);
   width: 95%;
   /* font-size: x-small; */
   border-radius: 5px;

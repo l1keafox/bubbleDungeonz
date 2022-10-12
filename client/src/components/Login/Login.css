@@ -12,7 +12,7 @@
   background-image: linear-gradient(var(--navy) 0%, var(--purple) 100%);
   border: 15px inset var(--fuscia);
   /* border-radius: 5px; */
-  box-shadow: 3px 3px 3px 3px var(--black);
+  box-shadow: 3px 3px 3px 3px var(--navy);
 }
 
 .loginCardTitle {

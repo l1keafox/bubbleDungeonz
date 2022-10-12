@@ -30,7 +30,10 @@ const userSchema = new Schema(
 				ref: "user",
 			},
 		],
-		settings: { Settings },
+		settings: {
+			type: Settings,
+			default: () => ({}),
+		},
 
 		isAdmin: {
 			type: Boolean,

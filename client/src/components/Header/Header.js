@@ -22,9 +22,8 @@ function Header() {
   return (
     <div className="headerDiv">
       <h1 className="headerTitle">App Title</h1>
-      <Settings show={showModal}>
-        <p>Settings</p>
-      </Settings>
+      <Settings show={showModal} />
+
       <ul className="navBar">
         <Link to={{ pathname: "/" }} className="navLink">
           <li>Home</li>

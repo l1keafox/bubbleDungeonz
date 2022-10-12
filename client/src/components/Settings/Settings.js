@@ -1,12 +1,12 @@
-import { FaHamburger } from "react-icons/fa";
 import "./Settings.css";
 // import "./colors.css";
 import Header from "../Header/Header";
 function Settings({ handleClose, show, children }) {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
+  const showHideClassName = show ? "modal d-block" : "modal d-none";
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
+  console.log(show, showHideClassName);
   const colorKeys = [
     "Fuscia",
     "Red",
@@ -29,69 +29,38 @@ function Settings({ handleClose, show, children }) {
   ];
 
   return (
-    (
-      <div className={showHideClassName}>
+    <div className={showHideClassName} id="mainModal">
+      <div className="modal-main">
+        {children}
         <button
           type="button"
+          onClick={handleClose}
           className="btn launch-button"
           data-bs-toggle="modal"
           data-bs-target="#launchModal"
         ></button>
+        <select
+          className="form-select"
+          aria-label="Screen-text-color"
+          defaultValue={"Fuscia"}
+        >
+          <option>Screen Text Color</option>
+          {colorKeys.map((colorKeys) => (
+            <option key={colorKeys}>opt</option>
+          ))}
+        </select>
+        <select
+          className="form-select"
+          aria-label="Screen-text-color"
+          defaultValue={"Fuscia"}
+        >
+          <option>Text Color</option>
+          {colorKeys.map((colorKeys) => (
+            <option key={colorKeys}>opt</option>
+          ))}
+        </select>
       </div>
-    ),
-    (
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="settings">
-                Settings
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <select
-                className="form-select"
-                aria-label="Screen-text-color"
-                defaultValue={"Fuscia"}
-              >
-                <option>Screen Text Color</option>
-                {colorKeys.map((opt) => (
-                  <option key={opt}>opt</option>
-                ))}
-              </select>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleFormSubmit}
-              >
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    </div>
   );
 }
 export default Settings;

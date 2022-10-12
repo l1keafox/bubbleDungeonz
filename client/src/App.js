@@ -15,7 +15,7 @@ import HomePage from "./pages/Home/HomePage.js";
 
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 
-import GamesPage from "./pages/Games/GamesPage.js";
+import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import ExistingUserProvider from "./utils/existingUserContext";
 
 // Construct our main GraphQL API endpoint
@@ -55,7 +55,7 @@ function App() {
               </ExistingUserProvider>
             }
           />
-          <Route path="/games" element={<GamesPage />} />
+          <Route path="/games" element={<GamesMenu />} />
         </Routes>
       </ApolloProvider>
     </Router>

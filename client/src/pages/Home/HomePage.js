@@ -15,6 +15,7 @@ function HomePage() {
       {/* scoreboard component - currently just placeholder */}
       <FeaturedScores />
       {/* conditionally renders <Login /> versus <CreateUser /> based on global context variable */}
+      {/* {existingUser ? <Login /> : <CreateAccount />} */}
       {auth.loggedIn() ? <div /> : existingUser ? <Login /> : <CreateAccount />}
     </div>
   );

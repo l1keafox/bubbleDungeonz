@@ -3,7 +3,6 @@ import "./HomePage.css";
 
 import Login from "../../components/Login/Login.js";
 import FeaturedScores from "../../components/FeaturedScores/FeaturedScores.js";
-import Canvas from "../../components/Canvas/Canvas.js";
 
 // import { loggedIn } from "../../utils/auth";
 function HomePage() {
@@ -14,7 +13,6 @@ function HomePage() {
       {/* button with event listener that changes state variable */}
       {/* ternary operator conditionally renders <Login /> versus <CreateUser /> */}
       <Login />
-      <Canvas />
       </div>
   );
 }

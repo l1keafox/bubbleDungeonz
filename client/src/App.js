@@ -8,9 +8,12 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
+import GamePage from "./pages/Home/GamePage.js";
 
 
 // Construct our main GraphQL API endpoint
@@ -37,12 +40,22 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const newSocket = io(`http://${window.location.hostname}:3002`);
+    console.log(newSocket,"Made?");
+    setSocket(newSocket);
+    return () => newSocket.close();
+  }, [setSocket]);
+
   return (
     <Router>
       <ApolloProvider client={client}>
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route path="/" element={<GamePage socket={socket} />} />
+          
           {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />

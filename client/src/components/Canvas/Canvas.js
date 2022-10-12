@@ -104,6 +104,33 @@ const Canvas = () => {
       socket.on("bubbles", (obj) => {
         GAME.render(obj);
       });
+      let Input = {
+        x: 0,
+        y: 0,
+        tapped: false,
+    
+        set: function (data) {
+          var offsetTop = GAME.canvas.offsetTop,
+            offsetLeft = GAME.canvas.offsetLeft;
+          this.x = data.pageX - offsetLeft;
+          this.y = data.pageY - offsetTop;
+          this.tapped = true;
+          console.log("Tapped!", { x: this.x, y: this.y });
+          socket.emit("click", { x: this.x, y: this.y });
+          GAME.Draw.circle(this.x, this.y, 10, "red");
+        },
+      };
+      // listen for clicks
+      GAME.canvas.addEventListener(
+        "click",
+        function (e) {
+          e.preventDefault();
+          //  POP.Input.set(e);
+          Input.set(e);
+        },
+        false
+      );      
+
     }
   }, [socket]);
 

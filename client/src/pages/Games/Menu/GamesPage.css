@@ -13,9 +13,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 2px 2px 2px 1px var(--white);
+  box-shadow: 0 0 10px var(--white);
   /* border: solid 2px white; */
   border-radius: 5px;
+  width: 25rem;
+}
+
+.gameViewContainer:hover {
+  box-shadow: 0 0 10px var(--yellow);
 }
 
 /* text components & button link */
@@ -27,14 +32,24 @@
   font-family: "Press Start 2P";
 }
 
+.cardTitle {
+  color: var(--lime);
+  /* width: 100%; */
+}
+
 .cardText {
   font-family: "Source Code Pro", monospace;
   font-weight: bolder;
+  text-align: center;
+  color: var(--teal1);
 }
 
 .playBtn {
   background-color: var(--fuscia);
   text-align: center;
   align-self: center;
-  width: 50%;
+  width: 10rem;
+}
+.playBtn a:hover {
+  color: var(--yellow);
 }

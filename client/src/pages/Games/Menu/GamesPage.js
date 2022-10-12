@@ -9,7 +9,12 @@ function GamesMenu() {
   let gameOptions = [
     {
       title: "Bubble Trouble",
-      description: "Click on a bubble to pop it.",
+      description: "How many bubbles can you pop before the time is up?",
+      component: <Canvas />,
+    },
+    {
+      title: "Double Trouble",
+      description: "Bubbles AGAIN!?!?",
       component: <Canvas />,
     },
   ];
@@ -20,9 +25,9 @@ function GamesMenu() {
     <div className="menuCardsContainer">
       {gameOptions.map((game) => (
         <div className="gameViewContainer">
-          {game.component}
+          <div className="gameComponent">{game.component}</div>
           <div className="cardBody">
-            <h5 className="card-title">{game.title}</h5>
+            <h5 className="cardTitle">{game.title}</h5>
             <p className="cardText">{game.description}</p>
             <Link className="playBtn" to="/gameplay">
               <a

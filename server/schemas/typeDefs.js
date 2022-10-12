@@ -11,6 +11,16 @@ const typeDefs = gql`
 		friends: [User]
 	}
 
+	type Settings {
+		_id: ID
+		screenTextColor: String
+		linkTextColor: String
+		chatTextColor: String
+		background: String
+		chatWindow: String
+		header: String
+	}
+
 	type Channel {
 		_id: ID
 		channelName: String
@@ -30,6 +40,13 @@ const typeDefs = gql`
 		_id: ID
 		game: String
 		scores: [Score]
+	}
+
+	type Score {
+		_id: ID
+		user: User
+		score: Int
+		createdAt: Date
 	}
 
 	type Auth {

@@ -1,6 +1,6 @@
 import "./CreateAccount.css";
 import React, { useState } from "react";
-
+import { BsJoystick } from "react-icons/bs";
 function CreateAccount() {
   const [userName, setUserName] = useState("");
   const [passWord, setPassWord] = useState("");
@@ -28,7 +28,7 @@ function CreateAccount() {
     e.preventDefault();
 
     if (passWord !== reTypePassWord) {
-      setErrorMessage("Passwords do not match.. Try Again!");
+      setErrorMessage("Womp Womp passwords do not match.. Try Again!");
     }
     if (!userName) {
       setErrorMessage("Username can not be blank.");
@@ -36,6 +36,7 @@ function CreateAccount() {
     setUserName("");
     setPassWord("");
     setEmail("");
+    setReTypePassword("");
   };
 
   return (
@@ -60,7 +61,7 @@ function CreateAccount() {
         </span>
         <input
           name="passWord"
-          type="text"
+          type="password"
           value={passWord}
           className="form-control"
           onChange={handleInputChange}
@@ -70,16 +71,16 @@ function CreateAccount() {
       </div>
       <div className="input-group mb-3">
         <span className="input-group-text" id="basic-addon1">
-          Re-Type Password:
+          Retype Password:
         </span>
         <input
           name="reTypePassWord"
-          type="text"
+          type="password"
           value={reTypePassWord}
           className="form-control"
           onChange={handleInputChange}
-          placeholder="Re-Type Password"
-          aria-label="Re-Type Password"
+          placeholder="ReType Password"
+          aria-label="ReType Password"
         ></input>
       </div>
       <div className="input-group mb-3">
@@ -95,8 +96,15 @@ function CreateAccount() {
           placeholder="Email"
           aria-label="Email"
         ></input>
-        <button type="button" onClick={handleFormSubmit}></button>
       </div>
+      <button className="submitButton" type="button" onClick={handleFormSubmit}>
+        Start! <BsJoystick></BsJoystick>
+      </button>
+      {errorMessage && (
+        <div>
+          <p className="error-text">{errorMessage}</p>
+        </div>
+      )}
       <div></div>
     </div>
   );

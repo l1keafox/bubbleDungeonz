@@ -11,6 +11,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
+
+import CreateAccount from "./components/CreateAccount/CreateAccount";
+
 import GamesPage from "./pages/Games/GamesPage.js";
 import ExistingUserProvider from "./utils/existingUserContext";
 
@@ -43,6 +46,9 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Routes>
+
+          <Route path="/" element={<CreateAccount />} />
+
           <Route
             path="/"
             element={
@@ -52,6 +58,7 @@ function App() {
             }
           />
           <Route path="/games" element={<GamesPage />} />
+
           {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />

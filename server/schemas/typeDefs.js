@@ -35,7 +35,7 @@ type Query{
     channels: [Channel]
     channel(channelId: ID!): Channel
     channelMessages(channelId:ID!,limit:Int): Channel
-    memberChannels(userId:ID!):[Channel]
+    memberChannels:[Channel]
     me: User
 }
 type Mutation {

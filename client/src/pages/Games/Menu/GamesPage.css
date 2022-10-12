@@ -1,0 +1,40 @@
+@import "../../../utils/colors.css";
+
+/* container of all game option cards */
+.menuCardsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* individual game option cards */
+.gameViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 2px 2px 1px var(--white);
+  /* border: solid 2px white; */
+  border-radius: 5px;
+}
+
+/* text components & button link */
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  font-family: "Press Start 2P";
+}
+
+.cardText {
+  font-family: "Source Code Pro", monospace;
+  font-weight: bolder;
+}
+
+.playBtn {
+  background-color: var(--fuscia);
+  text-align: center;
+  align-self: center;
+  width: 50%;
+}

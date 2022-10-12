@@ -39,6 +39,21 @@ const resolvers = {
 		channels: async () => {
 			return Channel.find();
 		},
+		memberChannels: async (parent, args, context) => {
+			if (context.user) {
+				let toBeReturned = [];
+				const channels = await Channel.find();
+				for (const item of channels) {
+					if (item.participants.includes(context.user._id)) {
+						toBeReturned.push(item);
+					}
+				}
+				console.log(toBeReturned);
+				return toBeReturned;
+			} else {
+				throw new AuthenticationError("You need to be logged in!");
+			}
+		},
 		//Gets single channel by ID
 		channel: async (parent, { channelId }) => {
 			return Channel.findById({ _id: channelId });
@@ -83,14 +98,19 @@ const resolvers = {
 		//adds a single message to a channel by id
 		addMessageToChannel: async (
 			parent,
-			{ channelId, messageText, username }
+			{ channelId, messageText },
+			context
 		) => {
-			const task = await Channel.findOneAndUpdate(
-				{ _id: channelId },
-				{ $addToSet: { messages: { messageText, username } } },
-				{ runValidators: true, new: true }
-			);
-			return task;
+			const user = await User.findById({ _id: context.user._id });
+			if (context.user) {
+				const task = await Channel.findOneAndUpdate(
+					{ _id: channelId },
+					{ $addToSet: { messages: { messageText, username: user.username } } },
+					{ runValidators: true, new: true }
+				);
+				return task;
+			}
+			throw new AuthenticationError("You need to be logged in!");
 		},
 		//adds a participant to the channel
 		addChannelParticipant: async (parent, { channelId, userId }) => {

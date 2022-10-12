@@ -13,13 +13,8 @@ import io from 'socket.io-client';
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
-<<<<<<< HEAD
-import GamePage from "./pages/Home/GamePage.js";
-
-=======
 import GamesPage from "./pages/Games/GamesPage.js";
 import ExistingUserProvider from "./utils/existingUserContext";
->>>>>>> main
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -62,7 +57,7 @@ function App() {
             path="/"
             element={
               <ExistingUserProvider>
-                <HomePage />
+                <GamesPage socket={socket} /> 
               </ExistingUserProvider>
             }
           />

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
 
-function GamesPage() {
+import React, { useState,useEffect } from "react";
+import Canvas from "../../components/Canvas/Canvas.js";
+
+function GamesPage({socket}) {
   return (
-    <div>
-      <h1>Game Page Filler</h1>
-    </div>
+    <div className="gameViewContainer">
+      {/* socket={} */}
+      <Canvas socket={socket}/> 
+      </div>
   );
 }
 

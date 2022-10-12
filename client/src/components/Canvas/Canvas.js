@@ -1,14 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
+const requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 30);
+    }
+  );
+})();
 
-import { io } from "socket.io-client";
-const Canvas = (props) => {
+const Canvas = ({ socket }) => {
   var GAME = {
     // set up some initial values
     WIDTH: 320,
     HEIGHT: 480,
     nextBubble: 0,
     entities: [],
-    localCache: null, // this is what is filled in order to draw
+    // localCache: null, // this is what is filled in order to draw
     // we'll set the rest of these
     // in the init function
     RATIO: null,
@@ -29,6 +40,7 @@ const Canvas = (props) => {
       // setting this is important
       // otherwise the browser will
       // default to 320 x 200
+      console.log(canvas.current, "Init canvas?");
       GAME.canvas.width = GAME.WIDTH;
       GAME.canvas.height = GAME.HEIGHT;
       // the canvas context enables us to
@@ -66,14 +78,17 @@ const Canvas = (props) => {
       }, 1);
     },
     loop: function () {
+//      requestAnimFrame(GAME.loop);
       GAME.render();
     },
-    render: function () {
+    render: function (objects) {
       GAME.Draw.rect(0, 0, GAME.WIDTH, GAME.HEIGHT, "#036");
 
       // cycle through all entities and render to canvas
-      if (this.localCache) {
-        for (let gameObj of this.localCache) {
+//      console.log("render",this.localCache);
+      if (objects) {
+        for (let gameObj of objects) {
+          console.log(gameObj);
           // let color;
 
           // let ditto =
@@ -122,25 +137,37 @@ const Canvas = (props) => {
   };
 
   //"bubbles"
-
   const canvas = useRef(null);
-  useEffect(() => {
-    // 👇️ use a ref (best)
-    const el2 = canvas.current;
-    console.log(el2);
 
-    // 👇️ use document.querySelector()
-    // should only be used when you can't set a ref prop on the element
-    // (you don't have access to the element)
-    const el = document.querySelector("#canvas");
-    console.log(el);
+  useEffect(() => {
+    console.log("init once");
     GAME.init();
+    //   // 👇️ use a ref (best)
+    //   const el2 = canvas.current;
+    //   console.log(el2);
+
+    //   // 👇️ use document.querySelector()
+    //   // should only be used when you can't set a ref prop on the element
+    //   // (you don't have access to the element)
+    //   const el = document.querySelector("#canvas");
+    //   console.log(el);
+
   }, []);
-  return (
-    <canvas ref={canvas} id="canvas">
-      {" "}
-    </canvas>
-  );
+  useEffect(() => {
+  if (socket) {
+    
+
+
+socket.on("bubbles", (obj) => {
+  //console.log(obj,GAME.localCache);
+//        GAME.localCache = obj;
+  GAME.render(obj);
+    });
+  }
+}, []);
+
+  return <canvas ref={canvas} id="canvas"></canvas>;
 };
 
 export default Canvas;
+

@@ -20,5 +20,6 @@ function HomePage() {
       {auth.loggedIn() ? <ChatList />:<div/> }
     </div>
   );
+  
 }
 export default HomePage;

@@ -2,7 +2,7 @@ import "./ChatList.css";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_USER_CHANNELS } from "../../utils/queries";
-
+import ChatWindow from "../ChatWindow/ChatWindow";
 import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 
@@ -21,7 +21,7 @@ export default function ChatList(){
         }
     }
     function loadedChannels(list){
-        return list.map((item)=><p>{item}</p>)
+        return list.map((item)=><ChatWindow key="1" channelId={item}/>)
     }
 
     return(

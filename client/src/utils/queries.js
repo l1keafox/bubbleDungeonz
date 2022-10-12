@@ -28,3 +28,15 @@ export const GET_USER_CHANNELS = gql`
     }
   }
 `;
+export const GET_CHANNEL_MESSAGES = gql`
+  query ChannelMessages($channelId: ID!, $limit: Int) {
+    channelMessages(channelId: $channelId, limit: $limit) {
+      messages {
+        messageText
+        username
+        createdAt
+        _id
+      }
+    }
+  }
+`;

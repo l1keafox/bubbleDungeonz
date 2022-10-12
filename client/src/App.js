@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
-
+import ExistingUserProvider from "./utils/existingUserContext";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -42,7 +42,14 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/"
+            element={
+              <ExistingUserProvider>
+                <HomePage />
+              </ExistingUserProvider>
+            }
+          />
           {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />

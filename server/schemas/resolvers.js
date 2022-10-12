@@ -39,6 +39,17 @@ const resolvers = {
         channels: async () =>{
           return Channel.find();
         },
+        memberChannels: async (parent, {userId}) =>{
+          console.log(userId);
+          let toBeReturned = [];
+          const channels = await Channel.find();
+          for(const item of channels){
+            if(item.participants.includes(userId)){
+              toBeReturned.push(item);
+            }
+          }
+          return toBeReturned;
+        },
         //Gets single channel by ID
         channel: async (parent, {channelId}) => {
           return Channel.findById({_id:channelId});

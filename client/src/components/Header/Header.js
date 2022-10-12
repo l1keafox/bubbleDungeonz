@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaHamburger } from "react-icons/fa";
+import auth from "../../utils/auth";
 
 function Header() {
   //state variable to control whether the header has a Login or Logout link
@@ -19,7 +20,7 @@ function Header() {
         <Link to={{ pathname: "/games" }} className="navLink">
           <li>Games</li>
         </Link>
-        <li className="navLink hidden">Logout</li>
+        <li className={ auth.loggedIn() ? "navLink":"navLink hidden" } onClick= {auth.logout} >Logout</li> 
         <li className="navLink">
           <FaHamburger></FaHamburger>
         </li>

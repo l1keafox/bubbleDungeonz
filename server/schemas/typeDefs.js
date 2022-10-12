@@ -13,7 +13,7 @@ type Channel {
     _id: ID
     channelName: String
     createdAt: Date
-    participants: [User]!
+    participants: [User]
     messages: [Message]
 }
 

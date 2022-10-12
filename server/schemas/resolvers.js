@@ -48,6 +48,7 @@ const resolvers = {
                 toBeReturned.push(item);
               }
             }
+            console.log(toBeReturned);
             return toBeReturned;
           }else{
             throw new AuthenticationError('You need to be logged in!');

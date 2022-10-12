@@ -29,6 +29,11 @@ const userSchema = new Schema(
 				ref: "user",
 			},
 		],
+		isAdmin: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
 	},
 	{
 		toJSON: {

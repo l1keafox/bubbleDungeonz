@@ -49,7 +49,7 @@ function App() {
         <Header />
         <Routes>
 
-          <Route path="/" element={<CreateAccount />} />
+          {/* <Route path="/" element={<CreateAccount />} /> */}
 
           <Route
             path="/"

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+// import bubble from "./bubble.png";
 
-
+import bubble from "./../Canvas/bubble.PNG"
 import io from "socket.io-client";
-
+import color from "./../../utils/colors.css";
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -52,18 +53,19 @@ const Canvas = () => {
           // let color;
 
           // let ditto =
-          GAME.Draw.circle(
-            gameObj.x,
-            gameObj.y,
-            gameObj.r,
-            "rgba(255,255,255,1)"
-          );
-          GAME.Draw.text(
-            gameObj.hits,
-            gameObj.x,
-            gameObj.y - 1,
-            "rgba(255,255,255,1)"
-          );
+          GAME.Draw.img(bubble,gameObj.x,gameObj.y,gameObj.r,gameObj.r );
+          // GAME.Draw.circle(
+          //   gameObj.x,
+          //   gameObj.y,
+          //   gameObj.r,
+          //   "rgba(255,255,255,1)"
+          // );
+          // GAME.Draw.text(
+          //   gameObj.hits,
+          //   gameObj.x,
+          //   gameObj.y - 1,
+          //   "rgba(255,255,255,1)"
+          // );
         }
       }
     },
@@ -76,6 +78,13 @@ const Canvas = () => {
       rect: function (x, y, w, h, col) {
         GAME.ctx.fillStyle = col;
         GAME.ctx.fillRect(x, y, w, h);
+      },
+      img: function(image, dx, dy,dWidth, dHeight){
+        //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+        const img1 = new Image(); // Image constructor
+        img1.src = image;
+        img1.alt = 'alt';        
+           GAME.ctx.drawImage(img1, dx, dy,dWidth, dHeight);
       },
 
       circle: function (x, y, r, col) {

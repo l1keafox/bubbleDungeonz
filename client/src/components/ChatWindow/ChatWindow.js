@@ -14,7 +14,7 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 
 
 export default function ChatWindow(props){
-
+    
     const [messages,setMessages] = useState([]);
     const [channelId,setChannelId] = useState(props.channelId);
     
@@ -44,6 +44,7 @@ export default function ChatWindow(props){
         }
         
     }
+
     return (
         <div>
             <h1>{props.name}</h1>
@@ -56,7 +57,6 @@ export default function ChatWindow(props){
             <MessageEditor channelId={props.channelId}/>
         </div>
     );
-
 }
 
 function MessageEditor(props){
@@ -69,6 +69,7 @@ function MessageEditor(props){
     async function handleSubmit(e){
         e.preventDefault();
         const test = await send(value);
+        setValue("");
     }
 
     async function send(messageText){

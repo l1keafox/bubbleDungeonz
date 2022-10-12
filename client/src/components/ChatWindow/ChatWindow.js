@@ -2,15 +2,23 @@
 import "./ChatWindow.css";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+
+
+import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
+import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
+
+
 import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
-import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
+
 
 
 export default function ChatWindow(props){
 
     const [messages,setMessages] = useState([]);
     const [channelId,setChannelId] = useState(props.channelId);
+    
+
     const {loading,data} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}});
     const channels = data?.channelMessages || [];
     console.log(channels.messages);
@@ -48,7 +56,32 @@ export default function ChatWindow(props){
                   {chatListItems(channels.messages)}
               </ul>
             </div>
+            <MessageEditor channelId={props.channelId}/>
         </div>
     );
 
+}
+
+function MessageEditor(props){
+    const [post,{error,info}] = useMutation(POST_MESSAGE_TO_CHANNEL);
+    const [value,setValue] = useState("");
+    const channelId=props.channelId;
+    function handleChange(e){
+        setValue(e.target.value);
+    }
+    async function handleSubmit(e){
+        e.preventDefault();
+        console.log("sending "+value);
+        const test = await send(value);
+    }
+
+    async function send(messageText){
+        console.log(messageText);
+        const {info} = await post({variables:{channelId,messageText}});
+    }
+    return(
+        <form id="form" action="" onSubmit={handleSubmit}>
+              <input type="text" value={value} onChange={handleChange} id="input" autoComplete="off" /><button>Send</button>
+          </form>
+    );
 }

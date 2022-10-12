@@ -89,13 +89,18 @@ const resolvers = {
           return channel;
         },
         //adds a single message to a channel by id
-        addMessageToChannel: async (parent,{channelId,messageText,username})=> {
+        addMessageToChannel: async (parent,{channelId,messageText},context)=> {
+
+          const user = await User.findById({_id:context.user._id});
+          if (context.user) {
           const task = await Channel.findOneAndUpdate(
             {_id: channelId},
-            { $addToSet: { messages: {messageText,username} } },
+            { $addToSet: { messages: {messageText,username:user.username} } },
             { runValidators: true, new: true }
           );
           return task;
+          }
+          throw new AuthenticationError('You need to be logged in!');
         },
         //adds a participant to the channel
         addChannelParticipant: async (parent,{channelId,userId})=>{

@@ -42,7 +42,7 @@ type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
     createChannel(channelName:String!):Channel
-    addMessageToChannel(channelId:ID!,messageText:String!,username:String!):Channel
+    addMessageToChannel(channelId:ID!,messageText:String!):Channel
     removeUser: User
     addChannelParticipant(channelId:ID!,userId:ID!):Channel
   }

@@ -1,0 +1,50 @@
+@import "../../utils/colors.css";
+
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 30rem;
+  height: auto;
+  border: solid 1px var(--black);
+  border-radius: 5px;
+}
+
+.loginCardTitle {
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  background-color: var(--purple);
+  color: var(--white);
+  width: 100%;
+  padding: 1rem;
+}
+
+.loginFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.loginFormInput {
+  margin: 0.5rem;
+  width: 100%;
+}
+
+.loginSubmitBtn {
+  background-color: var(--lime);
+  border: solid 2px var(--green);
+  color: var(--white);
+  border-radius: 5px;
+  margin: 1rem;
+}
+
+.createNewAccountBtn {
+  background-color: var(--purple);
+  border: solid 2px var(--purple);
+  color: var(--white);
+  border-radius: 5px;
+  margin: 1rem;
+}

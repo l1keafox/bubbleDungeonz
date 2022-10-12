@@ -23,10 +23,33 @@ let bubble = {
     maxTimer: 40, // what next is set too when it hits 0
     group: [], // this is what holds the bubbles.
 }
+function distance(x1,y1,x2,y2){
+  let a =Math.abs (x1-x2);
+  let b =Math.abs (y1-y2);
+  return Math.sqrt((a*a)+(b*b))
+}
 
 module.exports = {
     name: function(){
         return "bubbles";
+    },
+    init: function(){
+      // this is empty
+      io.on('connection', (socket) => {
+        socket.on("click",(msg)=>{
+          let i = bubble.group.length;
+          
+          while(i--){
+            let bubb = bubble.group[i];
+            if(distance(bubb.x+bubb.r,bubb.y+bubb.r,msg.x,msg.y) < bubb.r){
+              bubb.hits--;
+              if(bubb.hits <= 0){
+                bubble.group.splice(i,1);
+              }
+            }
+          }
+        });
+      });
     },
     updateFrame: function(){
         bubble.next--;

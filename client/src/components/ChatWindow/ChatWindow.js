@@ -19,7 +19,12 @@ export default function ChatWindow(props){
     const [channelId,setChannelId] = useState(props.channelId);
     
 
-    const {loading,data} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}});
+    const {loading,error,data,startPolling,stopPolling} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}},);
+    useEffect(()=>{
+        startPolling(1000);
+    });
+    
+
     const channels = data?.channelMessages || [];
 
     function parseLinkInText(text){
@@ -44,6 +49,7 @@ export default function ChatWindow(props){
         }
         
     }
+
     return (
         <div>
             <h1>{props.name}</h1>
@@ -56,7 +62,6 @@ export default function ChatWindow(props){
             <MessageEditor channelId={props.channelId}/>
         </div>
     );
-
 }
 
 function MessageEditor(props){
@@ -69,6 +74,7 @@ function MessageEditor(props){
     async function handleSubmit(e){
         e.preventDefault();
         const test = await send(value);
+        setValue("");
     }
 
     async function send(messageText){

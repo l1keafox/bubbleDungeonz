@@ -15,11 +15,14 @@ db.once("open", async () => {
 		console.log(channels);
 		console.log(users);
 		for(const user of users){
-			const task = await Channel.findOneAndUpdate(
-				{_id: channels[0]._id},
-				{ $addToSet: { participants: {_id:user._id} } },
-				{ runValidators: true, new: true }
-			  );
+			for(const channel of channels){
+				const task = await Channel.findOneAndUpdate(
+					{_id: channel._id},
+					{ $addToSet: { participants: {_id:user._id} } },
+					{ runValidators: true, new: true }
+				);
+			}
+			
 		}
 		
 

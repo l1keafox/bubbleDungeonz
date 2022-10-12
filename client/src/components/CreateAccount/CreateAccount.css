@@ -1,28 +1,69 @@
 @import "../../utils/colors.css";
+
+.formContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+
 .createUserForm {
-  padding: 1rem;
+  font-family: "Press Start 2P";
   width: 30rem;
   height: auto;
-  border: 15px inset var(--orange3);
+  border: 15px inset var(--fuscia);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: linear-gradient(var(--navy) 0%, var(--purple) 100%);
+  box-shadow: 3px 3px 3px 3px var(--navy);
 }
-.form-control {
-  display: flexbox;
+
+.createUserCardTitle {
+  text-align: center;
+  /* border-radius: 5px 5px 0 0; */
+  background-color: var(--orange1);
+  color: var(--purple);
+  width: 100%;
+  padding: 1rem;
+}
+
+.inputGroup {
+  margin: 0.5rem;
+  border-radius: 5px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.createUserFormInput {
+  font-family: "Press Start 2P";
   margin: 2%;
-  font-family: "play";
-  font-size: large;
+  /* padding: 1rem; */
+
+  /* font-size: large; */
   color: var(--lime);
   border: 2px solid var(--black);
+  width: 90%;
 }
+
+.inputGroupText {
+  font-family: "Press Start 2P";
+  /* background-color: var(--navy); */
+  color: var(--orange1);
+  width: 95%;
+  /* font-size: x-small; */
+  border-radius: 5px;
+}
+
 .submitButton {
-  margin-left: 75%;
   font-family: "Press Start 2P";
-  font-size: medium;
-  background-color: var(--green);
-  border-radius: 20%;
-}
-.input-group-text {
-  font-family: "Press Start 2P";
-  background-color: var(--green);
-  font-size: x-small;
-  border-radius: 20%;
+  background-color: var(--orange1);
+  border: solid 2px var(--orange1);
+  color: var(--purple);
+  border-radius: 5px;
+  margin: 1rem;
 }

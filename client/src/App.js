@@ -13,8 +13,13 @@ import io from 'socket.io-client';
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
+<<<<<<< HEAD
 import GamePage from "./pages/Home/GamePage.js";
 
+=======
+import GamesPage from "./pages/Games/GamesPage.js";
+import ExistingUserProvider from "./utils/existingUserContext";
+>>>>>>> main
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -53,9 +58,15 @@ function App() {
       <ApolloProvider client={client}>
         <Header />
         <Routes>
-          {/* <Route path="/" element={<HomePage />} /> */}
-          <Route path="/" element={<GamePage socket={socket} />} />
-          
+          <Route
+            path="/"
+            element={
+              <ExistingUserProvider>
+                <HomePage />
+              </ExistingUserProvider>
+            }
+          />
+          <Route path="/games" element={<GamesPage />} />
           {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />

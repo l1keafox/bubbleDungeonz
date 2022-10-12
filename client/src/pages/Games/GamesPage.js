@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Canvas from "../../components/Canvas/Canvas.js";
+// import Canvas from "../../components/Canvas/Canvas.js";
 
 function GamesPage() {
   //{/* <Canvas/>  */}

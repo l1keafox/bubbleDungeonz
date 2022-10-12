@@ -2,21 +2,28 @@
 
 .featuredScoresDiv {
   width: 16rem;
-  border: solid 1px var(--black);
   border-radius: 5px;
+  background-color: var(--navy);
+  color: var(--teal1);
+  box-shadow: 3px 3px 3px 3px var(--black);
 }
 
 .featuredGameTitle {
-  color: var(--orange3);
+  color: var(--lime);
   font-weight: bold;
   text-align: center;
 }
 
 .featuredScoresList {
   text-align: center;
+  color: var(--navy);
+}
+
+.featuredScoresList li {
+  text-align: center;
+  background-color: var(--seafoam);
 }
 
 .displayedUsername {
-  color: var(--teal2);
   font-weight: bold;
 }

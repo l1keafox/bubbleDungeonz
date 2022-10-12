@@ -4,13 +4,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--purple);
+  background-color: var(--navy);
   padding: 1rem;
 }
 
 .headerTitle {
-  color: var(--orange1);
+  color: var(--yellow);
   font-size: 2rem;
+  margin-left: 1.5rem;
 }
 
 .navBar {

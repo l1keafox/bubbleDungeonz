@@ -19,3 +19,33 @@ export const QUERY_SINGLE_USER = gql`
         }
     }
 `;
+
+export const GET_ALL_CHANNELS = gql`
+  query Query {
+    channels {
+      _id
+      channelName
+    }
+  }
+`;
+
+export const GET_USER_CHANNELS = gql`
+  query MemberChannels {
+    memberChannels {
+      _id
+      channelName
+    }
+  }
+`;
+export const GET_CHANNEL_MESSAGES = gql`
+  query ChannelMessages($channelId: ID!, $limit: Int) {
+    channelMessages(channelId: $channelId, limit: $limit) {
+      messages {
+        messageText
+        username
+        createdAt
+        _id
+      }
+    }
+  }
+`;

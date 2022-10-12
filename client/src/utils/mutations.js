@@ -25,3 +25,11 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const POST_MESSAGE_TO_CHANNEL = gql`
+  mutation Mutation($channelId: ID!, $messageText: String!) {
+    addMessageToChannel(channelId: $channelId, messageText: $messageText) {
+      _id
+    }
+  }
+`;

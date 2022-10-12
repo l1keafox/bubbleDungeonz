@@ -21,14 +21,12 @@ export default function ChatWindow(props){
 
     const {loading,data} = useQuery(GET_CHANNEL_MESSAGES,{variables:{channelId}});
     const channels = data?.channelMessages || [];
-    console.log(channels.messages);
 
     function parseLinkInText(text){
         let validLink = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+")
         if(validLink.test(text)){
             let linkMatches = text.match(validLink);
             let beforeAndAfterLink = text.split(linkMatches[0]);
-            console.log(beforeAndAfterLink);
             return <span>{beforeAndAfterLink[0]}<a href={linkMatches[0]}>{linkMatches[0]}</a>{parseLinkInText(beforeAndAfterLink[1])}</span>;
         }else{
             return <span>{text}</span>;
@@ -36,7 +34,6 @@ export default function ChatWindow(props){
     
     }
     function chatListItems(messages){
-        console.log(messages);
         if(loading){
             return <p>loading</p>
         }else{
@@ -71,12 +68,10 @@ function MessageEditor(props){
     }
     async function handleSubmit(e){
         e.preventDefault();
-        console.log("sending "+value);
         const test = await send(value);
     }
 
     async function send(messageText){
-        console.log(messageText);
         const {info} = await post({variables:{channelId,messageText}});
     }
     return(

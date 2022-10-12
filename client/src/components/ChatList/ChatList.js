@@ -7,12 +7,11 @@ import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 
 export default function ChatList(){
-    const {loading,data} = useQuery(GET_ALL_CHANNELS);
+    const {loading,data} = useQuery(GET_USER_CHANNELS);
     const [openChannelIds,setOpenChannelIds] = useState([]);
-    const channels = data?.channels || [];
+    const channels = data?.memberChannels || [];
 
     function channelOptions({channels}){
-        console.log(channels);
         if(loading){
             return <p>loading</p>
         }else{
@@ -32,9 +31,7 @@ export default function ChatList(){
     return(
         <aside>
             <ul>
-                
-                    {channelOptions({channels})}
-                
+                {channelOptions({channels})}
             </ul>
             {loadedChannels(openChannelIds)}
         </aside>

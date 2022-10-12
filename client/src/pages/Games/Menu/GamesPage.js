@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
+import { useGameContext } from "../../../utils/gameContext.js";
+import { Link } from "react-router-dom";
 
 function GamesMenu() {
   let gameOptions = [
@@ -10,6 +12,8 @@ function GamesMenu() {
     },
   ];
 
+  const { toggleGameState } = useGameContext();
+
   return (
     <div className="gameViewContainer">
       {gameOptions.map((game) => (
@@ -19,9 +23,19 @@ function GamesMenu() {
             <div className="card-body">
               <h5 className="card-title">{game.title}</h5>
               <p className="card-text">{game.description}</p>
-              <a href="#" className="btn btn-primary">
-                Play
-              </a>
+              <Link to="/gameplay">
+                <a
+                  name={game.title}
+                  href="#"
+                  className="btn btn-primary"
+                  onClick={() => {
+                    toggleGameState(game.title);
+                  }}
+                >
+                  Play
+                </a>
+              </Link>
+              ;
             </div>
           </div>
         </div>

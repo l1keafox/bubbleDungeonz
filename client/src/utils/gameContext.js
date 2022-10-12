@@ -2,14 +2,14 @@ import React, { useState, createContext, useContext } from "react";
 
 const GameContext = createContext();
 
-export const useGameContext = () => useContext(gameContext);
+export const useGameContext = () => useContext(GameContext);
 
-export default function GameContextProvider() {
+export default function GameContextProvider(props) {
   const [gameState, setGameState] = useState(null);
 
   // name should be a string value equal to game title
-  const toggleGameState = (name) => {
-    return setGameState(name);
+  const toggleGameState = (gameTitle) => {
+    return setGameState(gameTitle);
   };
 
   return (

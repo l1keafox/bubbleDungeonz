@@ -16,7 +16,9 @@ import HomePage from "./pages/Home/HomePage.js";
 import CreateAccount from "./components/CreateAccount/CreateAccount";
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
+import GamePlay from "./pages/Games/Play/GamePlay.js";
 import ExistingUserProvider from "./utils/existingUserContext";
+import GameContextProvider from "./utils/gameContext";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -55,7 +57,22 @@ function App() {
               </ExistingUserProvider>
             }
           />
-          <Route path="/games" element={<GamesMenu />} />
+          <Route
+            path="/games"
+            element={
+              <GameContextProvider>
+                <GamesMenu />
+              </GameContextProvider>
+            }
+          />
+          <Route
+            path="/gameplay"
+            element={
+              <GameContextProvider>
+                <GamePlay />
+              </GameContextProvider>
+            }
+          ></Route>
         </Routes>
       </ApolloProvider>
     </Router>

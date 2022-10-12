@@ -9,14 +9,13 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 import { loggedIn } from "../../utils/auth";
 
 function HomePage() {
-  const { existingUser, toggleExistingUser } = useExistingUserContext();
+  const { existingUser } = useExistingUserContext();
 
   return (
     <div className="homeViewContainer">
       {/* scoreboard component - currently just placeholder */}
       <FeaturedScores />
-      {/* button with event listener that changes state variable */}
-      {/* ternary operator conditionally renders <Login /> versus <CreateUser /> */}
+      {/* conditionally renders <Login /> versus <CreateUser /> based on global context variable */}
       {existingUser ? <Login /> : <CreateAccount />}
     </div>
   );

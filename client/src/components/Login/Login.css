@@ -7,8 +7,9 @@
   justify-content: space-between;
   width: 30rem;
   height: auto;
-  border: solid 1px var(--black);
+  background-color: var(--white);
   border-radius: 5px;
+  box-shadow: 3px 3px 3px 3px var(--black);
 }
 
 .loginCardTitle {
@@ -31,12 +32,15 @@
 .loginFormInput {
   margin: 0.5rem;
   width: 100%;
+  /* background-color: var(--white); */
+  border-radius: 5px;
+  color: var(--navy);
 }
 
 .loginSubmitBtn {
   background-color: var(--lime);
   border: solid 2px var(--green);
-  color: var(--white);
+  color: var(--navy);
   border-radius: 5px;
   margin: 1rem;
 }

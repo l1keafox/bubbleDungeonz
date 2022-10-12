@@ -35,7 +35,11 @@ type Query{
     channels: [Channel]
     channel(channelId: ID!): Channel
     channelMessages(channelId:ID!,limit:Int): Channel
+<<<<<<< HEAD
     memberChannels(userId:ID!):[Channel]
+=======
+    me: User
+>>>>>>> 99491f6e3c018c3482a22d2c3e97f76e3525b2b9
 }
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth

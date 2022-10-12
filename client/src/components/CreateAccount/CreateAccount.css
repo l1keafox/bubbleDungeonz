@@ -1,4 +1,28 @@
+@import "../../utils/colors.css";
 .createUserForm {
-  margin: 25%;
+  padding: 1rem;
+  width: 30rem;
+  height: auto;
+  border: 15px inset var(--orange3);
 }
-/* .form input {} */
+.form-control {
+  display: flexbox;
+  margin: 2%;
+  font-family: "play";
+  font-size: large;
+  color: var(--lime);
+  border: 2px solid var(--black);
+}
+.submitButton {
+  margin-left: 75%;
+  font-family: "Press Start 2P";
+  font-size: medium;
+  background-color: var(--green);
+  border-radius: 20%;
+}
+.input-group-text {
+  font-family: "Press Start 2P";
+  background-color: var(--green);
+  font-size: x-small;
+  border-radius: 20%;
+}

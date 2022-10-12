@@ -3,7 +3,8 @@
 .homeViewContainer {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-evenly;
+  margin-top: 6rem;
   padding: 2rem;
 }

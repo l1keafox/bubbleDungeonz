@@ -18,4 +18,37 @@ class Bubble{
     }
   }
 
-  
+let bubble = {
+    next:0, // when the next bubble is spawned.
+    maxTimer: 40, // what next is set too when it hits 0
+    group: [], // this is what holds the bubbles.
+}
+
+module.exports = {
+    name: function(){
+        return "bubbles";
+    },
+    updateFrame: function(){
+        bubble.next--;
+        if(bubble.next <= 0){
+            bubble.next = bubble.maxTimer;
+            let newBubble = new Bubble();
+            bubble.group.push(newBubble);
+        }
+        let index = bubble.group.length;
+        while(index--){
+          // we go backwards cause I want too :P But in seriously
+          // when splicing an array going backwards prevents some issues of next in array
+          let bubb = bubble.group[index];
+          bubb.update();
+           if(bubble.group[index].y <= -10){
+            bubble.group.splice(index,1);
+             break;
+           }
+        }
+      
+    },
+    emitData: function(){
+        return bubble.group;
+    }
+}

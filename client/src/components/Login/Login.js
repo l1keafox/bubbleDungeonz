@@ -20,6 +20,7 @@ const Login = (props) => {
       ...formState,
       [name]: value,
     });
+
   };
 
   // submit form

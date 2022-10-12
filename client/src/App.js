@@ -8,6 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
@@ -41,6 +42,7 @@ const client = new ApolloClient({
 });
 
 function App() {
+
   return (
     <Router>
       <ApolloProvider client={client}>
@@ -53,7 +55,7 @@ function App() {
             path="/"
             element={
               <ExistingUserProvider>
-                <HomePage />
+                <HomePage /> 
               </ExistingUserProvider>
             }
           />

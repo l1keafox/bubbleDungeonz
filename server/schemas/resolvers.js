@@ -81,7 +81,7 @@ const resolvers = {
         },
 
     },
-  
+    
     Mutation: {
         //creates a channel, only needs channel name
         createChannel: async (parent,{channelName}) => {

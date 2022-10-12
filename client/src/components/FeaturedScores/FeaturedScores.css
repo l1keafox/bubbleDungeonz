@@ -1,0 +1,22 @@
+@import "../../utils/colors.css";
+
+.featuredScoresDiv {
+  width: 16rem;
+  border: solid 1px var(--black);
+  border-radius: 5px;
+}
+
+.featuredGameTitle {
+  color: var(--orange3);
+  font-weight: bold;
+  text-align: center;
+}
+
+.featuredScoresList {
+  text-align: center;
+}
+
+.displayedUsername {
+  color: var(--teal2);
+  font-weight: bold;
+}

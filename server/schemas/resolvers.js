@@ -60,7 +60,7 @@ const resolvers = {
         //returns the current user id, must be logged in for it to work.
         me: async (parent, args, context) => {
           if (context.user) {
-            return Profile.findOne({ _id: context.user._id });
+            return User.findOne({ _id: context.user._id });
           }
           throw new AuthenticationError('You need to be logged in!');
         },

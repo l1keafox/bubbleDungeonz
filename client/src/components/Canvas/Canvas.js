@@ -8,7 +8,6 @@ const Canvas = () => {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     const newSocket = io(`http://${window.location.hostname}:3002`);
-    console.log(newSocket, "Creating?");
     setSocket(newSocket);
     return () => newSocket.close();
   }, []);
@@ -30,7 +29,7 @@ const Canvas = () => {
       GAME.currentWidth = GAME.WIDTH;
       GAME.currentHeight = GAME.HEIGHT;
       GAME.canvas = canvas.current;
-      console.log(canvas.current, "Init canvas?");
+      
       GAME.canvas.width = GAME.WIDTH;
       GAME.canvas.height = GAME.HEIGHT;
 
@@ -106,9 +105,7 @@ const Canvas = () => {
   const canvas = useRef(null);
 
   useEffect(() => {
-//    console.log(socket, "Testing");
     if (socket) {
-      console.log("connection made: init canvas");
       GAME.init();
       socket.on("bubbles", (obj) => {
         GAME.render(obj);
@@ -124,7 +121,6 @@ const Canvas = () => {
           this.x = data.pageX - offsetLeft;
           this.y = data.pageY - offsetTop;
           this.tapped = true;
-          console.log("Tapped!", { x: this.x, y: this.y });
           socket.emit("click", { x: this.x, y: this.y });
           GAME.Draw.circle(this.x, this.y, 10, "red");
         },

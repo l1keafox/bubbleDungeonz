@@ -45,6 +45,7 @@ type Mutation {
     addMessageToChannel(channelId:ID!,messageText:String!):Channel
     removeUser: User
     addChannelParticipant(channelId:ID!,userId:ID!):Channel
+    authUserSession(userId:ID!):User
   }
 `;
 

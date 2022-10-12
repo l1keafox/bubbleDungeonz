@@ -33,3 +33,15 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
     }
   }
 `;
+
+export const AUTH_USER_SESSION = gql`
+  mutation authSessId(userId:ID!){
+    authUserSession(userId:ID!){
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;

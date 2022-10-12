@@ -140,6 +140,11 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
           },
+        authUserSession:async(parent,args,context) =>{
+          
+          console.log(context.user);
+        }
+
   },
 }
 module.exports = resolvers;

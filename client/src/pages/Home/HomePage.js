@@ -7,17 +7,16 @@ import FeaturedScores from "../../components/FeaturedScores/FeaturedScores.js";
 
 
 import { useExistingUserContext } from "../../utils/existingUserContext";
-import { loggedIn } from "../../utils/auth";
+import auth from "../../utils/auth";
 
 function HomePage() {
   const { existingUser } = useExistingUserContext();
-
   return (
     <div className="homeViewContainer">
       {/* scoreboard component - currently just placeholder */}
       <FeaturedScores />
       {/* conditionally renders <Login /> versus <CreateUser /> based on global context variable */}
-      {existingUser ? <Login /> : <CreateAccount />}
+      {auth.loggedIn() ? <div /> :  <Login />}
     </div>
   );
 }

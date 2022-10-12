@@ -4,12 +4,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--navy);
+  /* background-color: var(--navy); */
   padding: 1rem;
+  font-family: "Press Start 2P";
 }
 
 .headerTitle {
-  color: var(--yellow);
+  color: var(--fuscia);
   font-size: 2rem;
   margin-left: 1.5rem;
 }

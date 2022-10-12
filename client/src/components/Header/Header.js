@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaHamburger } from "react-icons/fa";
 
@@ -12,9 +13,13 @@ function Header() {
     <div className="headerDiv">
       <h1 className="headerTitle">App Title</h1>
       <ul className="navBar">
-        <li className="navLink">Home</li>
-        <li className="navLink">Games</li>
-        <li className="navLink">{logInOrOut}</li>
+        <Link to={{ pathname: "/" }} className="navLink">
+          <li>Home</li>
+        </Link>
+        <Link to={{ pathname: "/games" }} className="navLink">
+          <li>Games</li>
+        </Link>
+        <li className="navLink hidden">Logout</li>
         <li className="navLink">
           <FaHamburger></FaHamburger>
         </li>

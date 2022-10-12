@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
+import GamesPage from "./pages/Games/GamesPage.js";
 import ExistingUserProvider from "./utils/existingUserContext";
 
 // Construct our main GraphQL API endpoint
@@ -50,6 +51,7 @@ function App() {
               </ExistingUserProvider>
             }
           />
+          <Route path="/games" element={<GamesPage />} />
           {/* <div className="flex-column justify-flex-start min-100-vh">
           <div className="container">
             <CreateAccount />

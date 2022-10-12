@@ -1,11 +1,27 @@
 const db = require("../config/connection");
-const { User } = require("../models");
+const { User,Channel } = require("../models");
 const userSeeds = require("./userSeeds.json");
+const chatSeeds = require("./chatSeeds.json");
 
 db.once("open", async () => {
 	try {
 		await User.deleteMany({});
 		await User.create(userSeeds);
+		await Channel.deleteMany({});
+		await Channel.create(chatSeeds);
+
+		let users = await User.find();
+		let channels = await Channel.find();
+		console.log(channels);
+		console.log(users);
+		for(const user of users){
+			const task = await Channel.findOneAndUpdate(
+				{_id: channels[0]._id},
+				{ $addToSet: { participants: {_id:user._id} } },
+				{ runValidators: true, new: true }
+			  );
+		}
+		
 
 		console.log("all done!");
 		process.exit(0);

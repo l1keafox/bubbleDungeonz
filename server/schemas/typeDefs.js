@@ -7,7 +7,7 @@ const typeDefs = gql`
 		_id: ID
 		username: String
 		email: String
-		setting: Settings
+		settings: Settings
 		friends: [User]
 	}
 
@@ -60,6 +60,7 @@ const typeDefs = gql`
 		channels: [Channel]
 		channel(channelId: ID!): Channel
 		channelMessages(channelId: ID!, limit: Int): Channel
+		me: User
 		scoreCards: [ScoreCard]
 		scoreCard(scoreCardId: ID!): ScoreCard
 	}
@@ -78,5 +79,4 @@ const typeDefs = gql`
 		addScoreToScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
 	}
 `;
-
 module.exports = typeDefs;

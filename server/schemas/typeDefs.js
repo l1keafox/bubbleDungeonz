@@ -24,11 +24,17 @@ const typeDefs = gql`
 		username: String
 	}
 
-	type Score {
+	type ScoreCard {
 		_id: ID
 		game: String
-		scores: [Score]
+		scores: [{user: User, score: Int, createdAt: Date}]
 	}
+
+    type Setting {
+        _id: ID
+        user: User
+
+    }
 
 	type Auth {
 		token: ID!
@@ -41,8 +47,8 @@ const typeDefs = gql`
 		channels: [Channel]
 		channel(channelId: ID!): Channel
 		channelMessages(channelId: ID!, limit: Int): Channel
-		scores: [Score]
-		score(scoreId: ID!): Score
+		scoreCards: [ScoreCard]
+		scoreCard(scoreCardId: ID!): ScoreCard
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth

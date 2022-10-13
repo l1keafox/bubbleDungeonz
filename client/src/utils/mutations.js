@@ -38,7 +38,6 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
     }
   }
 `;
-<<<<<<< HEAD
 
 export const CREATE_CHANNEL = gql`
   mutation Mutation($channelName: String!) {
@@ -61,7 +60,9 @@ export const LEAVE_CHANNEL = gql`
     leaveChannel(channelId: $channelId) {
       _id
       channelName
-=======
+    }
+  }
+`;
 export const UPDATE_SETTINGS = gql`
   mutation updateSettings(
     $userId: ID!
@@ -82,7 +83,6 @@ export const UPDATE_SETTINGS = gql`
       header: $header
     ) {
       _id
->>>>>>> cc961ef36e2fdd58a511c4fbbb449c7aef219df4
     }
   }
 `;

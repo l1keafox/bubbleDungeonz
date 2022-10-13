@@ -49,6 +49,11 @@ module.exports = {
               );
               if (findOne.length) {
                 let scorer = findOne[0];
+                /* scorer has these values;
+                username: username,
+        				id:  context.user._id,
+        				sessionId:args.sessionId
+                */
                 if (scorer.points === undefined) {
                   scorer.points = 0;
                 }
@@ -56,16 +61,8 @@ module.exports = {
                 console.log(
                   `point scored by: ${scorer.username} has now ${scorer.points}, id:${scorer.id}`
                 );
+
               }
-              // if (currentKey && currentKey[socket.id]) {
-              //   if (currentKey[socket.id].points == undefined) {
-              //     currentKey[socket.id].points = 0;
-              //   }
-              //   // Import model from graphQL
-              //   // UserID currentKey[socket.id].id
-              //   // id  - id via graphql
-              //   // name - username in graphql
-              //   // sessionID - uniqueID per socket.io session
 
               bubble.group.splice(i, 1);
             }

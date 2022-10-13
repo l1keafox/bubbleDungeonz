@@ -1,8 +1,10 @@
 [    {
     "title": "Bubble Trouble",
-    "description": "How many bubbles can you pop before the time is up?"
+    "description": "How many bubbles can you pop before the time is up?",
+    "type": "bubbles"
   },
   {
     "title": "Double Trouble",
-    "description": "Bubbles AGAIN!?!?"
+    "description": "Bubbles AGAIN!?!?",
+    "type": "bubbles"
   }]

@@ -63,7 +63,7 @@ const typeDefs = gql`
 		me: User
 		memberChannels: [Channel]
 		gameCards: [GameCard]
-		gameCard(GameCardId: ID!): ScoreCard
+		gameCard(GameCardId: ID!): GameCard
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth

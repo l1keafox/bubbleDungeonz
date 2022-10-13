@@ -9,6 +9,7 @@ const scoreCardSchema = new Schema({
 	scores: [Score],
 	description: {
 		type: String,
+		require: true,
 	},
 });
 

@@ -33,13 +33,19 @@ function FeaturedScores() {
   // card for featured game
   const featuredGameCard = data.filter((gameCard) => id === gameCard.id);
 
-  // array of scores from featured game in descending order
-  const highScoresArray = featuredGameCard.scores
+  // array of all scores from featured game in descending order
+  const allScoresArray = featuredGameCard.scores
     .map((score) => ({
       score: score.score,
       username: score.user.username,
     }))
-    .sort();
+    .sort(score);
+
+  // reduced to 5 scores
+  let highScoresArray = [];
+  for (var i = 0; i < 5; i++) {
+    highScoresArray.push(allScoresArray[i]);
+  }
 
   function populateHighScores() {
     if (loading) {
@@ -47,6 +53,13 @@ function FeaturedScores() {
     } else {
       return;
       // list items of username - score
+      // map over highScoresArray
+      highScoresArray.map((score) => (
+        <div className="featuredScore">
+          <span className="featuredUsername">{score.username}</span> -{" "}
+          {score.score}
+        </div>
+      ));
     }
   }
 

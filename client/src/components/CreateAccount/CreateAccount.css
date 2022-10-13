@@ -12,11 +12,12 @@
   font-family: "Press Start 2P";
   width: 30rem;
   height: auto;
-  border: 15px inset var(--fuscia);
+  border-top: 15px inset var(--fuscia);
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(var(--navy) 0%, var(--purple) 100%);
+  background-image: linear-gradient(var(--red) 0%, var(--purple) 100%);
   box-shadow: 3px 3px 3px 3px var(--navy);
 }
 
@@ -53,7 +54,7 @@
 .inputGroupText {
   font-family: "Press Start 2P";
   /* background-color: var(--navy); */
-  color: var(--orange1);
+  color: var(--white);
   width: 95%;
   /* font-size: x-small; */
   border-radius: 5px;

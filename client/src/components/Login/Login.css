@@ -9,8 +9,9 @@
   width: 30rem;
   height: auto;
   /* background: transparent; */
-  background-image: linear-gradient(var(--navy) 0%, var(--purple) 100%);
-  border: 15px inset var(--fuscia);
+  background-image: linear-gradient(var(--darkgreen) 0%, var(--lime) 100%);
+  border-top: 15px inset var(--fuscia);
+  border-radius: 5px;
   /* border-radius: 5px; */
   box-shadow: 3px 3px 3px 3px var(--navy);
 }

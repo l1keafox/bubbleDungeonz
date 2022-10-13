@@ -161,10 +161,13 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd) {
+    console.log(socketd);
     try {
+      console.log(socketd);
       const {} = await authUserSession({
         variables: { sessionId: socketd },
       });
+      console.log(socketd);
       //...formState
     } catch (err) {
       console.log(err);

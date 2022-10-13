@@ -39,6 +39,8 @@ function GamesMenu() {
             <div className="cardBody">
               <h5 className="cardTitle">{game.title}</h5>
               <p className="cardText">{game.description}</p>
+
+              {auth.loggedIn() ? 
               <Link to="/gameplay">
                 <a
                   name={game.title}
@@ -50,7 +52,10 @@ function GamesMenu() {
                 >
                   Play <BsJoystick></BsJoystick>
                 </a>
-              </Link>
+              </Link> :
+              <div />}
+
+
               {auth.loggedIn() ? <ChatList /> : <div />}
             </div>
           </div>

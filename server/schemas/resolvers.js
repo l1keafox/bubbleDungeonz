@@ -89,12 +89,18 @@ const resolvers = {
 			});
 		},
 		scoreCard: async (parents, { scoreCardId }) => {
-			return ScoreCard.findById({ _id: scoreCardId });
+			return ScoreCard.findById({ _id: scoreCardId }).populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
+			});
 		},
 		topScores: async (parent, { scoreCardId }) => {
 			//Slices messages sub-field on provided number (-1 to ensure latest messages are included)
 			let highScores = await ScoreCard.findById(scoreCardId, {
-				scores: { $sort: { score: -1 }, $slice: ["$scores", 10] },
+				scores: { $sort: { score: -1 }, $slice: 10 },
+			}).populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
 			});
 			if (!highScores) {
 				//todo add error to throw.
@@ -138,18 +144,17 @@ const resolvers = {
 		},
 		//adds a user to the database, used on signup.
 		addUser: async (parent, { username, email, password }) => {
-
 			const user = await User.create({ username, email, password });
 			let channels = await Channel.find();
 			//this wont scale. Need to write search for global, or better yet need to hard code single global channel with fixed id
-			for(const channel of channels){
-				if(channel.channelName == "Global"){
+			for (const channel of channels) {
+				if (channel.channelName == "Global") {
 					const task = await Channel.findOneAndUpdate(
-						{_id: channel._id},
-						{ $addToSet: { participants: {_id:user._id} } },
+						{ _id: channel._id },
+						{ $addToSet: { participants: { _id: user._id } } },
 						{ runValidators: true, new: true }
 					);
-				}	
+				}
 			}
 			const token = signToken(user);
 			return { token, user };

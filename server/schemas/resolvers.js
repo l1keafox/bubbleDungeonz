@@ -142,6 +142,7 @@ const resolvers = {
 					);
 				}
 			}
+			console.log(user,"token?");
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -157,6 +158,7 @@ const resolvers = {
 			if (!correctPw) {
 				throw new AuthenticationError("Incorrect password!");
 			}
+			console.log(user,"token?");
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -168,6 +170,7 @@ const resolvers = {
 		},
 
 		authUserSession: async (parent, args, context) => {
+			console.log(context.user._id,args.sessionId);
 			const { username } = await User.findById({ _id: context.user._id });
 			// now we send to the engine stuff but I don't really like how this is formatted.
 			// we might want to do this an different way, I'll work on it later.

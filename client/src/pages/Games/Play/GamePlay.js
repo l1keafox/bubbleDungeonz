@@ -19,13 +19,25 @@ function GamePlay() {
       break;
   }
   return (
-    <>
+    <div className="gamePlayContainer">
       <div className="canvasContainer">
         <h1>{gameState}</h1>
         {game}
       </div>
+      <div className="highScoreContainer">
+        <div className="featuredScoresDiv">
+          <div className="cardBody">
+            <h5 className="featuredGame card-title">{gameState} High Scores</h5>
+          </div>
+          <div className="featuredScoresList">
+            <div className="featuredScore">
+              <span className="featuredUsername">username</span> - score
+            </div>
+          </div>
+        </div>
+      </div>
       {auth.loggedIn() ? <ChatList /> : <div />}
-    </>
+    </div>
   );
 }
 

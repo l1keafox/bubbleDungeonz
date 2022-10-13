@@ -1,11 +1,16 @@
 @import "../../../utils/colors.css";
 
+/* container for canvas and high scores card */
+.gamePlayContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 /* container of Canvas */
 .canvasContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}

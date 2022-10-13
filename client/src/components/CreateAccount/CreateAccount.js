@@ -3,14 +3,18 @@ import React, { useState } from "react";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import { BsJoystick } from "react-icons/bs";
 import { IoMdRocket } from "react-icons/io";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 function CreateAccount() {
-  const [userName, setUserName] = useState("");
-  const [passWord, setPassWord] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [reTypePassWord, setReTypePassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { toggleExistingUser } = useExistingUserContext();
+  const [signUp, { error, data }] = useMutation(ADD_USER);
 
   const handleInputChange = (e) => {
     const { target } = e;
@@ -18,9 +22,9 @@ function CreateAccount() {
     const inputValue = target.value;
 
     if (inputType === "userName") {
-      setUserName(inputValue);
+      setUsername(inputValue);
     } else if (inputType === "passWord") {
-      setPassWord(inputValue);
+      setPassword(inputValue);
     } else if (inputType === "reTypePassWord") {
       setReTypePassword(inputValue);
     } else if (inputType === "email") {
@@ -28,17 +32,26 @@ function CreateAccount() {
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (passWord !== reTypePassWord) {
+    if (password !== reTypePassWord) {
       setErrorMessage("Womp Womp passwords do not match.. Try Again!");
     }
-    if (!userName) {
+    if (!username) {
       setErrorMessage("Username can not be blank.");
     }
-    setUserName("");
-    setPassWord("");
+    try{
+      const { data } = await signUp({
+        variables: { username,email,password },
+      });
+      Auth.login(data.addUser.token);
+    }catch (e){
+      console.error(e);
+    }
+
+    setUsername("");
+    setPassword("");
     setEmail("");
     setReTypePassword("");
   };
@@ -53,7 +66,7 @@ function CreateAccount() {
           <input
             name="userName"
             type="text"
-            value={userName}
+            value={username}
             className="createUserFormInput"
             onChange={handleInputChange}
             placeholder="Username"
@@ -65,7 +78,7 @@ function CreateAccount() {
           <input
             name="passWord"
             type="password"
-            value={passWord}
+            value={password}
             className="createUserFormInput"
             onChange={handleInputChange}
             placeholder="********"

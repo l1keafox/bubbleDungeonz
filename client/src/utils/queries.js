@@ -1,23 +1,23 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_USERS = gql`
-    query allUsers {
-        users{
-            _id
-            username
-            email
-        }
+  query allUsers {
+    users {
+      _id
+      username
+      email
     }
+  }
 `;
 
 export const QUERY_SINGLE_USER = gql`
-    query singleUser($userId:ID!){
-        user(userId:$userId){
-            _id
-            username
-            email
-        }
+  query singleUser($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      username
+      email
     }
+  }
 `;
 
 export const GET_ALL_CHANNELS = gql`
@@ -50,14 +50,19 @@ export const GET_CHANNEL_MESSAGES = gql`
   }
 `;
 
-export const GET_SCORE_CARDS = gql`
-query Query {
-  scoreCards {
-    _id
-    game
-    scores {
-      
+export const GET_GAME_CARDS = gql`
+  query ScoreCards {
+    scoreCards {
+      _id
+      game
+      scores {
+        user {
+          username
+        }
+        score
+      }
     }
   }
-}
 `;
+// Landing Page - filter scores by value
+// Game Play Page - filter scores by username then value

@@ -1,12 +1,13 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
+
 import "./FeaturedScores.css";
 import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
-import {GET_SCORE_CARDS} from "./../../utils/queries";
-import { useQuery } from "@apollo/client";
+
+import { GET_GAME_CARDS } from "./../../utils/queries";
+
 function FeaturedScores() {
   let game = "Bubble Trouble";
-  const { loading, data } = useQuery(GET_SCORE_CARDS);
-  console.log(data,"datat?1");
   let users = [
     {
       username: "feat1",
@@ -21,6 +22,33 @@ function FeaturedScores() {
       highscore: 21000,
     },
   ];
+
+  // Query for all games
+  // Pick a game at random from the list
+  // let id = game.id
+
+  const { loading, data } = useQuery(GET_GAME_CARDS);
+  console.log(data, "datat?1");
+
+  // card for featured game
+  const featuredGameCard = data.filter((gameCard) => id === gameCard.id);
+
+  // array of scores from featured game in descending order
+  const highScoresArray = featuredGameCard.scores
+    .map((score) => ({
+      score: score.score,
+      username: score.user.username,
+    }))
+    .sort();
+
+  function populateHighScores() {
+    if (loading) {
+      return <p>loading</p>;
+    } else {
+      return;
+      // list items of username - score
+    }
+  }
 
   return (
     <div>

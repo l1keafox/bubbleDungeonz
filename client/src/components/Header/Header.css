@@ -7,6 +7,7 @@
   /* background-color: var(--navy); */
   padding: 1rem;
   font-family: "Press Start 2P";
+  z-index: 4;
 }
 
 .headerTitle {

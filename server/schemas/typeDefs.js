@@ -61,6 +61,7 @@ const typeDefs = gql`
 		memberChannels: [Channel]
 		scoreCards: [ScoreCard]
 		scoreCard(scoreCardId: ID!): ScoreCard
+		topScores(scoreCardId: ID!): ScoreCard
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
@@ -80,6 +81,10 @@ const typeDefs = gql`
 			chatWindow: String!
 			header: String!
 		): User
+		authUserSession(sessionId: ID!): User
+	}
+	type Subscription {
+		messageAdded(channelId: ID!): Channel
 	}
 `;
 module.exports = typeDefs;

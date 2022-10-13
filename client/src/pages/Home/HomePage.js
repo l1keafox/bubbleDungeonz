@@ -6,6 +6,7 @@ import CreateAccount from "../../components/CreateAccount/CreateAccount.js";
 import FeaturedScores from "../../components/FeaturedScores/FeaturedScores.js";
 import ChatList from "../../components/ChatList/ChatList.js";
 
+
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import auth from "../../utils/auth";
 

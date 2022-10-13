@@ -18,7 +18,11 @@ import CreateAccount from "./components/CreateAccount/CreateAccount";
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import GamePlay from "./pages/Games/Play/GamePlay.js";
 import ExistingUserProvider from "./utils/existingUserContext";
+
+import Settings from "./components/Settings/Settings";
+
 import GameContextProvider from "./utils/gameContext";
+
 
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
@@ -27,6 +31,7 @@ import { createClient } from 'graphql-ws';
 const wsLink = new GraphQLWsLink(createClient({
   url: 'ws://localhost:4000/subscriptions',
 }));
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

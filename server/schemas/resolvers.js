@@ -1,4 +1,4 @@
-const { User, Channel, ScoreCard } = require("../models");
+const { User, Channel, GameCard } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
@@ -82,14 +82,14 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
-		scoreCards: async () => {
-			return ScoreCard.find().populate({
+		gameCards: async () => {
+			return GameCard.find().populate({
 				path: "scores",
 				populate: { path: "user", model: "user" },
 			});
 		},
-		scoreCard: async (parents, { scoreCardId }) => {
-			return ScoreCard.findById({ _id: scoreCardId }).populate({
+		gameCard: async (parents, { gameCardId }) => {
+			return GameCard.findById({ _id: gameCardId }).populate({
 				path: "scores",
 				populate: { path: "user", model: "user" },
 			});
@@ -175,15 +175,14 @@ const resolvers = {
 				username: username,
 				id: context.user._id,
 			};
-			// console.log(username,"authicate",args.sessionId,SessionKey);
 		},
-		createScoreCard: async (parent, { game }) => {
-			const scoreCard = await ScoreCard.create({ game });
-			return scoreCard;
+		createGameCard: async (parent, { game }) => {
+			const gameCard = await GameCard.create({ game });
+			return gameCard;
 		},
-		addScoreToScoreCard: async (parent, { scoreCardId, score, userId }) => {
-			const newScore = await ScoreCard.findByIdAndUpdate(
-				{ _id: scoreCardId },
+		addScoreToGameCard: async (parent, { GameCardId, score, userId }) => {
+			const newScore = await GameCard.findByIdAndUpdate(
+				{ _id: gameCardId },
 				{
 					$addToSet: { scores: { user: userId, score: score } },
 				},
@@ -191,9 +190,9 @@ const resolvers = {
 			);
 			return newScore;
 		},
-		updateScoreOnScoreCard: async (parent, { scoreCardId, score, userId }) => {
-			const newScore = await ScoreCard.findByIdAndUpdate(
-				{ _id: scoreCardId, "scores.user": userId },
+		updateScoreOnGameCard: async (parent, { gameCardId, score, userId }) => {
+			const newScore = await GameCard.findByIdAndUpdate(
+				{ _id: gameCardId, "scores.user": userId },
 				{
 					$set: { "scores.0.score": score },
 				},

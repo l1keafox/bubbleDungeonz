@@ -1,5 +1,5 @@
 const { gql } = require("apollo-server-express");
-const { User, Channel, ScoreCard, Settings } = require("./../models");
+const { User, Channel, GameCard, Settings } = require("./../models");
 
 const typeDefs = gql`
 	scalar Date
@@ -7,6 +7,8 @@ const typeDefs = gql`
 		_id: ID
 		username: String
 		email: String
+		settings: Settings
+		friends: [User]
 	}
 
 	type Settings {
@@ -33,10 +35,11 @@ const typeDefs = gql`
 		createdAt: Date
 		username: String
 	}
-	type ScoreCard {
+	type GameCard {
 		_id: ID
-		game: String
+		title: String
 		scores: [Score]
+		description: String
 	}
 
 	type Score {
@@ -59,8 +62,8 @@ const typeDefs = gql`
 		channelMessages(channelId: ID!, limit: Int): Channel
 		me: User
 		memberChannels: [Channel]
-		scoreCards: [ScoreCard]
-		scoreCard(scoreCardId: ID!): ScoreCard
+		gameCards: [GameCard]
+		gameCard(GameCardId: ID!): GameCard
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
@@ -69,9 +72,9 @@ const typeDefs = gql`
 		addMessageToChannel(channelId: ID!, messageText: String!): Channel
 		removeUser: User
 		addChannelParticipant(channelId: ID!, userId: ID!): Channel
-		createScoreCard(game: String!): ScoreCard
-		addScoreToScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
-		updateScoreOnScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
+		createGameCard(title: String!): GameCard
+		addScoreToGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
+		updateScoreOnGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
 		updateSettings(
 			userId: ID!
 			screenTextColor: String!

@@ -24,37 +24,37 @@ function FeaturedScores() {
   ];
 
   // Query for all games
-  // Pick a game at random from the list
-  // let gameId = game.id
-
   const { loading, data } = useQuery(GET_GAME_CARDS);
-  console.log(data, "datat?1");
+  console.log(data);
 
-  // card for featured game
-  const featuredGameCard = data.filter((gameCard) => gameCard.id === gameId);
+  // Pick a game at random from the list
+  let featuredGame =
+    data.gameCards[Math.floor(Math.random() * data.gameCards.length)];
+  console.log(featuredGame);
 
   // array of all scores from featured game in descending order
-  const allScoresArray = featuredGameCard.scores
+  const allScoresArray = featuredGame.scores
     .map((score) => ({
-      score: score.score,
+      score: score.scores,
       username: score.user.username,
     }))
-    .sort(score);
+    .sort();
+  console.log(allScoresArray); //array
 
   // reduced to 5 scores
   let highScoresArray = [];
   for (var i = 0; i < 5; i++) {
     highScoresArray.push(allScoresArray[i]);
   }
+  console.log(highScoresArray);
 
   function populateHighScores() {
     if (loading) {
       return <p>loading</p>;
     } else {
-      return;
       // list items of username - score
       // map over highScoresArray
-      highScoresArray.map((score) => (
+      return highScoresArray.map((score) => (
         <div className="featuredScore">
           <span className="featuredUsername">{score.username}</span> -{" "}
           {score.score}
@@ -75,14 +75,7 @@ function FeaturedScores() {
           <h5 className="featuredGame card-title">Featured Game:</h5>
           <h5 className="featuredGameTitle card-title">{game}</h5>
         </div>
-        <div className="featuredScoresList">
-          {users.map((user) => (
-            <div className="featuredScore">
-              <span className="featuredUsername">{user.username}</span> -{" "}
-              {user.highscore}
-            </div>
-          ))}
-        </div>
+        <div className="featuredScoresList">{() => populateHighScores()}</div>
       </div>
     </div>
   );

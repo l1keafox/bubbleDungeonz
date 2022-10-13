@@ -51,15 +51,16 @@ export const GET_CHANNEL_MESSAGES = gql`
 `;
 
 export const GET_GAME_CARDS = gql`
-  query ScoreCards {
-    scoreCards {
+  query GameCards {
+    gameCards {
       _id
-      game
+      title
+      description
       scores {
+        score
         user {
           username
         }
-        score
       }
     }
   }

@@ -7,10 +7,12 @@ import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 
 export default function ChatList() {
-  const { loading, data } = useQuery(GET_USER_CHANNELS);
+  const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
   const [openChannelIds, setOpenChannelIds] = useState([]);
   const channels = data?.memberChannels || [];
-
+    useEffect(()=>{
+        startPolling(1000);
+    },[]);
   function channelOptions({ channels }) {
     if (loading) {
       return <p>loading</p>;

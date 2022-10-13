@@ -59,7 +59,10 @@ const resolvers = {
 			return Channel.findById({ _id: channelId });
 		},
 		getChannelByName:async (parent,{channelNameString}) =>{
-			return Channel.findOne({channelName:{channelNameString}})
+			console.log(channelNameString);
+			const channel = await Channel.findOne({channelName:channelNameString})
+			console.log(channel);
+			return channel;
 		},
 		//Gets channel with messages limited param limit value.
 		channelMessages: async (parent, { channelId, limit }) => {
@@ -142,6 +145,7 @@ const resolvers = {
 					{ _id: channelId },
 					{ $pull: { participants: { _id: context.user._id } } },
 				);
+				return channel;
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
@@ -152,6 +156,7 @@ const resolvers = {
 					{ $addToSet: { participants: { _id: context.user._id } } },
 				{ runValidators: true, new: true }
 				);
+				return channel;
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},

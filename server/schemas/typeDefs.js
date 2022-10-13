@@ -62,6 +62,7 @@ const typeDefs = gql`
 		scoreCards: [ScoreCard]
 		scoreCard(scoreCardId: ID!): ScoreCard
 		topScores(scoreCardId: ID!): ScoreCard
+		getChannelByName(channelNameString:String):Channel
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
@@ -72,6 +73,8 @@ const typeDefs = gql`
 		addChannelParticipant(channelId: ID!, userId: ID!): Channel
 		createScoreCard(game: String!): ScoreCard
 		addScoreToScoreCard(scoreCardId: ID!, score: Int, userId: ID!): ScoreCard
+		leaveChannel(channelId:String):Channel
+		joinChannel(channelId:String):Channel
 		updateSettings(
 			userId: ID!
 			screenTextColor: String!

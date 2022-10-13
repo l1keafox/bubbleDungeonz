@@ -54,7 +54,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Text Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -67,7 +67,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Chat Text Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -80,7 +80,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Background Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -93,7 +93,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Chat Window Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -106,13 +106,13 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Header Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
         <button
           type="button"
-          onClick={handleClose}
+          onClick={handleFormSubmit}
           className="save-button"
           data-bs-toggle="modal"
           data-bs-target="#launchModal"

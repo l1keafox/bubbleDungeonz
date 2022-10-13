@@ -3,6 +3,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
 const { SessionKey } = require("./../engine/");
+const { populate } = require("../models/User/User");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
 	name: "Date",
@@ -82,7 +83,10 @@ const resolvers = {
 			throw new AuthenticationError("You need to be logged in!");
 		},
 		scoreCards: async () => {
-			return ScoreCard.find();
+			return ScoreCard.find().populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
+			});
 		},
 		scoreCard: async (parents, { scoreCardId }) => {
 			return ScoreCard.findById({ _id: scoreCardId });
@@ -169,8 +173,29 @@ const resolvers = {
 				id: context.user._id,
 			};
 		},
-		createScoreCard: async (parent, args) => {
-			const scoreCard = await scoreCard.create;
+		createScoreCard: async (parent, { game }) => {
+			const scoreCard = await ScoreCard.create({ game });
+			return scoreCard;
+		},
+		addScoreToScoreCard: async (parent, { scoreCardId, score, userId }) => {
+			const newScore = await ScoreCard.findByIdAndUpdate(
+				{ _id: scoreCardId },
+				{
+					$addToSet: { scores: { user: userId, score: score } },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
+		},
+		updateScoreOnScoreCard: async (parent, { scoreCardId, score, userId }) => {
+			const newScore = await ScoreCard.findByIdAndUpdate(
+				{ _id: scoreCardId },
+				{
+					$addToSet: { scores: { user: userId, score: score } },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
 		},
 
 		updateSettings: async (

@@ -9,8 +9,8 @@ const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
-const Engine = require('./engine/engine');
-
+const {Engine} = require('./engine/');
+const Global = require('./utils/globals');
 
 const PORT = process.env.PORT || 3001;
 
@@ -64,3 +64,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
 // Call the async function to start the server
   startApolloServer(typeDefs, resolvers);
   Engine.init();
+  

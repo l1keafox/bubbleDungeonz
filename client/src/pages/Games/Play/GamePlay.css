@@ -1,0 +1,11 @@
+@import "../../../utils/colors.css";
+
+/* container of Canvas */
+.canvasContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  

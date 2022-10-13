@@ -1,25 +1,23 @@
 import React from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
-import { Link } from "react-router-dom";
-
-// import { useGame}  from "../../../utils/gameContext";
+import "./GamePlay.css";
 function GamePlay() {
   const { gameState } = useGameContext();
-  console.log(gameState);
+  // changeTitle(gameState);
   let game;
   switch (gameState) {
     case "Bubble Trouble":
       game = <Canvas />;
       break;
-      default:
+    default:
       game = <Canvas />;
       break;
   }
   return (
-    <div>
-      <h1>{gameState}</h1>
-      {game}
+    <div className="canvasContainer">
+      <h1>{gameState}</h1> 
+        {game}
     </div>
   );
 }

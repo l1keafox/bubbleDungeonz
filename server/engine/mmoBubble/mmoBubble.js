@@ -1,9 +1,10 @@
+
 class Bubble{
     constructor(){
       this.type = "bubble";
       this.r =  Math.floor( Math.random()*15)+6; // the radius of the bubble
       this.x = Math.floor( Math.random()*320);
-      this.y = 480; // make sure it starts off screen
+      this.y = 480 + rollDice(2,4) ; // make sure it starts off screen
       let rando = Math.floor( Math.random()*5)+1;
       this.speed = (Math.floor( Math.random()*7)+.05 * 0.001) + 0.2
       this.hits = rando;
@@ -23,11 +24,8 @@ let bubble = {
     maxTimer: 40, // what next is set too when it hits 0
     group: [], // this is what holds the bubbles.
 }
-function distance(x1,y1,x2,y2){
-  let a =Math.abs (x1-x2);
-  let b =Math.abs (y1-y2);
-  return Math.sqrt((a*a)+(b*b))
-}
+
+
 
 module.exports = {
     name: function(){
@@ -42,8 +40,16 @@ module.exports = {
           while(i--){
             let bubb = bubble.group[i];
             if(distance(bubb.x+bubb.r,bubb.y+bubb.r,msg.x,msg.y) < bubb.r){
+
               bubb.hits--;
+              const {sessionKey} = require("../engine");
               if(bubb.hits <= 0){
+                
+                if(sessionKey[socket.id].points == undefined){
+                  sessionKey[socket.id].points = 0;
+                }
+                sessionKey[socket.id].points += rollDice(1,6);
+                console.log(`point scored by: ${sessionKey[socket.id].username} has now ${sessionKey[socket.id].points }`);
                 bubble.group.splice(i,1);
               }
             }
@@ -52,12 +58,21 @@ module.exports = {
       });
     },
     updateFrame: function(){
+      const Engine = require("../engine");
         bubble.next--;
         if(bubble.next <= 0){
             bubble.next = bubble.maxTimer;
             let newBubble = new Bubble();
             bubble.group.push(newBubble);
         }
+        if(bubble.group.length === 0){
+          let randomCount = Math.floor(Math.random()*15)+10;
+          while(randomCount--){
+            let newBubble = new Bubble();
+            bubble.group.push(newBubble);
+          }
+        }
+
         let index = bubble.group.length;
         while(index--){
           // we go backwards cause I want too :P But in seriously

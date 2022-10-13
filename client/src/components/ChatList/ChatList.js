@@ -1,15 +1,39 @@
 import "./ChatList.css";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_USER_CHANNELS, GET_ALL_CHANNELS } from "../../utils/queries";
+import { GET_USER_CHANNELS, GET_ALL_CHANNELS, GET_CHANNEL_BY_NAME } from "../../utils/queries";
+import { CREATE_CHANNEL,JOIN_CHANNEL,LEAVE_CHANNEL } from "../../utils/mutations.js";
 import ChatWindow from "../ChatWindow/ChatWindow";
 import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
+import { useGameContext } from "../../utils/gameContext";
 
 export default function ChatList() {
   const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
   const [openChannelIds, setOpenChannelIds] = useState([]);
+  const context = useGameContext();
+  if(context){
+    console.log("in game");
+    const gameState = context?.gameState() || "Global"
+  }else{
+    console.log("out of game");
+  }
+  
+//   if(){
+//     const { gameState } = useGameContext();
+//     const channelNameString=gameState;
+//     let { channelLoading, channelData } = useQuery(GET_CHANNEL_BY_NAME,{variables:{channelNameString}});
+//   }
+ 
   const channels = data?.memberChannels || [];
+  
+  
+  const [create,{e,d}] = useMutation(CREATE_CHANNEL);
+  const [join,{joinError,joinData}] = useMutation(JOIN_CHANNEL);
+  const [leave,{leaveError,leaveData}]=useMutation(LEAVE_CHANNEL);
+
+  
+
     useEffect(()=>{
         startPolling(1000);
     },[]);

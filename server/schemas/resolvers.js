@@ -40,7 +40,10 @@ const resolvers = {
 			return Channel.find();
 		},
 		memberChannels: async (parent, args, context) => {
+
+		
 			if (context.user) {
+
 				let toBeReturned = [];
 				const channels = await Channel.find();
 				for (const item of channels) {
@@ -48,7 +51,6 @@ const resolvers = {
 						toBeReturned.push(item);
 					}
 				}
-				console.log(toBeReturned);
 				return toBeReturned;
 			} else {
 				throw new AuthenticationError("You need to be logged in!");
@@ -59,9 +61,7 @@ const resolvers = {
 			return Channel.findById({ _id: channelId });
 		},
 		getChannelByName:async (parent,{channelNameString}) =>{
-			console.log(channelNameString);
 			const channel = await Channel.findOne({channelName:channelNameString})
-			console.log(channel);
 			return channel;
 		},
 		//Gets channel with messages limited param limit value.
@@ -140,23 +140,39 @@ const resolvers = {
 		},
 		//context dependant leave and join channel resolvers make it easier for front end to add people to particular channels.
 		leaveChannel:async (parent,{channelId},context)=>{
+			console.log("attempting to leave channel");
+			console.log(channelId);
 			if(context.user){
+				console.log(context.user);
+				const userId = context.user._id;
+				const hold = await Channel.findById({ _id: channelId });
+				let participants = hold.participants;
+				const index=participants.indexOf(userId);
+				if(index>-1){
+					participants.splice(index,1);
+				}
 				const channel = await Channel.findOneAndUpdate(
 					{ _id: channelId },
-					{ $pull: { participants: { _id: context.user._id } } },
+					{ participants },
 				);
 				return channel;
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
 		joinChannel:async (parent,{channelId},context)=>{
+			console.log("joining channel")
 			if(context.user){
-				const channel = await Channel.findOneAndUpdate(
+				console.log(channelId);
+				console.log("User id "+context.user._id)
+				
+				const userId = context.user._id;
+				const task = await Channel.findOneAndUpdate(
 					{ _id: channelId },
-					{ $addToSet: { participants: { _id: context.user._id } } },
-				{ runValidators: true, new: true }
+					{ $addToSet: { participants: { _id: userId } } },
+					{ runValidators: true, new: true }
 				);
-				return channel;
+				console.log(task);
+				return task;
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},

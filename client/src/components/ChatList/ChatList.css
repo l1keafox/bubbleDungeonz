@@ -1,1 +1,25 @@
-aside { float:left; }
+@import "../../utils/colors.css";
+
+/* styling for aside container */
+.chatAside {
+  background-color: var(--orange1);
+  width: 20rem;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+
+/* styling for the channel tabs at the top of the chat */
+.chatChannelsList {
+  font-family: "Press Start 2p";
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+}
+
+.channelLink {
+  border: solid 2px white;
+  color: var(--white);
+  width: 40%;
+}

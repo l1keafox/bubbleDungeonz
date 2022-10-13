@@ -23,6 +23,17 @@
   font-size: 0.6rem;
 }
 
+.collapseChatBtn {
+  color: var(--lime);
+  margin: 0.4rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.collapseChatBtn:hover {
+  text-shadow: 0 0 10px var(--teal1), 0 0 15px var(--teal1), 0 0 30px;
+}
+
 .channelLink {
   cursor: pointer;
   display: flex;

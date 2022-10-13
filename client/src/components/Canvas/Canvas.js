@@ -7,6 +7,20 @@ import bubble from "./../Canvas/bubble.PNG";
 import io from "socket.io-client";
 import color from "./../../utils/colors.css";
 import auth from "./../../utils/auth";
+
+const requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    }
+  );
+})();
+
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
   const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
@@ -27,7 +41,8 @@ const Canvas = () => {
     currentHeight: null,
     canvas: null, // canvas is the element
     ctx: null, // ctx is 2d rendering drawing enginge https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
-
+    localCache: [],
+    localObjects: null,
     init: function () {
       // the proportion of width to height
       GAME.RATIO = GAME.WIDTH / GAME.HEIGHT;
@@ -47,13 +62,58 @@ const Canvas = () => {
       GAME.canvas.style.width = GAME.currentWidth + "px";
       GAME.canvas.style.height = GAME.currentHeight + "px";
     },
-    render: function (objects) {
+    loop:function(){
+      GAME.render();
+      requestAnimFrame(GAME.loop);
+    },
+
+    render: function () {
+      const gameObjects = GAME.localCache;
       GAME.Draw.rect(0, 0, GAME.WIDTH, GAME.HEIGHT, "#036");
 
       // cycle through all entities and render to canvas
-      if (objects) {
-        for (let gameObj of objects) {
+      if (gameObjects) {
+        for (let gameObj of gameObjects) {
           GAME.Draw.img(bubble, gameObj.x, gameObj.y, gameObj.r, gameObj.r);
+        }
+      }
+
+
+      // Now we have localStuff - this isn't shown to everyone only too the user.
+      // So this will have clicks for now.
+      if(!GAME.localObjects) GAME.localObjects = [];
+//      console.log(GAME.localObjects.length, "is our local");
+      let index = GAME.localObjects.length;
+      while(index--){
+      //for(let localObj of GAME.localObjects){
+        const localObj = GAME.localObjects[index];
+        switch(localObj.type){
+          case "clickRipple":
+            // This needs x and y from the click
+            // So the object radius start 0 
+            // and it's opacity starts at 100 and lowers.
+            // {type:"clickRipple", x: this.x, y: this.y}
+              if(localObj.radius === undefined){
+                localObj.radius = 1;
+              }
+              if(localObj.opacity === undefined){
+                localObj.opacity = 100;
+              }
+              if(localObj.framesLeft === undefined){
+                localObj.framesLeft = 25;
+              }
+              
+              if(localObj.framesLeft){
+                localObj.framesLeft--;
+                GAME.Draw.circle(localObj.x, localObj.y, parseInt( localObj.radius ),"white");
+                localObj.radius += 1;
+              }else {
+                GAME.localObjects.splice(index,1);
+              }
+          break;
+          default:
+
+          break;
         }
       }
     },
@@ -79,8 +139,9 @@ const Canvas = () => {
         GAME.ctx.fillStyle = col;
         GAME.ctx.beginPath();
         GAME.ctx.arc(x + 5, y + 5, r, 0, Math.PI * 2, true);
+        GAME.ctx.stroke();
         GAME.ctx.closePath();
-        GAME.ctx.fill();
+        // GAME.ctx.fill();
       },
 
       text: function (string, x, y, size, col) {
@@ -109,8 +170,10 @@ const Canvas = () => {
 
         GAME.init();
         socket.on("bubbles", (obj) => {
-          GAME.render(obj);
+          GAME.localCache = obj;
         });
+        requestAnimFrame(GAME.loop);
+        GAME.loop();
         let Input = {
           x: 0,
           y: 0,
@@ -121,15 +184,24 @@ const Canvas = () => {
               offsetLeft = GAME.canvas.offsetLeft;
             this.x = data.pageX - offsetLeft;
             this.y = data.pageY - offsetTop;
+            console.log(this.x , data.pageX , offsetLeft );
+            console.log(this.y , data.pageY , offsetTop );
+            
             this.tapped = true;
+            if( !GAME.localObjects ){
+              GAME.localObjects = [];
+            }
+            GAME.localObjects.push({type:"clickRipple", x: this.x, y: this.y});
+
             socket.emit("click", { x: this.x, y: this.y });
-            GAME.Draw.circle(this.x, this.y, 10, "red");
+
           },
         };
         // listen for clicks
         GAME.canvas.addEventListener(
           "click",
           function (e) {
+
             e.preventDefault();
             //  POP.Input.set(e);
             Input.set(e);

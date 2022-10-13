@@ -13,8 +13,6 @@ const {Engine} = require('./engine/');
 const Global = require('./utils/globals');
 
 const PORT = process.env.PORT || 3001;
-
-
 const app = express();
 
 const server = new ApolloServer({
@@ -24,7 +22,6 @@ const server = new ApolloServer({
 });
 
 // Socket.io Stuff 
-const ioPORT = process.env.PORT+1 || PORT+1; // The +1 to ioPort is questionable.
 const {initIo} = require('./socket/index'); // initIo to initalize the server, io later on just to grab the object.
 const ioServer = initIo(app); // initalizing io into serverIo
 
@@ -49,14 +46,11 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
   
   db.once('open', () => {
-    app.listen(PORT, () => {
+    ioServer.listen(PORT, () => { // IO port being opened.
+      
       console.log(`  -API> API server running on port ${PORT}!`);
       console.log(`  -GQL> Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
-    })
-    ioServer.listen(ioPORT, () => { // IO port being opened.
-      console.log(
-        `  -IO> Socket.io listening on http://localHost:${ioPORT}?`
-      );
+      console.log(`  -IO> Socket.io listening on http://localHost:${PORT}?`);
     });
   })
   };

@@ -67,7 +67,7 @@ function App() {
 
   return (
     <Router>
-      <Particles options={particlesOptions} init={particlesInit} />
+      {/* <Particles options={particlesOptions} init={particlesInit} /> */}
       <ApolloProvider client={client}>
         <Header />
         <Routes>

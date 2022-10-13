@@ -175,6 +175,7 @@ const resolvers = {
 				username: username,
 				id: context.user._id,
 			};
+			// console.log(username,"authicate",args.sessionId,SessionKey);
 		},
 		createScoreCard: async (parent, { game }) => {
 			const scoreCard = await ScoreCard.create({ game });

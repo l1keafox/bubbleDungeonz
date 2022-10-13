@@ -58,6 +58,10 @@
   border: solid 2px var(--darkgreen);
   border-radius: 0 0 0 5px;
 }
+.messageInput:focus {
+  background-image: linear-gradient(var(--teal1) 0%, var(--lime) 100%);
+  border: solid 2px var(--darkgreen);
+}
 
 .sendBtn {
   width: 20%;

@@ -2,7 +2,7 @@ const { User, Channel, ScoreCard } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
-
+const { SessionKey } = require("./../engine/");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
 	name: "Date",
@@ -140,7 +140,6 @@ const resolvers = {
 			if (!correctPw) {
 				throw new AuthenticationError("Incorrect password!");
 			}
-
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -150,6 +149,17 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
+
+    authUserSession: async (parent, args, context) => {
+      const {username} = await User.findById({ _id: context.user._id });
+      // now we send to the engine stuff but I don't really like how this is formatted.
+      // we might want to do this an different way, I'll work on it later.
+      SessionKey[args.sessionId] = {
+        "username":username,
+        "id":context.user._id
+      };
+    },
+
 		updateSettings: async (
 			parent,
 			{

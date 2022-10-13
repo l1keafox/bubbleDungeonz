@@ -21,6 +21,7 @@ const FramePerLoop = Math.round( 1000/FRAMES ); // number of cycles per second. 
 let engineIntervalID; // This will be assigned an id of a setInterval in the initEngine
 let gameData; // This gets declared as an object in initEngine.
 
+let userSessionsKey;
 
 const mmoBubble = require('./mmoBubble/mmoBubble');
 // Main loop
@@ -57,7 +58,25 @@ module.exports = {
         // in the background server.
         mmoBubble.init();
         this.addGame(mmoBubble);
+        userSessionsKey = {};
     },
+    /* The session key is an object that hold values via sessionId of players Example:
+        When thinking about 'highscore'
+        I guess we need to think beyond just joints this 'session'.
+    {
+        '#sessionIdRando': {
+            username:"likeafox",
+            id: 132414124214124,
+            points:64
+        }
+    }
+
+        this key currently gets set in Schemas/resolvers - when a player init's into a game and sends session.id over;
+    */
+    sessionKey : function(){
+        return userSessionsKey;
+    },
+
     // this returns various methods too
     addGame: (game,gameID) => {
         console.log("  -ENG> added GAME",game.name());
@@ -66,4 +85,7 @@ module.exports = {
         }
         gameData[gameID] = game;
     },
+
+
+
  };

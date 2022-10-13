@@ -25,13 +25,13 @@ function FeaturedScores() {
 
   // Query for all games
   // Pick a game at random from the list
-  // let id = game.id
+  // let gameId = game.id
 
   const { loading, data } = useQuery(GET_GAME_CARDS);
   console.log(data, "datat?1");
 
   // card for featured game
-  const featuredGameCard = data.filter((gameCard) => id === gameCard.id);
+  const featuredGameCard = data.filter((gameCard) => gameCard.id === gameId);
 
   // array of all scores from featured game in descending order
   const allScoresArray = featuredGameCard.scores

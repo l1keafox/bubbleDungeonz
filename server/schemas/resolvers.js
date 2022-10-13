@@ -3,6 +3,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
 const { SessionKey } = require("./../engine/");
+const { populate } = require("../models/User/User");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
 	name: "Date",
@@ -82,21 +83,16 @@ const resolvers = {
 			throw new AuthenticationError("You need to be logged in!");
 		},
 		scoreCards: async () => {
-			return ScoreCard.find();
+			return ScoreCard.find().populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
+			});
 		},
 		scoreCard: async (parents, { scoreCardId }) => {
-			return ScoreCard.findById({ _id: scoreCardId });
-		},
-		topScores: async (parent, { scoreCardId }) => {
-			//Slices messages sub-field on provided number (-1 to ensure latest messages are included)
-			let highScores = await ScoreCard.findById(scoreCardId, {
-				scores: { $sort: { score: -1 }, $slice: ["$scores", 10] },
+			return ScoreCard.findById({ _id: scoreCardId }).populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
 			});
-			if (!highScores) {
-				//todo add error to throw.
-				return;
-			}
-			return highScores;
 		},
 	},
 
@@ -134,18 +130,17 @@ const resolvers = {
 		},
 		//adds a user to the database, used on signup.
 		addUser: async (parent, { username, email, password }) => {
-
 			const user = await User.create({ username, email, password });
 			let channels = await Channel.find();
 			//this wont scale. Need to write search for global, or better yet need to hard code single global channel with fixed id
-			for(const channel of channels){
-				if(channel.channelName == "Global"){
+			for (const channel of channels) {
+				if (channel.channelName == "Global") {
 					const task = await Channel.findOneAndUpdate(
-						{_id: channel._id},
-						{ $addToSet: { participants: {_id:user._id} } },
+						{ _id: channel._id },
+						{ $addToSet: { participants: { _id: user._id } } },
 						{ runValidators: true, new: true }
 					);
-				}	
+				}
 			}
 			const token = signToken(user);
 			return { token, user };
@@ -181,8 +176,29 @@ const resolvers = {
 				id: context.user._id,
 			};
 		},
-		createScoreCard: async (parent, args) => {
-			const scoreCard = await scoreCard.create;
+		createScoreCard: async (parent, { game }) => {
+			const scoreCard = await ScoreCard.create({ game });
+			return scoreCard;
+		},
+		addScoreToScoreCard: async (parent, { scoreCardId, score, userId }) => {
+			const newScore = await ScoreCard.findByIdAndUpdate(
+				{ _id: scoreCardId },
+				{
+					$addToSet: { scores: { user: userId, score: score } },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
+		},
+		updateScoreOnScoreCard: async (parent, { scoreCardId, score, userId }) => {
+			const newScore = await ScoreCard.findByIdAndUpdate(
+				{ _id: scoreCardId },
+				{
+					$addToSet: { scores: { user: userId, score: score } },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
 		},
 
 		updateSettings: async (

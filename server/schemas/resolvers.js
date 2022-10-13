@@ -87,8 +87,18 @@ const resolvers = {
 		scoreCard: async (parents, { scoreCardId }) => {
 			return ScoreCard.findById({ _id: scoreCardId });
 		},
+		topScores: async (parent, { scoreCardId }) => {
+			//Slices messages sub-field on provided number (-1 to ensure latest messages are included)
+			let highScores = await ScoreCard.findById(scoreCardId, {
+				scores: { $sort: { score: -1 }, $slice: ["$scores", 10] },
+			});
+			if (!highScores) {
+				//todo add error to throw.
+				return;
+			}
+			return highScores;
+		},
 	},
-
 
 	Mutation: {
 		//creates a channel, only needs channel name
@@ -150,15 +160,18 @@ const resolvers = {
 			throw new AuthenticationError("You need to be logged in!");
 		},
 
-    authUserSession: async (parent, args, context) => {
-      const {username} = await User.findById({ _id: context.user._id });
-      // now we send to the engine stuff but I don't really like how this is formatted.
-      // we might want to do this an different way, I'll work on it later.
-      SessionKey[args.sessionId] = {
-        "username":username,
-        "id":context.user._id
-      };
-    },
+		authUserSession: async (parent, args, context) => {
+			const { username } = await User.findById({ _id: context.user._id });
+			// now we send to the engine stuff but I don't really like how this is formatted.
+			// we might want to do this an different way, I'll work on it later.
+			SessionKey[args.sessionId] = {
+				username: username,
+				id: context.user._id,
+			};
+		},
+		createScoreCard: async (parent, args) => {
+			const scoreCard = await scoreCard.create;
+		},
 
 		updateSettings: async (
 			parent,

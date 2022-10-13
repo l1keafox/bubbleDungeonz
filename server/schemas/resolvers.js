@@ -41,10 +41,7 @@ const resolvers = {
 			return Channel.find();
 		},
 		memberChannels: async (parent, args, context) => {
-
-		
 			if (context.user) {
-
 				let toBeReturned = [];
 				const channels = await Channel.find();
 				for (const item of channels) {

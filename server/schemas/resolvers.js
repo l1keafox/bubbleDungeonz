@@ -94,20 +94,6 @@ const resolvers = {
 				populate: { path: "user", model: "user" },
 			});
 		},
-		topScores: async (parent, { scoreCardId }) => {
-			//Slices messages sub-field on provided number (-1 to ensure latest messages are included)
-			let highScores = await ScoreCard.findById(scoreCardId, {
-				scores: { $sort: { score: -1 }, $slice: 10 },
-			}).populate({
-				path: "scores",
-				populate: { path: "user", model: "user" },
-			});
-			if (!highScores) {
-				//todo add error to throw.
-				return;
-			}
-			return highScores;
-		},
 	},
 
 	Mutation: {

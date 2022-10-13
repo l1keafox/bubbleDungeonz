@@ -62,6 +62,7 @@ const typeDefs = gql`
 		channelMessages(channelId: ID!, limit: Int): Channel
 		me: User
 		memberChannels: [Channel]
+		getChannelByName(channelNameString:String):Channel
 		gameCards: [GameCard]
 		gameCard(GameCardId: ID!): GameCard
 	}

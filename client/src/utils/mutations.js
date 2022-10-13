@@ -39,6 +39,7 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
   }
 `;
 
+
 export const CREATE_CHANNEL = gql`
   mutation Mutation($channelName: String!) {
     createChannel(channelName: $channelName) {
@@ -83,6 +84,7 @@ export const UPDATE_SETTINGS = gql`
       header: $header
     ) {
       _id
+
     }
   }
 `;

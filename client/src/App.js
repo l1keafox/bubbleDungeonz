@@ -66,38 +66,41 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      {/* <Particles options={particlesOptions} init={particlesInit} /> */}
-      <ApolloProvider client={client}>
-        <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ExistingUserProvider>
-                <HomePage />
-              </ExistingUserProvider>
-            }
-          />
-          <Route
-            path="/games"
-            element={
-              <GameContextProvider>
-                <GamesMenu />
-              </GameContextProvider>
-            }
-          />
-          <Route
-            path="/gameplay"
-            element={
-              <GameContextProvider>
-                <GamePlay />
-              </GameContextProvider>
-            }
-          ></Route>
-        </Routes>
-      </ApolloProvider>
-    </Router>
+    <>
+      {" "}
+      <Router>
+        <ApolloProvider client={client}>
+          <Header />
+          <Particles options={particlesOptions} init={particlesInit} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ExistingUserProvider>
+                  <HomePage />
+                </ExistingUserProvider>
+              }
+            />
+            <Route
+              path="/games"
+              element={
+                <GameContextProvider>
+                  <GamesMenu />
+                </GameContextProvider>
+              }
+            />
+            <Route
+              path="/gameplay"
+              element={
+                <GameContextProvider>
+                  <GamePlay />
+                </GameContextProvider>
+              }
+            ></Route>
+          </Routes>
+        </ApolloProvider>
+      </Router>
+    </>
   );
 }
 

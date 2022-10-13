@@ -40,6 +40,7 @@ export default function ChatWindow(props) {
       return <span>{text}</span>;
     }
   }
+
   function chatListItems(messages) {
     if (loading) {
       return <p>loading</p>;

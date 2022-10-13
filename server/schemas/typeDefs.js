@@ -13,7 +13,7 @@ type Channel {
     _id: ID
     channelName: String
     createdAt: Date
-    participants: [User]!
+    participants: [User]
     messages: [Message]
 }
 
@@ -35,13 +35,14 @@ type Query{
     channels: [Channel]
     channel(channelId: ID!): Channel
     channelMessages(channelId:ID!,limit:Int): Channel
+    memberChannels:[Channel]
     me: User
 }
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
     createChannel(channelName:String!):Channel
-    addMessageToChannel(channelId:ID!,messageText:String!,username:String!):Channel
+    addMessageToChannel(channelId:ID!,messageText:String!):Channel
     removeUser: User
     addChannelParticipant(channelId:ID!,userId:ID!):Channel
   }

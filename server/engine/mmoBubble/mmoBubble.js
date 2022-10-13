@@ -1,7 +1,7 @@
 class Bubble{
     constructor(){
       this.type = "bubble";
-      this.r =  Math.floor( Math.random()*10)+3; // the radius of the bubble
+      this.r =  Math.floor( Math.random()*15)+6; // the radius of the bubble
       this.x = Math.floor( Math.random()*320);
       this.y = 480; // make sure it starts off screen
       let rando = Math.floor( Math.random()*5)+1;
@@ -23,10 +23,33 @@ let bubble = {
     maxTimer: 40, // what next is set too when it hits 0
     group: [], // this is what holds the bubbles.
 }
+function distance(x1,y1,x2,y2){
+  let a =Math.abs (x1-x2);
+  let b =Math.abs (y1-y2);
+  return Math.sqrt((a*a)+(b*b))
+}
 
 module.exports = {
     name: function(){
         return "bubbles";
+    },
+    init: function(){
+      // this is empty
+      io.on('connection', (socket) => {
+        socket.on("click",(msg)=>{
+          let i = bubble.group.length;
+          
+          while(i--){
+            let bubb = bubble.group[i];
+            if(distance(bubb.x+bubb.r,bubb.y+bubb.r,msg.x,msg.y) < bubb.r){
+              bubb.hits--;
+              if(bubb.hits <= 0){
+                bubble.group.splice(i,1);
+              }
+            }
+          }
+        });
+      });
     },
     updateFrame: function(){
         bubble.next--;

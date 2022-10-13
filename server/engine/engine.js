@@ -55,6 +55,7 @@ module.exports = {
         engineIntervalID = setInterval(doGameLoop,FramePerLoop);
         // THIS IS WHERE WE ADD mmoBUBBLE GAME - WHEN THE ENGINE INIT it starts this game, so it's always running 
         // in the background server.
+        mmoBubble.init();
         this.addGame(mmoBubble);
     },
     // this returns various methods too

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
+import { useMutation, useQuery } from "@apollo/client";
+
 
 import auth from "../../../utils/auth";
 import ChatList from "../../../components/ChatList/ChatList.js";
@@ -10,6 +12,9 @@ function GamePlay() {
   const { gameState } = useGameContext();
   // changeTitle(gameState);
   let game;
+
+  
+ 
   switch (gameState) {
     case "Bubble Trouble":
       game = <Canvas />;
@@ -55,5 +60,6 @@ function GamePlay() {
     </div>
   );
 }
+
 
 export default GamePlay;

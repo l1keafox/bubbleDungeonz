@@ -38,6 +38,32 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
     }
   }
 `;
+
+
+export const CREATE_CHANNEL = gql`
+  mutation Mutation($channelName: String!) {
+    createChannel(channelName: $channelName) {
+      _id
+      channelName
+    }
+  }
+`;
+export const JOIN_CHANNEL = gql`
+  mutation JoinChannel($channelId: String) {
+    joinChannel(channelId: $channelId) {
+      _id
+      channelName
+    }
+  }
+`;
+export const LEAVE_CHANNEL = gql`
+  mutation Mutation($channelId: String) {
+    leaveChannel(channelId: $channelId) {
+      _id
+      channelName
+    }
+  }
+`;
 export const UPDATE_SETTINGS = gql`
   mutation updateSettings(
     $userId: ID!
@@ -58,6 +84,7 @@ export const UPDATE_SETTINGS = gql`
       header: $header
     ) {
       _id
+
     }
   }
 `;

@@ -62,15 +62,8 @@ const typeDefs = gql`
 		channelMessages(channelId: ID!, limit: Int): Channel
 		me: User
 		memberChannels: [Channel]
-<<<<<<< HEAD
-		scoreCards: [ScoreCard]
-		scoreCard(scoreCardId: ID!): ScoreCard
-		topScores(scoreCardId: ID!): ScoreCard
-		getChannelByName(channelNameString:String):Channel
-=======
 		gameCards: [GameCard]
 		gameCard(GameCardId: ID!): GameCard
->>>>>>> cc961ef36e2fdd58a511c4fbbb449c7aef219df4
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth

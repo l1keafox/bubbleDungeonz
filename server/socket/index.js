@@ -21,9 +21,9 @@ const initIo = (app) => {
 
   // Just a connection based.
   io.on("connection", (socket) => {
-    console.log("a user connected");
+    console.log("   -IO>a user connected");
     socket.on("disconnect", () => {
-      console.log("user disconnected");
+      console.log("   -IO>user disconnected");
     });
   });
 

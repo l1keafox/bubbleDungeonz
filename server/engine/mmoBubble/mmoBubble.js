@@ -49,7 +49,7 @@ module.exports = {
                   sessionKey[socket.id].points = 0;
                 }
                 sessionKey[socket.id].points += rollDice(1,6);
-                console.log(`point scored by: ${sessionKey[socket.id].username} has now ${sessionKey[socket.id].points }`);
+                console.log(`   -ENG/BUB>point scored by: ${sessionKey[socket.id].username} has now ${sessionKey[socket.id].points }`);
                 bubble.group.splice(i,1);
               }
             }

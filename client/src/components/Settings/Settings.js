@@ -1,6 +1,5 @@
 import "./Settings.css";
-// import "./colors.css";
-import Header from "../Header/Header";
+
 function Settings({ handleClose, show, children }) {
   const showHideClassName = show ? "modal d-block" : "modal d-none";
   const handleFormSubmit = (e) => {
@@ -31,22 +30,40 @@ function Settings({ handleClose, show, children }) {
   return (
     <div className={showHideClassName} id="mainModal">
       <div className="modal-main">
-        {children}
-        <button
-          type="button"
-          onClick={handleClose}
-          className="btn launch-button"
-          data-bs-toggle="modal"
-          data-bs-target="#launchModal"
-        ></button>
+        <div className="screenTextChange">
+          <h3>Change Screen Text Color</h3>
+          {children}
+          <select
+            className="form-select"
+            aria-label="Screen-text-color"
+            defaultValue={"Fuscia"}
+          >
+            <option>Screen Text Color</option>
+            {colorKeys.map((opt) => (
+              <option key={opt}>opt</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <select
+            className="form-select"
+            aria-label="Screen-text-color"
+            defaultValue={"Fuscia"}
+          >
+            <option>Text Color</option>
+            {colorKeys.map((opt) => (
+              <option key={opt}>opt</option>
+            ))}
+          </select>
+        </div>
         <select
           className="form-select"
           aria-label="Screen-text-color"
           defaultValue={"Fuscia"}
         >
-          <option>Screen Text Color</option>
-          {colorKeys.map((colorKeys) => (
-            <option key={colorKeys}>opt</option>
+          <option>Chat Text Color</option>
+          {colorKeys.map((opt) => (
+            <option key={opt}>opt</option>
           ))}
         </select>
         <select
@@ -54,11 +71,38 @@ function Settings({ handleClose, show, children }) {
           aria-label="Screen-text-color"
           defaultValue={"Fuscia"}
         >
-          <option>Text Color</option>
-          {colorKeys.map((colorKeys) => (
-            <option key={colorKeys}>opt</option>
+          <option>Background Color</option>
+          {colorKeys.map((opt) => (
+            <option key={opt}>opt</option>
           ))}
         </select>
+        <select
+          className="form-select"
+          aria-label="Screen-text-color"
+          defaultValue={"Fuscia"}
+        >
+          <option>Chat Window Color</option>
+          {colorKeys.map((opt) => (
+            <option key={opt}>opt</option>
+          ))}
+        </select>
+        <select
+          className="form-select"
+          aria-label="Screen-text-color"
+          defaultValue={"Fuscia"}
+        >
+          <option>Header Color</option>
+          {colorKeys.map((opt) => (
+            <option key={opt}>opt</option>
+          ))}
+        </select>
+        {/* <button
+        type="button"
+        onClick={handleClose}
+        className="btn launch-button"
+        data-bs-toggle="modal"
+        data-bs-target="#launchModal"
+      ></button> */}
       </div>
     </div>
   );

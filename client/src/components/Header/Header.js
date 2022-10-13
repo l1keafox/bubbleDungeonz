@@ -21,7 +21,7 @@ function Header() {
 
   return (
     <div className="headerDiv">
-      <h1 className="headerTitle">App Title</h1>
+      <h1 className="headerTitle">Bubble DungeonZ</h1>
       <Settings show={showModal} />
 
       <ul className="navBar">

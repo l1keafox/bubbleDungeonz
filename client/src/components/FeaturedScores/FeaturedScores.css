@@ -1,29 +1,42 @@
 @import "../../utils/colors.css";
 
 .featuredScoresDiv {
-  width: 16rem;
+  width: 18rem;
+  border-top: 15px inset var(--fuscia);
   border-radius: 5px;
-  background-color: var(--navy);
-  color: var(--teal1);
-  box-shadow: 3px 3px 3px 3px var(--black);
+  background-image: linear-gradient(var(--red) 0%, var(--fuscia) 100%);
+  color: var(--white);
+  box-shadow: 3px 3px 3px 3px var(--blue2);
+}
+
+.featuredGameImg {
+  height: 20rem;
+  padding: 1rem;
+}
+
+.featuredGame {
+  font-family: "Press Start 2p";
+  font-size: 1rem;
 }
 
 .featuredGameTitle {
   color: var(--lime);
   font-weight: bold;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 .featuredScoresList {
   text-align: center;
-  color: var(--navy);
+  padding: 0.5rem;
 }
 
-.featuredScoresList li {
-  text-align: center;
-  background-color: var(--seafoam);
+.featuredScore {
+  font-family: "Press Start 2p";
+  color: var(--white);
+  padding: 0.5rem;
 }
 
-.displayedUsername {
-  font-weight: bold;
+.featuredUsername {
+  color: var(--yellow);
 }

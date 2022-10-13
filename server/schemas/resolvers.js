@@ -82,13 +82,13 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
-		scoreCards: async () => {
+		gameCards: async () => {
 			return ScoreCard.find().populate({
 				path: "scores",
 				populate: { path: "user", model: "user" },
 			});
 		},
-		scoreCard: async (parents, { scoreCardId }) => {
+		gameCard: async (parents, { scoreCardId }) => {
 			return ScoreCard.findById({ _id: scoreCardId }).populate({
 				path: "scores",
 				populate: { path: "user", model: "user" },
@@ -175,13 +175,12 @@ const resolvers = {
 				username: username,
 				id: context.user._id,
 			};
-			// console.log(username,"authicate",args.sessionId,SessionKey);
 		},
-		createScoreCard: async (parent, { game }) => {
+		createGameCard: async (parent, { game }) => {
 			const scoreCard = await ScoreCard.create({ game });
 			return scoreCard;
 		},
-		addScoreToScoreCard: async (parent, { scoreCardId, score, userId }) => {
+		addScoreToGameCard: async (parent, { scoreCardId, score, userId }) => {
 			const newScore = await ScoreCard.findByIdAndUpdate(
 				{ _id: scoreCardId },
 				{
@@ -191,7 +190,7 @@ const resolvers = {
 			);
 			return newScore;
 		},
-		updateScoreOnScoreCard: async (parent, { scoreCardId, score, userId }) => {
+		updateScoreOnGameCard: async (parent, { scoreCardId, score, userId }) => {
 			const newScore = await ScoreCard.findByIdAndUpdate(
 				{ _id: scoreCardId, "scores.user": userId },
 				{

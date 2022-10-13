@@ -2,11 +2,14 @@ const { Schema, model } = require("mongoose");
 const Score = require("./Score");
 
 const scoreCardSchema = new Schema({
-	game: {
+	title: {
 		type: String,
 		require: true,
 	},
 	scores: [Score],
+	description: {
+		type: String,
+	},
 });
 
 const ScoreCard = model("scoreCard", scoreCardSchema);

@@ -192,9 +192,9 @@ const resolvers = {
 		},
 		updateScoreOnScoreCard: async (parent, { scoreCardId, score, userId }) => {
 			const newScore = await ScoreCard.findByIdAndUpdate(
-				{ _id: scoreCardId },
+				{ _id: scoreCardId, "scores.user": userId },
 				{
-					$addToSet: { scores: { user: userId, score: score } },
+					$set: { "scores.0.score": score },
 				},
 				{ runValidators: true, new: true }
 			);

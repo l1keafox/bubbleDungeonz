@@ -33,6 +33,9 @@ export default function ChatList() {
       setOpenChannelIds([id]);
     }
   }
+  function closeChannel() {
+    setOpenChannelIds([]);
+  }
 
   function loadedChannels(list) {
     return list.map((item) => <ChatWindow key={item} channelId={item} />);
@@ -40,7 +43,16 @@ export default function ChatList() {
 
   return (
     <aside className="chatAside">
-      <div className="chatChannelsList">{channelOptions({ channels })}</div>
+      <div className="chatChannelsList">
+        {openChannelIds.length === 1 ? (
+          <p className="collapseChatBtn" onClick={closeChannel}>
+            X
+          </p>
+        ) : (
+          <p></p>
+        )}
+        {channelOptions({ channels })}
+      </div>
       {loadedChannels(openChannelIds)}
     </aside>
   );

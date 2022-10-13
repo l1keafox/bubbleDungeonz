@@ -4,11 +4,12 @@
   background-color: var(--orange2);
   font-size: 0.75rem;
 }
-.screenTextChange {
+/* .screenTextChange {
   display: flexbox;
   border-style: double black;
-  padding: 1rem;
-}
+  
+} */
+/* font-family "play" is just a placeholder */
 h3 {
   font-size: 1rem;
   font-family: "play";

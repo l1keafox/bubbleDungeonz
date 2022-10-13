@@ -161,6 +161,7 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd) {
+    console.log("Authicating sessionID",socketd);
     try {
       const {} = await authUserSession({
         variables: { sessionId: socketd },

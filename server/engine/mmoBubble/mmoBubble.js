@@ -44,25 +44,31 @@ module.exports = {
               // console.log(engine.sessionKey);
               let currentKey = engine.sessionKey;
               // console.log(currentKey[socket.id], currentKey);
-              if (currentKey && currentKey[socket.id]) {
-                if (currentKey[socket.id].points == undefined) {
-                  currentKey[socket.id].points = 0;
+              if(engine.sessionKey.length){
+                console.log(engine.sessionKey.length);
+                let result = engine.sessionKey.filter(player => player.sessionId === socket.id );
+                if(result.length){
+                    console.log(result[0]);
                 }
-                // Import model from graphQL
-                // UserID currentKey[socket.id].id
-                // id  - id via graphql
-                // name - username in graphql
-                // sessionID - uniqueID per socket.io session
-
-                currentKey[socket.id].points += rollDice(1, 6);
-                console.log(
-                  `point scored by: ${currentKey[socket.id].username} has now ${
-                    currentKey[socket.id].points
-                  }`
-                );
-              } else {
-                
               }
+
+              // if (currentKey && currentKey[socket.id]) {
+              //   if (currentKey[socket.id].points == undefined) {
+              //     currentKey[socket.id].points = 0;
+              //   }
+              //   // Import model from graphQL
+              //   // UserID currentKey[socket.id].id
+              //   // id  - id via graphql
+              //   // name - username in graphql
+              //   // sessionID - uniqueID per socket.io session
+
+              //   currentKey[socket.id].points += rollDice(1, 6);
+              //   console.log(
+              //     `point scored by: ${currentKey[socket.id].username} has now ${
+              //       currentKey[socket.id].points
+              //     }`
+              //   );
+              // }
               bubble.group.splice(i, 1);
             }
           }

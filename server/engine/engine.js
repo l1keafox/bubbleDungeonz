@@ -58,7 +58,7 @@ module.exports = {
         // in the background server.
         mmoBubble.init();
         this.addGame(mmoBubble);
-        userSessionsKey = {};
+        userSessionsKey = [];
     },
     /* The session key is an object that hold values via sessionId of players Example:
         When thinking about 'highscore'

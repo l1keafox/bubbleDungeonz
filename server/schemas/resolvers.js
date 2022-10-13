@@ -171,11 +171,13 @@ const resolvers = {
 			const { username } = await User.findById({ _id: context.user._id });
 			// now we send to the engine stuff but I don't really like how this is formatted.
 			// we might want to do this an different way, I'll work on it later.
-			SessionKey[args.sessionId] = {
+			
+			SessionKey.push({ 
 				username: username,
+				sessionId: args.sessionId,
 				id: context.user._id,
-			};
-			// console.log(username,"authicate",args.sessionId,SessionKey);
+			});
+			 console.log(username,"authicate",args.sessionId,SessionKey);
 		},
 		createScoreCard: async (parent, { game }) => {
 			const scoreCard = await ScoreCard.create({ game });

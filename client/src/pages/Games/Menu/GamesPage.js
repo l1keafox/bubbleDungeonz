@@ -2,6 +2,8 @@ import React from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "../../../utils/gameContext.js";
 import { Link } from "react-router-dom";
+import auth from "../../../utils/auth";
+import ChatList from "../../../components/ChatList/ChatList.js";
 
 import "./GamesPage.css";
 import { BsJoystick } from "react-icons/bs";
@@ -42,6 +44,7 @@ function GamesMenu() {
                 Play <BsJoystick></BsJoystick>
               </a>
             </Link>
+            {auth.loggedIn() ? <ChatList /> : <div />}
           </div>
         </div>
       ))}

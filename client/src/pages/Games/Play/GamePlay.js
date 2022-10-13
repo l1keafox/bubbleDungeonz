@@ -2,6 +2,10 @@ import React from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
+
+import auth from "../../../utils/auth";
+import ChatList from "../../../components/ChatList/ChatList.js";
+
 function GamePlay() {
   const { gameState } = useGameContext();
   // changeTitle(gameState);
@@ -15,10 +19,13 @@ function GamePlay() {
       break;
   }
   return (
-    <div className="canvasContainer">
-      <h1>{gameState}</h1> 
+    <>
+      <div className="canvasContainer">
+        <h1>{gameState}</h1>
         {game}
-    </div>
+      </div>
+      {auth.loggedIn() ? <ChatList /> : <div />}
+    </>
   );
 }
 

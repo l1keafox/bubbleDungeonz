@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import bubble from "./../Canvas/bubble.PNG"
 import io from "socket.io-client";
 import color from "./../../utils/colors.css";
-
+import auth from "./../../utils/auth"
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
   const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
@@ -94,7 +94,8 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd){
-    console.log(socketd,"Session id auth");
+    console.log(socketd,"Session id auth",auth.getUser());
+    
     try{
     const { data } = await authUserSession({
       variables: { sessionId: socketd },
@@ -107,9 +108,9 @@ const Canvas = () => {
   }
   useEffect(() => {
     if (socket) {
-      // socket.on("connect", () => {
-      //   authMe(socket.id);
-      // });
+      socket.on("connect", () => {
+        authMe(socket.id);
+      });
     
       GAME.init();
       socket.on("bubbles", (obj) => {

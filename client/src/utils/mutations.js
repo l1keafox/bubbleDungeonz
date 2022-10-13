@@ -16,10 +16,7 @@ export const ADD_USER = gql`
 export const AUTH_USER_SESSION = gql`
   mutation authUserSession($sessionId:ID!){
     authUserSession(sessionId: $sessionId){
-      token
-      user {
-        username
-      }
+      _id
     }
   }
 `;

@@ -140,7 +140,6 @@ const resolvers = {
 			if (!correctPw) {
 				throw new AuthenticationError("Incorrect password!");
 			}
-
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -150,6 +149,13 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
+
+    authUserSession: async (parent, args, context) => {
+      const user = await User.findById({ _id: context.user._id });
+      console.log('here?',user.username);
+      // now we send to the engine stuff
+    },
+
 		updateSettings: async (
 			parent,
 			{

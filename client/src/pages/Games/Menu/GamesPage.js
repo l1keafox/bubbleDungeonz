@@ -28,26 +28,33 @@ function GamesMenu() {
   return (
     <div className="menuCardsContainer">
       {gameOptions.map((game) => (
-        <div className="gameViewContainer">
-          <img src={game.image} className="gameComponent" />
-          <div className="cardBody">
-            <h5 className="cardTitle">{game.title}</h5>
-            <p className="cardText">{game.description}</p>
-            <Link className="playBtn" to="/gameplay">
-              <a
-                name={game.title}
-                href="#"
-                className="btn"
-                onClick={() => {
-                  toggleGameState(game.title);
-                }}
-              >
-                Play <BsJoystick></BsJoystick>
-              </a>
-            </Link>
-            {auth.loggedIn() ? <ChatList /> : <div />}
+        <Link className="gameViewLink" to="/gameplay">
+          <div
+            onClick={() => {
+              toggleGameState(game.title);
+            }}
+            className="gameViewContainer"
+          >
+            <img src={game.image} className="gameComponent" />
+            <div className="cardBody">
+              <h5 className="cardTitle">{game.title}</h5>
+              <p className="cardText">{game.description}</p>
+              <Link to="/gameplay">
+                <a
+                  name={game.title}
+                  href="#"
+                  className="playBtn btn"
+                  onClick={() => {
+                    toggleGameState(game.title);
+                  }}
+                >
+                  Play <BsJoystick></BsJoystick>
+                </a>
+              </Link>
+              {auth.loggedIn() ? <ChatList /> : <div />}
+            </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

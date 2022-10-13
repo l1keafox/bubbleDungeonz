@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const ADD_USER = gql`
   mutation Mutation($username: String!, $email: String!, $password: String!) {
@@ -13,8 +13,8 @@ export const ADD_USER = gql`
   }
 `;
 export const AUTH_USER_SESSION = gql`
-  mutation authUserSession($sessionId:ID!){
-    authUserSession(sessionId: $sessionId){
+  mutation authUserSession($sessionId: ID!) {
+    authUserSession(sessionId: $sessionId) {
       _id
     }
   }
@@ -38,4 +38,26 @@ export const POST_MESSAGE_TO_CHANNEL = gql`
     }
   }
 `;
-
+export const UPDATE_SETTINGS = gql`
+  mutation updateSettings(
+    $userId: ID!
+    $screenTextColor: String!
+    $linkTextColor: String!
+    $chatTextColor: String!
+    $background: String!
+    $chatWindow: String!
+    $header: String!
+  ) {
+    updateSettings(
+      userId: $userId
+      screenTextColor: $screenTextColor
+      linkTextColor: $linkTextColor
+      chatTextColor: $chatTextColor
+      background: $background
+      chatWindow: $chatWindow
+      header: $header
+    ) {
+      _id
+    }
+  }
+`;

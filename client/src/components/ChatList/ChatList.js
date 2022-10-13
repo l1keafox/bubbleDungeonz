@@ -26,11 +26,14 @@ export default function ChatList() {
       ));
     }
   }
+  // openChannel called on click for channel buttons
   function openChannel(id, name) {
+    console.log(openChannelIds);
     if (!openChannelIds.includes(id)) {
-      setOpenChannelIds([...openChannelIds, id]);
+      setOpenChannelIds([id]);
     }
   }
+
   function loadedChannels(list) {
     return list.map((item) => <ChatWindow key={item} channelId={item} />);
   }

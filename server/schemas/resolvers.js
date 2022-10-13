@@ -169,7 +169,9 @@ const resolvers = {
 				id: context.user._id,
 			};
 		},
-		addScoreCard: async (parent, args) => {},
+		createScoreCard: async (parent, args) => {
+			const scoreCard = await scoreCard.create;
+		},
 
 		updateSettings: async (
 			parent,

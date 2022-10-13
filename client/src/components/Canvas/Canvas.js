@@ -12,7 +12,7 @@ const Canvas = () => {
   const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
 
   useEffect(() => {
-    const newSocket = io(`http://${window.location.hostname}:3002`);
+    const newSocket = io(`http://${window.location.hostname}:3001`);
     setSocket(newSocket);
     return () => newSocket.close();
   }, []);

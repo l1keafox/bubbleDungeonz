@@ -48,6 +48,12 @@ module.exports = {
                 if(sessionKey[socket.id].points == undefined){
                   sessionKey[socket.id].points = 0;
                 }
+                // Import model from graphQL 
+                  // UserID sessionKey[socket.id].id
+                  // id  - id via graphql
+                  // name - username in graphql
+                  // sessionID - uniqueID per socket.io session
+
                 sessionKey[socket.id].points += rollDice(1,6);
                 console.log(`point scored by: ${sessionKey[socket.id].username} has now ${sessionKey[socket.id].points }`);
                 bubble.group.splice(i,1);

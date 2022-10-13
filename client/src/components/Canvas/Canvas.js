@@ -100,13 +100,14 @@ const Canvas = () => {
                 localObj.opacity = 100;
               }
               if(localObj.framesLeft === undefined){
-                localObj.framesLeft = 25;
+                localObj.framesLeft = 35;
               }
               
               if(localObj.framesLeft){
                 localObj.framesLeft--;
-                GAME.Draw.circle(localObj.x, localObj.y, parseInt( localObj.radius ),"white");
+                GAME.Draw.circle(localObj.x, localObj.y, parseInt( localObj.radius ),"white",localObj.opacity);
                 localObj.radius += 1;
+                localObj.opacity -= 10;
               }else {
                 GAME.localObjects.splice(index,1);
               }
@@ -135,9 +136,15 @@ const Canvas = () => {
         GAME.ctx.drawImage(img1, dx, dy, dWidth, dHeight);
       },
 
-      circle: function (x, y, r, col) {
-        GAME.ctx.fillStyle = col;
+      circle: function (x, y, r, col,o) {
+        let oca = o;
+        if(o > 1){
+          oca = o/100;
+        } 
+        //GAME.ctx.fillStyle = col;
+        GAME.ctx.fillStyle = `rgba(0, 0, 0, ${oca})`;
         GAME.ctx.beginPath();
+
         GAME.ctx.arc(x + 5, y + 5, r, 0, Math.PI * 2, true);
         GAME.ctx.stroke();
         GAME.ctx.closePath();
@@ -184,8 +191,6 @@ const Canvas = () => {
               offsetLeft = GAME.canvas.offsetLeft;
             this.x = data.pageX - offsetLeft;
             this.y = data.pageY - offsetTop;
-            console.log(this.x , data.pageX , offsetLeft );
-            console.log(this.y , data.pageY , offsetTop );
             
             this.tapped = true;
             if( !GAME.localObjects ){

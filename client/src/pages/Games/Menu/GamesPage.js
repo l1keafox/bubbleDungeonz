@@ -28,7 +28,7 @@ function GamesMenu() {
   return (
     <div className="menuCardsContainer">
       {gameOptions.map((game) => (
-        <Link className="gameViewLink" to="/gameplay">
+        <Link className="gameViewLink" name={game.title} to="/gameplay">
           <div
             onClick={() => {
               toggleGameState(game.title);

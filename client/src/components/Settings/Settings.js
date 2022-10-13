@@ -110,13 +110,15 @@ function Settings({ handleClose, show, children }) {
             ))}
           </select>
         </div>
-        {/* <button
-        type="button"
-        onClick={handleClose}
-        className="btn launch-button"
-        data-bs-toggle="modal"
-        data-bs-target="#launchModal"
-      >Save Changes</button> */}
+        <button
+          type="button"
+          onClick={handleClose}
+          className="save-button"
+          data-bs-toggle="modal"
+          data-bs-target="#launchModal"
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   );

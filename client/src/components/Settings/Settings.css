@@ -1,8 +1,16 @@
+@import "../../utils/colors.css";
+
 #mainModal {
-  width: 25%;
+  /* width: 25%;
   border: 5px solid black;
-  background-color: var(--orange2);
-  font-size: 0.75rem;
+  /* background-color: var(--orange2); */
+  /* font-size: 0.75rem; */
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  background-image: linear-gradient(var(--red) 0%, var(--fuscia) 100%);
 }
 /* .screenTextChange {
   display: flexbox;
@@ -13,4 +21,19 @@
 h3 {
   font-size: 1rem;
   font-family: "play";
+}
+.form-select {
+  background-color: var(--lime);
+}
+.save-button {
+  outline: 3px solid var(--black);
+  margin: 1rem;
+  background-color: var(--lime);
+  color: var(--navy);
+}
+.settingsOptions {
+  border: solid var(--black);
+  margin: 1rem;
+  font-family: "Source Code Pro";
+  color: var(--white);
 }

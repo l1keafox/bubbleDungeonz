@@ -7,18 +7,19 @@ import ChatList from "../../../components/ChatList/ChatList.js";
 
 import "./GamesPage.css";
 import { BsJoystick } from "react-icons/bs";
+import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
   let gameOptions = [
     {
       title: "Bubble Trouble",
       description: "How many bubbles can you pop before the time is up?",
-      component: <Canvas />,
+      image: bubbleTroubleImg,
     },
     {
       title: "Double Trouble",
       description: "Bubbles AGAIN!?!?",
-      component: <Canvas />,
+      image: bubbleTroubleImg,
     },
   ];
 
@@ -28,7 +29,7 @@ function GamesMenu() {
     <div className="menuCardsContainer">
       {gameOptions.map((game) => (
         <div className="gameViewContainer">
-          <div className="gameComponent">{game.component}</div>
+          <img src={game.image} className="gameComponent" />
           <div className="cardBody">
             <h5 className="cardTitle">{game.title}</h5>
             <p className="cardText">{game.description}</p>

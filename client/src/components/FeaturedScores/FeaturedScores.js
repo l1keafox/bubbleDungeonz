@@ -1,8 +1,10 @@
 import React from "react";
 import "./FeaturedScores.css";
+import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
 
 function FeaturedScores() {
   let game = "Bubble Trouble";
+
   let users = [
     {
       username: "feat1",
@@ -20,30 +22,24 @@ function FeaturedScores() {
 
   return (
     <div>
-      <div className="featuredScoresDiv card">
-        <img className="card-img-top" src="" alt="Card image cap" />
-        <div className="card-body">
-          <h5 className="card-title">Featured Game:</h5>
+      <div className="featuredScoresDiv">
+        <img
+          className="card-img-top featuredGameImg"
+          src={image}
+          alt="Card image cap"
+        />
+        <div className="cardBody">
+          <h5 className="featuredGame card-title">Featured Game:</h5>
           <h5 className="featuredGameTitle card-title">{game}</h5>
         </div>
-        <ul className="featuredScoresList list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="displayedUsername">{users[0].username}</span> -{" "}
-            {users[0].highscore}
-          </li>
-          <li className="list-group-item">
-            {" "}
-            <span className="displayedUsername">
-              {users[1].username}
-            </span> - {users[1].highscore}
-          </li>
-          <li className="list-group-item">
-            {" "}
-            <span className="displayedUsername">
-              {users[2].username}
-            </span> - {users[2].highscore}
-          </li>
-        </ul>
+        <div className="featuredScoresList">
+          {users.map((user) => (
+            <div className="featuredScore">
+              <span className="featuredUsername">{user.username}</span> -{" "}
+              {user.highscore}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

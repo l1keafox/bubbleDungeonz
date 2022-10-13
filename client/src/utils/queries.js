@@ -49,3 +49,15 @@ export const GET_CHANNEL_MESSAGES = gql`
     }
   }
 `;
+
+export const GET_SCORE_CARDS = gql`
+query Query {
+  scoreCards {
+    _id
+    game
+    scores {
+      
+    }
+  }
+}
+`;

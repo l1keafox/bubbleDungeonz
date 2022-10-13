@@ -1,10 +1,12 @@
 import React from "react";
 import "./FeaturedScores.css";
 import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
-
+import {GET_SCORE_CARDS} from "./../../utils/queries";
+import { useQuery } from "@apollo/client";
 function FeaturedScores() {
   let game = "Bubble Trouble";
-
+  const { loading, data } = useQuery(GET_SCORE_CARDS);
+  console.log(data,"datat?1");
   let users = [
     {
       username: "feat1",

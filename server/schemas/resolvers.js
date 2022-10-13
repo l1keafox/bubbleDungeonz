@@ -58,6 +58,9 @@ const resolvers = {
 		channel: async (parent, { channelId }) => {
 			return Channel.findById({ _id: channelId });
 		},
+		getChannelByName:async (parent,{channelNameString}) =>{
+			return Channel.findOne({channelName:{channelNameString}})
+		},
 		//Gets channel with messages limited param limit value.
 		channelMessages: async (parent, { channelId, limit }) => {
 			let num = 50;
@@ -131,6 +134,26 @@ const resolvers = {
 				{ runValidators: true, new: true }
 			);
 			return task;
+		},
+		//context dependant leave and join channel resolvers make it easier for front end to add people to particular channels.
+		leaveChannel:async (parent,{channelId},context)=>{
+			if(context.user){
+				const channel = await Channel.findOneAndUpdate(
+					{ _id: channelId },
+					{ $pull: { participants: { _id: context.user._id } } },
+				);
+			}
+			throw new AuthenticationError("You need to be logged in!");
+		},
+		joinChannel:async (parent,{channelId},context)=>{
+			if(context.user){
+				const channel = await Channel.findOneAndUpdate(
+					{ _id: channelId },
+					{ $addToSet: { participants: { _id: context.user._id } } },
+				{ runValidators: true, new: true }
+				);
+			}
+			throw new AuthenticationError("You need to be logged in!");
 		},
 		//adds a user to the database, used on signup.
 		addUser: async (parent, { username, email, password }) => {

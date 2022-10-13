@@ -4,6 +4,7 @@ import { useGameContext } from "../../../utils/gameContext.js";
 import { Link } from "react-router-dom";
 
 import "./GamesPage.css";
+import { BsJoystick } from "react-icons/bs";
 
 function GamesMenu() {
   let gameOptions = [
@@ -38,7 +39,7 @@ function GamesMenu() {
                   toggleGameState(game.title);
                 }}
               >
-                Play
+                Play <BsJoystick></BsJoystick>
               </a>
             </Link>
           </div>

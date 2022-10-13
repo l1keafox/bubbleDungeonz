@@ -1,11 +1,12 @@
 import "./Settings.css";
-
+import auth from "./../../utils/auth";
 function Settings({ handleClose, show, children }) {
   const showHideClassName = show ? "modal d-block" : "modal d-none";
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
   console.log(show, showHideClassName);
+  console.log(auth.getUser());
   const colorKeys = [
     "Fuscia",
     "Red",
@@ -54,7 +55,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Text Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -67,7 +68,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Chat Text Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -80,7 +81,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Background Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -93,7 +94,7 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Chat Window Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
@@ -106,17 +107,19 @@ function Settings({ handleClose, show, children }) {
           >
             <option>Header Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
-        {/* <button
-        type="button"
-        onClick={handleClose}
-        className="btn launch-button"
-        data-bs-toggle="modal"
-        data-bs-target="#launchModal"
-      >Save Changes</button> */}
+        <button
+          type="button"
+          onClick={handleFormSubmit}
+          className="save-button"
+          data-bs-toggle="modal"
+          data-bs-target="#launchModal"
+        >
+          Save Changes
+        </button>
       </div>
     </div>
   );

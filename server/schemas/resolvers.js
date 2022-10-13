@@ -1,8 +1,9 @@
-const { User, Channel, ScoreCard } = require("../models");
+const { User, Channel, GameCard } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
 const { SessionKey } = require("./../engine/");
+const { populate } = require("../models/User/User");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
 	name: "Date",
@@ -87,22 +88,17 @@ const resolvers = {
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
-		scoreCards: async () => {
-			return ScoreCard.find();
-		},
-		scoreCard: async (parents, { scoreCardId }) => {
-			return ScoreCard.findById({ _id: scoreCardId });
-		},
-		topScores: async (parent, { scoreCardId }) => {
-			//Slices messages sub-field on provided number (-1 to ensure latest messages are included)
-			let highScores = await ScoreCard.findById(scoreCardId, {
-				scores: { $sort: { score: -1 }, $slice: ["$scores", 10] },
+		gameCards: async () => {
+			return GameCard.find().populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
 			});
-			if (!highScores) {
-				//todo add error to throw.
-				return;
-			}
-			return highScores;
+		},
+		gameCard: async (parents, { gameCardId }) => {
+			return GameCard.findById({ _id: gameCardId }).populate({
+				path: "scores",
+				populate: { path: "user", model: "user" },
+			});
 		},
 	},
 
@@ -178,19 +174,19 @@ const resolvers = {
 		},
 		//adds a user to the database, used on signup.
 		addUser: async (parent, { username, email, password }) => {
-
 			const user = await User.create({ username, email, password });
 			let channels = await Channel.find();
 			//this wont scale. Need to write search for global, or better yet need to hard code single global channel with fixed id
-			for(const channel of channels){
-				if(channel.channelName == "Global"){
+			for (const channel of channels) {
+				if (channel.channelName == "Global") {
 					const task = await Channel.findOneAndUpdate(
-						{_id: channel._id},
-						{ $addToSet: { participants: {_id:user._id} } },
+						{ _id: channel._id },
+						{ $addToSet: { participants: { _id: user._id } } },
 						{ runValidators: true, new: true }
 					);
-				}	
+				}
 			}
+			console.log(user,"token?");
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -206,6 +202,7 @@ const resolvers = {
 			if (!correctPw) {
 				throw new AuthenticationError("Incorrect password!");
 			}
+			console.log(user,"token?");
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -217,6 +214,7 @@ const resolvers = {
 		},
 
 		authUserSession: async (parent, args, context) => {
+			console.log(context.user._id,args.sessionId);
 			const { username } = await User.findById({ _id: context.user._id });
 			// now we send to the engine stuff but I don't really like how this is formatted.
 			// we might want to do this an different way, I'll work on it later.
@@ -225,8 +223,29 @@ const resolvers = {
 				id: context.user._id,
 			};
 		},
-		createScoreCard: async (parent, args) => {
-			const scoreCard = await scoreCard.create;
+		createGameCard: async (parent, { game }) => {
+			const gameCard = await GameCard.create({ game });
+			return gameCard;
+		},
+		addScoreToGameCard: async (parent, { GameCardId, score, userId }) => {
+			const newScore = await GameCard.findByIdAndUpdate(
+				{ _id: gameCardId },
+				{
+					$addToSet: { scores: { user: userId, score: score } },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
+		},
+		updateScoreOnGameCard: async (parent, { gameCardId, score, userId }) => {
+			const newScore = await GameCard.findByIdAndUpdate(
+				{ _id: gameCardId, "scores.user": userId },
+				{
+					$set: { "scores.0.score": score },
+				},
+				{ runValidators: true, new: true }
+			);
+			return newScore;
 		},
 
 		updateSettings: async (

@@ -12,9 +12,9 @@ import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 function GamesMenu() {
   const { toggleGameState } = useGameContext();
 
-  useEffect(()=>{
+  useEffect(() => {
     toggleGameState(null);
-  },[]);
+  }, []);
 
   let gameOptions = [
     {
@@ -29,45 +29,61 @@ function GamesMenu() {
     },
   ];
 
- 
-
   return (
-    <div className="menuCardsContainer">
-      {gameOptions.map((game) => (
-        <Link className="gameViewLink" name={game.title} to="/gameplay">
-          <div
-            onClick={() => {
-              toggleGameState(game.title);
-            }}
-            className="gameViewContainer"
-          >
-            <img src={game.image} className="gameComponent" />
-            <div className="cardBody">
-              <h5 className="cardTitle">{game.title}</h5>
-              <p className="cardText">{game.description}</p>
-
-              {auth.loggedIn() ? 
-              <Link to="/gameplay">
-                <a
-                  name={game.title}
-                  href="#"
-                  className="playBtn btn"
+    <>
+      <div className="menuCardsContainer">
+        {auth.loggedIn()
+          ? gameOptions.map((game) => (
+              <Link className="gameViewLink" name={game.title} to="/gameplay">
+                <div
                   onClick={() => {
                     toggleGameState(game.title);
                   }}
+                  className="gameViewContainer"
                 >
-                  Play <BsJoystick></BsJoystick>
-                </a>
-              </Link> :
-              <div />}
-
-
-              {auth.loggedIn() ? <ChatList /> : <div />}
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
+                  <img src={game.image} className="gameComponent" />
+                  <div className="cardBody">
+                    <h5 className="cardTitle">{game.title}</h5>
+                    <p className="cardText">{game.description}</p>
+                    <Link to="/gameplay">
+                      <button
+                        name={game.title}
+                        href="#"
+                        className="playBtn btn"
+                        onClick={() => {
+                          toggleGameState(game.title);
+                        }}
+                      >
+                        Play <BsJoystick />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </Link>
+            ))
+          : gameOptions.map((game) => (
+              <Link className="gameViewLink" name={game.title} to="/">
+                <div className="gameViewContainer">
+                  <img src={game.image} className="gameComponent" />
+                  <div className="cardBody">
+                    <h5 className="cardTitle">{game.title}</h5>
+                    <p className="cardText">{game.description}</p>
+                    <Link to="/">
+                      <button
+                        name={game.title}
+                        href="#"
+                        className="playBtn btn"
+                      >
+                        Login to Play <BsJoystick />
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </Link>
+            ))}
+      </div>
+      {auth.loggedIn() ? <ChatList /> : <></>}
+    </>
   );
 }
 

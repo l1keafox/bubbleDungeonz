@@ -18,6 +18,9 @@
   box-shadow: 0 0 10px var(--red);
   text-decoration: none;
 }
+.gameViewLink:hover button {
+  color: var(--yellow);
+}
 
 .gameViewContainer {
   display: flex;

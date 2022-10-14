@@ -24,16 +24,6 @@ import ExistingUserProvider from "./utils/existingUserContext";
 
 import GameContextProvider from "./utils/gameContext";
 
-import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { createClient } from "graphql-ws";
-
-//constructs subscription endpoint
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: "ws://localhost:4000/subscriptions",
-  })
-);
-console.log();
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",

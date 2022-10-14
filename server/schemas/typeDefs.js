@@ -64,7 +64,7 @@ const typeDefs = gql`
 		memberChannels: [Channel]
 		getChannelByName(channelNameString:String):Channel
 		gameCards: [GameCard]
-		gameCard(GameCardId: ID!): GameCard
+		gameCard(gameCardId: ID!): GameCard
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth

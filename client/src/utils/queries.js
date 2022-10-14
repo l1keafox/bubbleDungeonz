@@ -95,3 +95,16 @@ export const GET_GAME_CARDS = gql`
     }
   }
  `;
+
+ export const GET_CARD_BY_ID = gql`
+ query Query($gameCardId: ID!) {
+  gameCard(gameCardId: $gameCardId) {
+    scores {
+      score
+      user {
+        username
+      }
+    }
+  }
+}
+ `;

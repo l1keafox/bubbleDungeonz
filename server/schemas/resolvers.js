@@ -93,6 +93,7 @@ const resolvers = {
 			});
 		},
 		gameCard: async (parents, { gameCardId }) => {
+			console.log('look up gamecard,',gameCardId);
 			return GameCard.findById({ _id: gameCardId }).populate({
 				path: "scores",
 				populate: { path: "user", model: "user" },

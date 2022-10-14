@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+
+// stylesheet
 import "./HomePage.css";
 
+// components
 import Login from "../../components/Login/Login.js";
 import CreateAccount from "../../components/CreateAccount/CreateAccount.js";
 import FeaturedScores from "../../components/FeaturedScores/FeaturedScores.js";
 import ChatList from "../../components/ChatList/ChatList.js";
 
-
+// user context
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import auth from "../../utils/auth";
 
@@ -18,9 +21,8 @@ function HomePage() {
       <FeaturedScores />
       {/* conditionally renders <Login /> versus <CreateUser /> based on global context variable */}
       {auth.loggedIn() ? <div /> : existingUser ? <Login /> : <CreateAccount />}
-      {auth.loggedIn() ? <ChatList />:<div/> }
+      {auth.loggedIn() ? <ChatList /> : <div />}
     </div>
   );
-  
 }
 export default HomePage;

@@ -19,6 +19,11 @@
   font-size: 1rem;
 }
 
+.highScores {
+  font-family: "Press Start 2p";
+  font-size: 1rem;
+}
+
 .featuredGameTitle {
   color: var(--lime);
   font-weight: bold;
@@ -33,6 +38,7 @@
 
 .featuredScore {
   font-family: "Press Start 2p";
+  font-size: 0.8rem;
   color: var(--white);
   padding: 0.5rem;
 }

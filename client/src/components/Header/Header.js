@@ -13,7 +13,8 @@ function Header() {
   const {data,loading} = useQuery(GET_ME);
   const [userContext, setUserContext] = useState(useExistingUserContext());
   const me = data?._id || [];
-  //state variable to control whether the header has a Login or Logout link
+
+//state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");
   const [showModal, changeModal] = useState(false);
   const { toggleGameState } = useGameContext();

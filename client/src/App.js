@@ -9,20 +9,18 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useCallback, useEffect, useState } from "react";
-import Particles from "react-particles";
-import { loadFull } from "tsparticles";
-import particlesOptions from "./particles.json";
+// import Particles from "react-particles";
+// import { loadFull } from "tsparticles";
+// import particlesOptions from "./particles.json";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
-
-import CreateAccount from "./components/CreateAccount/CreateAccount";
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import GamePlay from "./pages/Games/Play/GamePlay.js";
 import ExistingUserProvider from "./utils/existingUserContext";
 
-import Settings from "./components/Settings/Settings";
+// import Settings from "./components/Settings/Settings";
 
 import GameContextProvider from "./utils/gameContext";
 
@@ -35,7 +33,7 @@ const wsLink = new GraphQLWsLink(
     url: "ws://localhost:4000/subscriptions",
   })
 );
-
+console.log();
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -61,9 +59,10 @@ const client = new ApolloClient({
 
 // const particlesJS = window.particleJS;
 function App() {
-  const particlesInit = useCallback((main) => {
-    loadFull(main);
-  }, []);
+  // const particlesInit = useCallback((main) => {
+  //   loadFull(main);
+  // }, []);
+//          <Particles options={particlesOptions} init={particlesInit} />
 
   return (
     <>
@@ -74,7 +73,6 @@ function App() {
           <GameContextProvider>
             <Header />
           
-          <Particles options={particlesOptions} init={particlesInit} />
           <Routes>
             <Route
               path="/"

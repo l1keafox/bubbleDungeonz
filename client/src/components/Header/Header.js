@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaHamburger } from "react-icons/fa";
 import auth from "../../utils/auth";
 import Settings from "../Settings/Settings";
 import { useGameContext } from "../../utils/gameContext";
+import { GET_ME} from "../../utils/queries";
 
 function Header() {
+  const {data,loading} = useQuery(GET_ME);
+  const me = data?._id || [];
+  console.log("me: "+me);
+  useEffect(()=>{
+    console.log("use effect me: "+me);
+    console.log(data);
+  },[data]);
   //state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");
   const [showModal, changeModal] = useState(false);

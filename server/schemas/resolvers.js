@@ -81,6 +81,7 @@ const resolvers = {
 
 		//returns the current user id, must be logged in for it to work.
 		me: async (parent, args, context) => {
+			console.log("here");
 			if (context.user) {
 				return User.findOne({ _id: context.user._id });
 			}

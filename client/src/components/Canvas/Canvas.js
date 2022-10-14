@@ -16,7 +16,7 @@ const requestAnimFrame = (function () {
     window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame ||
     function (callback) {
-      window.setTimeout(callback, 1000 / 60);
+      window.setTimeout(callback, 1000 / 30);
     }
   );
 })();
@@ -68,12 +68,10 @@ const Canvas = () => {
     },
 
     render: function () {
-      const gameObjects = GAME.localCache;
       GAME.Draw.rect(0, 0, GAME.WIDTH, GAME.HEIGHT, "#036");
-
       // cycle through all entities and render to canvas
-      if (gameObjects) {
-        for (let gameObj of gameObjects) {
+      if (GAME.localCache) {
+        for (let gameObj of GAME.localCache) {
           GAME.Draw.img(bubble, gameObj.x, gameObj.y, gameObj.r, gameObj.r);
         }
       }
@@ -161,16 +159,11 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd) {
-    console.log(socketd);
     try {
-      console.log(socketd);
       const {} = await authUserSession({
         variables: { sessionId: socketd },
       });
-      console.log(socketd);
-      //...formState
     } catch (err) {
-      console.log(err);
     }
   }
   useEffect(() => {

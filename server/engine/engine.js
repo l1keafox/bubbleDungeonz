@@ -16,7 +16,7 @@ name - name?
 */
 
 // Engine variables.
-const FRAMES = 30; // Number of frames per sec
+const FRAMES = 60; // Number of frames per sec
 const FramePerLoop = Math.round( 1000/FRAMES ); // number of cycles per second. so every 16.67MS there will be an game loop.
 let engineIntervalID; // This will be assigned an id of a setInterval in the initEngine
 let gameData; // This gets declared as an object in initEngine.

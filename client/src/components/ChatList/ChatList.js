@@ -9,8 +9,9 @@ import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import { useGameContext, } from "../../utils/gameContext";
 
-let lock = true;
+let locked = false;
 let lastGameChannelId = null;
+let lastGameState = "";
 
 export default function ChatList() {
   const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
@@ -29,18 +30,19 @@ export default function ChatList() {
     await join({variables:{channelId}});
     }
     const attemptLeave = async (channelId) => {
-    await leave({variables:{channelId}});
+    const test = await leave({variables:{channelId}});
+    console.log(test);
     }
 
   const [channels,setChannels] = useState(data?.memberChannels || []);
   
     useEffect(()=>{
-        startPolling(1000);
+        startPolling(300);
         //on logout doesn't leave channel. needs to check at all times to leave all channels but global
         if(location.pathname=="/gameplay"){
             console.log(location.pathname);
             console.log(context.gameState);
-            
+            lastGameState=context.gameState;
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
                 lastGameChannelId = newChannel.data.createChannel._id;
@@ -52,25 +54,47 @@ export default function ChatList() {
                 console.log(channelNameString);
                 const gameChannel = await getChannel({variables:{channelNameString}})
                 console.log(gameChannel.data.getChannelByName);
-                setChannels([...channels,gameChannel.data.getChannelByName])
+                if(gameChannel.data.getChannelByName){
+                    attemptJoin(gameChannel.data.getChannelByName._id);
+                    setChannels([...channels,gameChannel.data.getChannelByName])
+                }else{
+                    console.log("no channel found");
+                    if(!locked){
+                        attemptCreate(channelNameString);
+                        locked = true;
+                    }
+                    
+                }
+                
             }
             attemptLoad();
             // lock=false;
           }
           if(location.pathname!='/gameplay'){
-            console.log(location.pathname);
-            console.log(context.gameState);
-            if(channelNameString!="Global"){
-                setOpenChannelId("");
+            console.log("navigated away");
+            console.log(lastGameState);
+            console.log(channels)
+            let hold = [];
+            for(const item of channels){
+                if(item.channelName!=lastGameState){
+                    hold.push(item);
+                    console.log(item);
+                }else{
+                    attemptLeave(item._id);
+                }
             }
-            if(lastGameChannelId){
-                //leave channel
-                attemptLeave(lastGameChannelId);
-                lastGameChannelId = null;
+            setChannels(hold);
+            if(channelNameString==lastGameState){
+                setOpenChannelId(null);
             }
             // lock = true;
           }
     },[]);
+    useEffect(()=>{
+        if(data?.memberChannels){
+            setChannels(data.memberChannels);
+        }
+    },[data])
 
 
   function channelOptions({ channels }) {
@@ -90,8 +114,8 @@ export default function ChatList() {
   }
   // openChannel called on click for channel buttons
   function openChannel(id, name) {
-    console.log("opening channel");
-    console.log(id);
+    //console.log("opening channel");
+    //console.log(id);
     setChannelNameString(name);
     setOpenChannelId(id);
   }
@@ -100,9 +124,9 @@ export default function ChatList() {
   }
 
 function loadedChannels(item) {
-    console.log("loading new channel");
-    console.log(channelNameString);
-    console.log(item);
+
+    //console.log(channelNameString);
+    //console.log(item);
     if(item){
         return  <ChatWindow key={item} channelId={item} />;
     }else{

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 
 import "./FeaturedScores.css";
 import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
-
-import { GET_GAME_CARDS } from "../../utils/queries";
 
 function FeaturedScores(props) {
   // Query for all games
@@ -18,7 +16,7 @@ function FeaturedScores(props) {
             <img
               className="card-img-top featuredGameImg"
               src={image}
-              alt="Card image cap"
+              alt="FeaturedGame"
             />
             <div className="cardBody">
               <h5 className="featuredGame card-title">Featured Game:</h5>

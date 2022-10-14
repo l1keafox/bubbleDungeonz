@@ -5,8 +5,6 @@ import { useMutation } from "@apollo/client";
 
 import bubble from "./../Canvas/bubble.PNG";
 import io from "socket.io-client";
-import color from "./../../utils/colors.css";
-import auth from "./../../utils/auth";
 
 const requestAnimFrame = (function () {
   return (
@@ -23,7 +21,7 @@ const requestAnimFrame = (function () {
 
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
-  const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
+  const [authUserSession] = useMutation(AUTH_USER_SESSION);
 
   useEffect(() => {
     const newSocket = io(); //`http://${window.location.hostname}:3001`
@@ -160,7 +158,7 @@ const Canvas = () => {
   const canvas = useRef(null);
   async function authMe(socketd) {
     try {
-      const {} = await authUserSession({
+      await authUserSession({
         variables: { sessionId: socketd },
       });
     } catch (err) {

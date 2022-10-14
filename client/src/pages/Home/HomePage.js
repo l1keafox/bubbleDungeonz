@@ -18,7 +18,7 @@ import { GET_GAME_CARDS } from "../../utils/queries";
 function HomePage() {
   const { existingUser } = useExistingUserContext();
 
-  const { loading, error, data } = useQuery(GET_GAME_CARDS,{
+  const { data } = useQuery(GET_GAME_CARDS,{
     nextFetchPolicy:"network-only",
   }); //async not functioning
   const [scores, setScore] = useState([]);
@@ -29,7 +29,7 @@ function HomePage() {
       // console.log(data.gameCards);
 
       // Pick a game at random from the list
-      let randomGameIndex = Math.floor(Math.random() * gameCards.length);
+      // let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
       setGameTitle(featuredGame.title);
@@ -37,8 +37,6 @@ function HomePage() {
         .sort((a, b) => a.score * -1 - b.score * -1)
         .slice(0, 5);
       setScore([...out]);
-
-      console.log(scores);
     }
   }, [data]);
 

@@ -1,10 +1,10 @@
 [    {
     "title": "Bubble Trouble",
     "description": "How many bubbles can you pop before the time is up?",
-    "type": "bubbles"
+    "gameType": "bubbles"
   },
   {
     "title": "Double Trouble",
     "description": "Bubbles AGAIN!?!?",
-    "type": "bubbles"
+    "gameType": "bubbles2"
   }]

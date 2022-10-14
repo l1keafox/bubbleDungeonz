@@ -22,13 +22,16 @@ let bubble = {
   maxTimer: 40, // what next is set too when it hits 0
   group: [], // this is what holds the bubbles.
 };
-
+let gameCardId;
 module.exports = {
   name: function () {
     return "bubbles";
   },
-  init: function () {
+  init: function (gameSettings) {
     // this is empty
+    console.log(gameSettings.id);//
+    gameCardId = gameSettings.id;
+
     io.on("connection", (socket) => {
       socket.on("click", (msg) => {
         let i = bubble.group.length;
@@ -59,7 +62,7 @@ module.exports = {
                 }
                 scorer.points += rollDice(1, 6);
                 console.log(
-                  `point scored by: ${scorer.username} has now ${scorer.points}, id:${scorer.id}`
+                  `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points}, id:${scorer.id}`
                 );
 
               }

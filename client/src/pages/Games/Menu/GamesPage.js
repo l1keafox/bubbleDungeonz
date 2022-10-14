@@ -31,7 +31,7 @@ function GamesMenu() {
                 className="gameViewContainer"
                 key = {index}
               >
-                <img src={game.image} className="gameComponent" />
+                <img src={bubbleTroubleImg} className="gameComponent" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>
                   <p className="cardText">{game.description}</p>

@@ -70,7 +70,7 @@
 
   <a href='https://github.com/TateFoster'>Tate Foster github.</a> :🐹🐹🐹🐹🐹:
   <a href="mailto:@gmail.com">Email :Tate@gmail.com</a>
-  * Accessability back-end
+  * Accessibility back-end
   * Game database features
 
   <a href='https://github.com/madrodgerflynn'>Tyler Anderson github.</a>  :🐧🐧🐧🐧:

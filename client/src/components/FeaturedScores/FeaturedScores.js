@@ -22,7 +22,7 @@ function FeaturedScores(props) {
             />
             <div className="cardBody">
               <h5 className="featuredGame card-title">Featured Game:</h5>
-              <h5 className="featuredGameTitle card-title"></h5>
+              <h5 className="featuredGameTitle card-title">{props.title}</h5>
             </div>
             <hr
               style={{
@@ -45,7 +45,6 @@ function FeaturedScores(props) {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       )}

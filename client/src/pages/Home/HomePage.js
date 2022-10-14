@@ -20,6 +20,7 @@ function HomePage() {
 
   const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
   const [scores, setScore] = useState([]);
+  const [gameTitle, setGameTitle] = useState("");
   useEffect(() => {
     if (data && data.gameCards) {
       const gameCards = data.gameCards;
@@ -29,6 +30,7 @@ function HomePage() {
       let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
+      setGameTitle(featuredGame.title);
       let out = [...featuredGame.scores]
         .sort((a, b) => a.score * -1 - b.score * -1)
         .slice(0, 5);
@@ -41,7 +43,7 @@ function HomePage() {
   return (
     <div className="homeViewContainer">
       {/* scoreboard component - currently just placeholder */}
-      <FeaturedScores scores={scores} />
+      <FeaturedScores scores={scores} title={gameTitle} />
       {/* conditionally renders <Login /> versus <CreateUser /> based on global context variable */}
       {auth.loggedIn() ? <div /> : existingUser ? <Login /> : <CreateAccount />}
       {auth.loggedIn() ? <ChatList /> : <div />}

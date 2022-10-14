@@ -28,7 +28,6 @@
   "dependencies": {
     "apollo-server-express": "^3.10.3",
     "concurrently": "^7.4.0",
-    "graphql-ws": "^5.11.2",
     "jsonwebtoken": "^8.5.1"
   }
 }

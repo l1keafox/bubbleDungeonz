@@ -20,37 +20,29 @@ function Header() {
     console.log("toggleModal", showModal);
   };
 
+  //need logic to conditionally render Login/Logout link based on user objects loggedIn state
+
   return (
     <div className="headerDiv">
       <h1 className="headerTitle">Bubble DungeonZ</h1>
       <Settings show={showModal} />
 
       <ul className="navBar">
-        <Link
-          onClick={() => toggleGameState(null)}
-          to={{ pathname: "/" }}
-          className="navLink"
-        >
+        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/" }} className="navLink">
           <li>Home</li>
         </Link>
-        <Link
-          onClick={() => toggleGameState(null)}
-          to={{ pathname: "/games" }}
-          className="navLink"
-        >
+        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/games" }} className="navLink">
           <li>Games</li>
         </Link>
-
         <li
           className={auth.loggedIn() ? "navLink" : "navLink hidden"}
-          onClick={() => {
+          onClick={()=>{
             auth.logout();
-            toggleGameState(null);
-          }}
+            toggleGameState(null);}
+          }
         >
           Logout
         </li>
-
         <li className="navLink">
           <FaHamburger onClick={toggleModal}></FaHamburger>
         </li>

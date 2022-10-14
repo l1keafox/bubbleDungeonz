@@ -12,13 +12,10 @@ import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
   const { toggleGameState } = useGameContext();
-
   const { loading, data,startPolling, stopPolling } = useQuery(GET_GAME_CARDS);
   useEffect(()=>{
-
     toggleGameState(null);
-  }, []);
-
+  },[]);
 
 
   return (

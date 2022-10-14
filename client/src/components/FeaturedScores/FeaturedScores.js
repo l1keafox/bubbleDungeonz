@@ -39,7 +39,7 @@ function FeaturedScores(props) {
               {props.scores.map((score, index) => (
                 <div className="featuredScore" key={index}>
                   <span className="featuredUsername">
-                    {score.username ? score.username : "foxes"}
+                    {score.user.username ? score.user.username : "null??!"}
                   </span>{" "}
                   - {score.score}
                 </div>

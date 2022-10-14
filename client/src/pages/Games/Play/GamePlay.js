@@ -11,10 +11,13 @@ import ChatList from "../../../components/ChatList/ChatList.js";
 
 function GamePlay() {
   const { gameState } = useGameContext();
-  const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
+  const { loading, error, data } = useQuery(GET_GAME_CARDS,{
+    nextFetchPolicy:"network-only",
+  }); //async not functioning
   const [scores, setScore] = useState([]);
   const [myScore, setMyScore] = useState(0);
   useEffect(() => {
+    console.log('update?');
     if (data && data.gameCards) {
       const gameCards = data.gameCards;
       // console.log(data.gameCards);
@@ -28,7 +31,6 @@ function GamePlay() {
       for(let index in featuredGame.scores){
         if(featuredGame.scores[index].user.username === auth.getUser().data.username ){
           setMyScore(featuredGame.scores[index].score);
-          break;
         }
       }
 
@@ -48,9 +50,6 @@ function GamePlay() {
       game = <Canvas />;
       break;
   }
-
-  try {
-
     return (
       <div className="gamePlayContainer">
         <div className="canvasContainer">
@@ -65,9 +64,6 @@ function GamePlay() {
         {auth.loggedIn() ? <ChatList /> : <div />}
       </div>
     );
-  } catch (err) {
-    if (err) console.log(err);
-  }
 }
 
 export default GamePlay;

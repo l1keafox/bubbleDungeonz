@@ -18,7 +18,9 @@ import {GET_GAME_CARDS } from "../../utils/queries";
 function HomePage() {
   const { existingUser } = useExistingUserContext();
 
-  const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
+  const { loading, error, data } = useQuery(GET_GAME_CARDS,{
+    nextFetchPolicy:"network-only",
+  }); //async not functioning
   const [scores, setScore] = useState([]);
   useEffect(() => {
     if (data && data.gameCards) {

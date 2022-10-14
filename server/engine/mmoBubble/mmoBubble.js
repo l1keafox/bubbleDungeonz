@@ -6,7 +6,7 @@ class Bubble {
     this.x = Math.floor(Math.random() * 320);
     this.y = 480 + rollDice(2, 4); // make sure it starts off screen
     let rando = Math.floor(Math.random() * 5) + 1;
-    this.speed = Math.floor(Math.random() * 7) + 0.05 * 0.001 + 0.2;
+    this.speed = Math.random()+Math.random();
     this.hits = rando;
     this.score = rando;
   }
@@ -79,10 +79,34 @@ module.exports = {
                   );
                   return newScore;
                 };
+
+                async function updateScoreOnGameCard ( gameCardId, score, userId ){
+                  const newScore = await GameCard.findByIdAndUpdate(
+                    { _id: gameCardId, "scores.user": userId },
+                    {
+                      $set: { "scores.0.score": score },
+                    },
+                    { runValidators: true, new: true }
+                  );
+                  return newScore;
+                };
+                
                 GameCard.findById({ _id: gameCardId }).exec(
                   async (err, collection) => { 
 //                    console.log(gameCardId, scorer.username, scorer.id); // this is the gameCard
-                   let update = await addScoreToGameCard(gameCardId, scorePts, scorer.id );
+                    // So we need to get the collection
+                    let foundSelf = false;
+                    for(let i in collection.scores){
+                      if(collection.scores[i].user == scorer.id){
+                        foundSelf = true;
+                        scorePts+= collection.scores[i].score
+                      }
+                    }
+                    if(foundSelf){
+                      updateScoreOnGameCard(gameCardId, scorePts, scorer.id);
+                    } else {
+                      addScoreToGameCard(gameCardId, scorePts, scorer.id );
+                    }
                 } 
                 )
                 console.log(
@@ -109,7 +133,7 @@ module.exports = {
     bubble.next--;
     if (bubble.next <= 0) {
       if(bubble.next < 0){
-        createBubs(rollDice(3,4));
+        createBubs(rollDice(1,2));
       } else {
         let newBubble = new Bubble();
         bubble.group.push(newBubble);
@@ -117,7 +141,7 @@ module.exports = {
       bubble.next = bubble.maxTimer;
     }
     if (bubble.group.length === 0) {
-      createBubs(rollDice(2,6));
+      createBubs(rollDice(1,6));
     }
 
     let index = bubble.group.length;

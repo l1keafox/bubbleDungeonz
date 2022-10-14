@@ -1,18 +1,21 @@
 @import "../../utils/colors.css";
 
 #mainModal {
-  width: 35%;
+  width: 25rem;
+  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1.2rem;
+  margin-top: 1.2rem;
+  margin-left: 1.2rem;
   background-image: linear-gradient(var(--red) 0%, var(--fuscia) 100%);
   border: solid 2px var(--fuscia);
   border-radius: 5px;
   position: absolute;
   transition: 2s ease;
-  overflow: hidden;
-  /* scrollbar-width: none; */
+
+  box-shadow: 3px 3px 3px 3px var(--blue2);
 }
 
 /* font-family "play" is just a placeholder */
@@ -24,6 +27,8 @@ h3 {
 h1 {
   display: flex;
   justify-content: center;
+  margin: 1rem;
+  font-weight: 200;
 }
 .form-select {
   background-color: var(--lime);
@@ -33,13 +38,14 @@ h1 {
 }
 .save-button {
   outline: 3px solid var(--black);
-  margin: 1rem;
+  margin-left: 15%;
+  margin-bottom: 5%;
   background-color: var(--lime);
   color: var(--navy);
 }
 .settingsOptions {
   border: solid 0.5rem var(--black);
-  margin: 1rem;
+  margin: 2rem;
   font-family: "Source Code Pro";
   color: var(--white);
   font-size: medium;

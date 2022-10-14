@@ -27,7 +27,7 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -70,13 +70,15 @@ const Login = (props) => {
             value={formState.password}
             onChange={handleChange}
           />
-          <button
-            className="loginSubmitBtn"
-            style={{ cursor: "pointer" }}
-            type="submit"
-          >
-            Login <IoMdRocket />
-          </button>
+          <Link to="/games" onClick={handleFormSubmit}>
+            <button
+              className="loginSubmitBtn"
+              style={{ cursor: "pointer" }}
+              type="submit"
+            >
+              Login <IoMdRocket />
+            </button>
+          </Link>
           <hr
             style={{
               height: "1px",

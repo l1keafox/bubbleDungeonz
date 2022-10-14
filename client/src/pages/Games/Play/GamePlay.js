@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef,useState } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
@@ -22,9 +22,11 @@ function GamePlay() {
       let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
-      let out = [...featuredGame.scores].sort((a, b) => a.score*-1 - b.score*-1);
+      let out = [...featuredGame.scores]
+        .sort((a, b) => a.score * -1 - b.score * -1)
+        .slice(0, 5);
       //
-      setScore([...out] );
+      setScore([...out]);
     }
   }, [data]);
 
@@ -40,7 +42,6 @@ function GamePlay() {
   }
 
   try {
-
     return (
       <div className="gamePlayContainer">
         <div className="canvasContainer">
@@ -50,7 +51,7 @@ function GamePlay() {
             Current Score: <span className="currentScore"></span>
           </p>
         </div>
-        <FeaturedScores scores = {scores}/>
+        <FeaturedScores scores={scores} />
 
         {auth.loggedIn() ? <ChatList /> : <div />}
       </div>

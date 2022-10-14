@@ -49,6 +49,7 @@ export const GET_CHANNEL_MESSAGES = gql`
     }
   }
 `;
+
 export const GET_ME = gql`
   query Me {
     username
@@ -66,3 +67,14 @@ export const GET_ME = gql`
     }
   }
 `;
+
+
+export const GET_CHANNEL_BY_NAME = gql`
+  query GetChannelByName($channelNameString: String) {
+    getChannelByName(channelNameString: $channelNameString) {
+      channelName
+      _id
+    }
+  }
+`;
+

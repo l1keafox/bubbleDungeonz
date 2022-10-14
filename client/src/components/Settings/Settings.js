@@ -1,12 +1,11 @@
 import "./Settings.css";
-import React, { useState } from "react";
+
 import auth from "./../../utils/auth";
 function Settings({ handleClose, show, children }) {
   const showHideClassName = show ? "modal d-block" : "modal d-none";
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
-
   console.log(auth.getUser());
   const colorKeys = [
     "Fuscia",

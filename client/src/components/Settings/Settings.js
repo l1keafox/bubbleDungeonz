@@ -11,7 +11,6 @@ function Settings({ handleClose, show, children }) {
 	const [updateSettings, { error }] = useMutation(UPDATE_SETTINGS);
 
 	const { data, loading } = useQuery(GET_ME);
-	console.log(data);
 	let [settings, setSettings] = useState({
 		background: "Fuscia",
 		chatTextColor: "Red",
@@ -20,12 +19,16 @@ function Settings({ handleClose, show, children }) {
 		linkTextColor: "Lime",
 		screenTextColor: "Purple",
 	});
-	useEffect(() => {
-		let dataSettings = data.me.settings;
-		console.log(dataSettings);
 
-		if (dataSettings.background !== null) {
-			setSettings(dataSettings);
+	useEffect(() => {
+		if (loading) {
+			return;
+		} else {
+			let dataSettings = data.me.settings;
+
+			if (dataSettings.background !== null) {
+				setSettings(dataSettings);
+			}
 		}
 	}, [data]);
 
@@ -50,6 +53,7 @@ function Settings({ handleClose, show, children }) {
 		"Black",
 	];
 
+	console.log(settings);
 	const changeSettings = (e) => {
 		let value = e.target.value;
 		let setting = e.target.name;
@@ -119,7 +123,7 @@ function Settings({ handleClose, show, children }) {
 						name="screenTextColor"
 						className="form-select"
 						aria-label="screen-text-color"
-						defaultValue={settings.screenTextColor}
+						value={settings.screenTextColor}
 						onChange={changeSettings}
 					>
 						<option>Screen Text Color</option>
@@ -134,7 +138,7 @@ function Settings({ handleClose, show, children }) {
 						name="linkTextColor"
 						className="form-select"
 						aria-label="link-text-color"
-						defaultValue={settings.linkTextColor}
+						value={settings.linkTextColor}
 						onChange={changeSettings}
 					>
 						<option>Link Text Color</option>
@@ -149,7 +153,7 @@ function Settings({ handleClose, show, children }) {
 						name="chatTextColor"
 						className="form-select"
 						aria-label="chat-text-color"
-						defaultValue={settings.chatTextColor}
+						value={settings.chatTextColor}
 						onChange={changeSettings}
 					>
 						<option>Chat Text Color</option>
@@ -164,7 +168,7 @@ function Settings({ handleClose, show, children }) {
 						name="background"
 						className="form-select"
 						aria-label="background-color"
-						defaultValue={settings.background}
+						value={settings.background}
 						onChange={changeSettings}
 					>
 						<option>Background Color</option>
@@ -179,7 +183,7 @@ function Settings({ handleClose, show, children }) {
 						name="chatWindow"
 						className="form-select"
 						aria-label="chat-window-color"
-						defaultValue={settings.chatWindow}
+						value={settings.chatWindow}
 						onChange={changeSettings}
 					>
 						<option>Chat Window Color</option>
@@ -194,7 +198,7 @@ function Settings({ handleClose, show, children }) {
 						name="header"
 						className="form-select"
 						aria-label="header-color"
-						defaultValue={settings.header}
+						value={settings.header}
 						onChange={changeSettings}
 					>
 						<option>Header Color</option>

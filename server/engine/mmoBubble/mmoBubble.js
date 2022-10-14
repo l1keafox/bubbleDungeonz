@@ -1,3 +1,4 @@
+
 class Bubble {
   constructor() {
     this.type = "bubble";
@@ -16,6 +17,10 @@ class Bubble {
     return "circle";
   }
 }
+
+
+const {GameCard,Score} = require("../../models");
+
 
 let bubble = {
   next: -1, // when the next bubble is spawned.
@@ -60,7 +65,26 @@ module.exports = {
                 if (scorer.points === undefined) {
                   scorer.points = 0;
                 }
-                scorer.points += rollDice(1, 6);
+                let scorePts = rollDice(1, 6);
+                scorer.points += scorePts;
+
+
+                async function addScoreToGameCard( gameCardId, score, userId ){
+                  const newScore = await GameCard.findByIdAndUpdate(
+                    { _id: gameCardId },
+                    {
+                      $addToSet: { scores: { user: userId, score: score } },
+                    },
+                    { runValidators: true, new: true }
+                  );
+                  return newScore;
+                };
+                GameCard.findById({ _id: gameCardId }).exec(
+                  async (err, collection) => { 
+//                    console.log(gameCardId, scorer.username, scorer.id); // this is the gameCard
+                   let update = await addScoreToGameCard(gameCardId, scorePts, scorer.id );
+                } 
+                )
                 console.log(
                   `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
                 );

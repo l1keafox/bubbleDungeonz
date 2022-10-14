@@ -66,19 +66,23 @@ export const GET_GAME_CARDS = gql`
   }
 `;
 export const GET_ME = gql`
-  query Me {
-    username
-    email
-    friends {
+  query Query {
+    me {
+      _id
       username
-    }
-    settings {
-      screenTextColor
-      linkTextColor
-      chatTextColor
-      background
-      chatWindow
-      header
+      email
+      settings {
+        screenTextColor
+        linkTextColor
+        chatTextColor
+        background
+        chatWindow
+        header
+      }
+      friends {
+        _id
+        username
+      }
     }
   }
 `;

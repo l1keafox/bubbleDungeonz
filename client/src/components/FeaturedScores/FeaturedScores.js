@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import "./FeaturedScores.css";
@@ -7,14 +7,26 @@ import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
 import { GET_GAME_CARDS } from "./../../utils/queries";
 
 function FeaturedScores() {
+  const [featuredGame, setFeaturedGame] = useState();
+
   // Query for all games
   const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
   console.log(data);
+  // const gameCards = data.gameCards || [];
+  // console.log(gameCards);
+  if (loading) {
+    return <p>loading</p>;
+  } else {
+    console.log(data.gameCards);
+
+    let randomGameIndex = Math.floor(Math.random() * data.gameCards.length);
+    let randomGame = data.gameCards[randomGameIndex];
+    console.log(randomGame);
+    setFeaturedGame("test");
+    console.log(featuredGame);
+  }
 
   // Pick a game at random from the list
-  let featuredGame =
-    data.gameCards[Math.floor(Math.random() * data.gameCards.length)];
-  console.log(featuredGame);
 
   // array of all scores from featured game in descending order
   const allScoresArray = featuredGame.scores
@@ -31,7 +43,7 @@ function FeaturedScores() {
     highScoresArray.push(allScoresArray[i]);
   }
   console.log(highScoresArray);
-  console.log(highScoresArray.map((score) => score.score));
+  // console.log(highScoresArray.map((score) => score.score));
 
   function populateHighScores() {
     if (loading) {

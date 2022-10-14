@@ -20,12 +20,9 @@ function GamePlay() {
    useEffect(  ()=>{
     const load = async () => {
       const test = await gameCard({variables:{gameCardId:gameId}});
-      console.log(test.data.gameCard.scores[1].user.username);
+      const userName = auth.getUser().data.username;
       for(let i in test.data.gameCard.scores){
-        console.log(test.data.gameCard.scores[i]);
-
-        if(test.data.gameCard.scores[i].user && test.data.gameCard.scores[i].user.username === "test"){
-          console.log(test.data.gameCard.scores[i].score);
+        if(test.data.gameCard.scores[i].user && test.data.gameCard.scores[i].user.username === userName){
           changeScore(test.data.gameCard.scores[i].score);
           break;
         }

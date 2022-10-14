@@ -19,6 +19,14 @@
   text-decoration: none;
 }
 
+.gameViewLink:hover button {
+  color: var(--yellow);
+}
+
+.gameViewLink:hover button {
+  color: var(--yellow);
+}
+
 .gameViewContainer {
   display: flex;
   flex-direction: column;

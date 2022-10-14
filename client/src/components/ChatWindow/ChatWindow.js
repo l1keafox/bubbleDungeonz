@@ -2,7 +2,7 @@ import "./ChatWindow.css";
 import React, { useEffect, useState, useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
-import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
+import { GET_CHANNEL_MESSAGES,GET_CHANNEL_BY_NAME } from "../../utils/queries";
 import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
 
 import auth from "../../utils/auth";
@@ -11,6 +11,8 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 export default function ChatWindow(props) {
   const [messages, setMessages] = useState([]);
   const [channelId, setChannelId] = useState(props.channelId);
+  const [channelNameString,setChannelName] = useState(props?.channelName);
+  const { l, dat } = useQuery(GET_CHANNEL_BY_NAME,{variables:{channelNameString}});
 
   const bottomRef = useRef();
 
@@ -20,6 +22,12 @@ export default function ChatWindow(props) {
   );
   useEffect(() => {
     startPolling(1000);
+  },[]);
+  useEffect(()=>{
+    console.log("checking channel by name")
+    console.log(props.channelName);
+    console.log(l);
+    console.log(dat);
   },[]);
 
   const channels = data?.channelMessages || [];
@@ -47,7 +55,7 @@ export default function ChatWindow(props) {
     if (loading) {
       return <p>loading</p>;
     } else {
-      return messages.map((message) => {
+      return messages?.map((message) => {
         return (
           <li key={message._id}>
             <span className="displayedUsername">{message.username}</span>:{" "}

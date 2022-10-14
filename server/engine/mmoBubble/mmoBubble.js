@@ -106,6 +106,7 @@ module.exports = {
         bubble.group.push(newBubble);
       }
     }
+    
     bubble.next--;
     if (bubble.next <= 0) {
       if(bubble.next < 0){

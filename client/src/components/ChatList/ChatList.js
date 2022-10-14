@@ -14,17 +14,17 @@ let lastGameChannelId = null;
 
 export default function ChatList() {
   const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
-  const [openChannelIds, setOpenChannelIds] = useState([]);
+  const [openChannelId, setOpenChannelId] = useState(null);
   const { toggleGameState } = useGameContext();
   const [context, setContext] = useState(useGameContext());
   const [getChannel,{ l, dat }] = useLazyQuery(GET_CHANNEL_BY_NAME);
   const [create,{e,d}] = useMutation(CREATE_CHANNEL);
   const [join,{joinError,joinData}] = useMutation(JOIN_CHANNEL);
   const [leave,{leaveError,leaveData}]=useMutation(LEAVE_CHANNEL);
+  const [channelNameString,setChannelNameString] = useState("");
   let location = useLocation();
 
 
-  let channelNameString = "Global"
     const attemptJoin = async (channelId) => {
     await join({variables:{channelId}});
     }
@@ -32,39 +32,43 @@ export default function ChatList() {
     await leave({variables:{channelId}});
     }
 
-  const channels = data?.memberChannels || [];
+  const [channels,setChannels] = useState(data?.memberChannels || []);
   
     useEffect(()=>{
         startPolling(1000);
-        if(context?.gameState && lock && location.pathname=="/gameplay"){
-            channelNameString = context.gameState;
+        //on logout doesn't leave channel. needs to check at all times to leave all channels but global
+        if(location.pathname=="/gameplay"){
+            console.log(location.pathname);
+            console.log(context.gameState);
+            
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
                 lastGameChannelId = newChannel.data.createChannel._id;
                 await attemptJoin(newChannel.data.createChannel._id);
             };
-            const load = async () => {
-                const test = await getChannel({variables:{channelNameString}});
-                if(test.data.getChannelByName){
-                    lastGameChannelId = test.data.getChannelByName._id
-                    //join channel
-                    attemptJoin(lastGameChannelId);
-                }else{
-                    //create and join channel
-                    attemptCreate(channelNameString);
-                }
-                
+            const attemptLoad = async () => {
+                const channelNameString = context.gameState;
+                console.log("loading");
+                console.log(channelNameString);
+                const gameChannel = await getChannel({variables:{channelNameString}})
+                console.log(gameChannel.data.getChannelByName);
+                setChannels([...channels,gameChannel.data.getChannelByName])
             }
-            load();
-            lock=false;
+            attemptLoad();
+            // lock=false;
           }
-          if(!context?.gameState || location.pathname!='/gameplay'){
+          if(location.pathname!='/gameplay'){
+            console.log(location.pathname);
+            console.log(context.gameState);
+            if(channelNameString!="Global"){
+                setOpenChannelId("");
+            }
             if(lastGameChannelId){
                 //leave channel
                 attemptLeave(lastGameChannelId);
                 lastGameChannelId = null;
             }
-            lock = true;
+            // lock = true;
           }
     },[]);
 
@@ -75,34 +79,42 @@ export default function ChatList() {
     } else {
       return channels.map((item) => (
         <p
-          onClick={() => openChannel(item._id, item.channelName)}
-          key={item._id}
+          onClick={() => openChannel(item?._id, item?.channelName)}
+          key={item?._id}
           className="channelLink"
         >
-          {item.channelName}
+          {item?.channelName}
         </p>
       ));
     }
   }
   // openChannel called on click for channel buttons
   function openChannel(id, name) {
-    console.log(openChannelIds);
-    if (!openChannelIds.includes(id)) {
-      setOpenChannelIds([id]);
-    }
+    console.log("opening channel");
+    console.log(id);
+    setChannelNameString(name);
+    setOpenChannelId(id);
   }
   function closeChannel() {
-    setOpenChannelIds([]);
+    setOpenChannelId(null);
   }
 
-  function loadedChannels(list) {
-    return list.map((item) => <ChatWindow key={item} channelId={item} />);
-  }
+function loadedChannels(item) {
+    console.log("loading new channel");
+    console.log(channelNameString);
+    console.log(item);
+    if(item){
+        return  <ChatWindow key={item} channelId={item} />;
+    }else{
+        return <div></div>;
+    }
+    
+}
 
   return (
     <aside className="chatAside">
       <div className="chatChannelsList">
-        {openChannelIds.length === 1 ? (
+        {openChannelId ? (
           <p className="collapseChatBtn" onClick={closeChannel}>
             X
           </p>
@@ -111,7 +123,8 @@ export default function ChatList() {
         )}
         {channelOptions({ channels })}
       </div>
-      {loadedChannels(openChannelIds)}
+      <h3>{openChannelId ? channelNameString :null}</h3>
+      {loadedChannels(openChannelId)}
     </aside>
   );
 }

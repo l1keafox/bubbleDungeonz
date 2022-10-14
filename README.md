@@ -54,18 +54,31 @@
   ## Questions
   <a href='https://github.com/l1keafox'>Raymond Lewis github.</a>  :🐱: 
   <a href="mailto: raymond.ed.lewis@gmail.com">Email :raymond.ed.lewis@gmail.com</a>
+  * Repo master
+  * Game design
+  * Socket.io implementation
     
   <a href='https://github.com/relero90'>Becca Roberts github.</a> :🐕🐕🐱:
   <a href="mailto: sdfa@gmail.com">Email :Becca@gmail.com</a>
+  * UI/UX design
+  * React specialist
 
-  <a href='https://github.com/jamesyoungGHusername'>James Young github.</a> :🦉🦉:
-  <a href="mailto: @gmail.com">Email :James@gmail.com</a>
+  <a href='https://github.com/jamesyoungGHusername'>James Young github.</a> :🐩🐩🦉🦉:
+  <a href="mailto: @gmail.com">Email :jamesyoungwrites@gmail.com</a>
+  * Chat implementation
+  * Login and onboarding back-end
 
   <a href='https://github.com/TateFoster'>Tate Foster github.</a> :🐹🐹🐹🐹🐹:
   <a href="mailto:@gmail.com">Email :Tate@gmail.com</a>
+  * Accessability back-end
+  * Game database features
 
   <a href='https://github.com/madrodgerflynn'>Tyler Anderson github.</a>  :🐧🐧🐧🐧:
   <a href="mailto: @gmail.com">Email Tyler@gmail.com</a>
+  * Accessibility front-end
+  * Onboarding front-end
+  * User preferences front-end
+  * UI/UX design 
 
   ## License
   [MIT](https://choosealicense.com/licenses/mit/)

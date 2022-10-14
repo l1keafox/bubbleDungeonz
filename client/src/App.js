@@ -35,7 +35,7 @@ const wsLink = new GraphQLWsLink(
     url: "ws://localhost:4000/subscriptions",
   })
 );
-
+console.log();
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",

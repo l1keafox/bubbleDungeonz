@@ -104,6 +104,8 @@ module.exports = {
                         findSelf = true;
                       }
                     }
+
+                    console.log(gameCardId, scorePts, scorer.id );
                     if(!findSelf){
                      addScoreToGameCard( gameCardId, scorePts, scorer.id )
                     } else {

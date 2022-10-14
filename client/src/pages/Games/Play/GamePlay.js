@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef,useState } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
@@ -15,7 +15,12 @@ function GamePlay() {
     nextFetchPolicy:"network-only",
   }); //async not functioning
   const [scores, setScore] = useState([]);
+
   const [myScore, setMyScore] = useState(0);
+
+  const [gameTitle, setGameTitle] = useState("");
+
+
   useEffect(() => {
     console.log('update?');
     if (data && data.gameCards) {
@@ -27,6 +32,7 @@ function GamePlay() {
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
 
+
       // here we'll go and see if we can find myself
       for(let index in featuredGame.scores){
         if(featuredGame.scores[index].user.username === auth.getUser().data.username ){
@@ -35,8 +41,14 @@ function GamePlay() {
       }
 
       let out = [...featuredGame.scores].sort((a, b) => a.score*-1 - b.score*-1);
+
+      setGameTitle(featuredGame.title);
+      let out = [...featuredGame.scores]
+        .sort((a, b) => a.score * -1 - b.score * -1)
+        .slice(0, 5);
+
       //
-      setScore([...out] );
+      setScore([...out]);
     }
   }, [data]);
 
@@ -50,6 +62,10 @@ function GamePlay() {
       game = <Canvas />;
       break;
   }
+
+
+  try {
+
     return (
       <div className="gamePlayContainer">
         <div className="canvasContainer">
@@ -59,7 +75,7 @@ function GamePlay() {
             {auth.getUser().data.username} Score: <span className="currentScore">{myScore}</span>
           </p>
         </div>
-        <FeaturedScores scores = {scores}/>
+        <FeaturedScores scores={scores} title={gameTitle} />
 
         {auth.loggedIn() ? <ChatList /> : <div />}
       </div>

@@ -1,7 +1,7 @@
 const { Schema, Types } = require("mongoose");
 
 const scoreSchema = new Schema({
-	user: {
+	userId: {
 		type: Schema.Types.ObjectId,
 		ref: "user",
 	},

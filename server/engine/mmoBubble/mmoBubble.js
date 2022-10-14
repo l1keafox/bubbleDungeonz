@@ -34,7 +34,6 @@ module.exports = {
   },
   init: function (gameSettings) {
     // this is empty
-    console.log(gameSettings.id);//
     gameCardId = gameSettings.id;
 
     io.on("connection", (socket) => {
@@ -79,11 +78,38 @@ module.exports = {
                   );
                   return newScore;
                 };
+                async function updateScoreOnGameCard( gameCardId, score, userId ){
+                  const newScore = await GameCard.findByIdAndUpdate(
+                    { _id: gameCardId, "scores.user": userId },
+                    {
+                      $set: { "scores.0.score": score },
+                    },
+                    { runValidators: true, new: true }
+                  );
+                  return newScore;
+                };
+
                 GameCard.findById({ _id: gameCardId }).exec(
                   async (err, collection) => { 
 //                    console.log(gameCardId, scorer.username, scorer.id); // this is the gameCard
-                   let update = await addScoreToGameCard(gameCardId, scorePts, scorer.id );
-                } 
+                    // How this should work is
+                    // we find the user
+                    // then we add the score
+                    // if we do not find 
+                    //console.log(collection);
+                    const findSelf = false;
+                    for(let i in collection.scores){
+                    //  console.log(collection.scores[i].id , scorer.id);
+                      if(collection.scores[i].id == scorer.id ){
+                        findSelf = true;
+                      }
+                    }
+                    if(!findSelf){
+                     addScoreToGameCard( gameCardId, scorePts, scorer.id )
+                    } else {
+                      updateScoreOnGameCard( gameCardId, scorePts, scorer.id )
+                    }
+                  } 
                 )
                 console.log(
                   `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`

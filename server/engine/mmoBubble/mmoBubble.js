@@ -6,7 +6,7 @@ class Bubble {
     this.x = Math.floor(Math.random() * 320);
     this.y = 480 + rollDice(2, 4); // make sure it starts off screen
     let rando = Math.floor(Math.random() * 5) + 1;
-    this.speed = Math.floor(Math.random() * 7) + 0.05 * 0.001 + 0.2;
+    this.speed = Math.random() +Math.random() +Math.random()  ;
     this.hits = rando;
     this.score = rando;
   }
@@ -111,8 +111,7 @@ module.exports = {
       if(bubble.next < 0){
         createBubs(rollDice(3,4));
       } else {
-        let newBubble = new Bubble();
-        bubble.group.push(newBubble);
+        createBubs(rollDice(1,4));
       }
       bubble.next = bubble.maxTimer;
     }

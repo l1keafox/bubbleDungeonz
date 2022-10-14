@@ -10,7 +10,7 @@ function Header() {
   //state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");
   const [showModal, changeModal] = useState(false);
-  const { toggleGameState } = useGameContext();
+  const { submitGameTitle } = useGameContext();
   const toggleModal = () => {
     if (!showModal) {
       changeModal(true);
@@ -28,17 +28,17 @@ function Header() {
       <Settings show={showModal} />
 
       <ul className="navBar">
-        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/" }} className="navLink">
+        <Link onClick={()=>submitGameTitle(null)} to={{ pathname: "/" }} className="navLink">
           <li>Home</li>
         </Link>
-        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/games" }} className="navLink">
+        <Link onClick={()=>submitGameTitle(null)} to={{ pathname: "/games" }} className="navLink">
           <li>Games</li>
         </Link>
         <li
           className={auth.loggedIn() ? "navLink" : "navLink hidden"}
           onClick={()=>{
             auth.logout();
-            toggleGameState(null);}
+            submitGameTitle(null);}
           }
         >
           Logout

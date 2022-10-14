@@ -107,7 +107,7 @@ const Canvas = () => {
                 localObj.framesLeft--;
                 GAME.Draw.circle(localObj.x, localObj.y, parseInt( localObj.radius ),"white",localObj.opacity);
                 localObj.radius += 1;
-                localObj.opacity -= 10;
+                localObj.opacity -= 1;
               }else {
                 GAME.localObjects.splice(index,1);
               }
@@ -137,18 +137,12 @@ const Canvas = () => {
       },
 
       circle: function (x, y, r, col,o) {
-        let oca = o;
-        if(o > 1){
-          oca = o/100;
-        } 
-        //GAME.ctx.fillStyle = col;
-        GAME.ctx.fillStyle = `rgba(0, 0, 0, ${oca})`;
+        GAME.ctx.strokeStyle = `rgba(150, 150, 0, ${ o * 0.01 })`;
         GAME.ctx.beginPath();
 
         GAME.ctx.arc(x + 5, y + 5, r, 0, Math.PI * 2, true);
         GAME.ctx.stroke();
         GAME.ctx.closePath();
-        // GAME.ctx.fill();
       },
 
       text: function (string, x, y, size, col) {
@@ -161,23 +155,17 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd) {
-    console.log(socketd);
     try {
-      console.log(socketd);
       const {} = await authUserSession({
         variables: { sessionId: socketd },
       });
-      console.log(socketd);
-      //...formState
     } catch (err) {
-      console.log(err);
     }
   }
   useEffect(() => {
     if (socket) {
       socket.on("connect", () => {
         authMe(socket.id);
-
         GAME.init();
         socket.on("bubbles", (obj) => {
           GAME.localCache = obj;

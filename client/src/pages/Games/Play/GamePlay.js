@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef,useState } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
-import { useGameContext } from "./../../../utils/gameContext";
+import { useGameContext ,gameId } from "./../../../utils/gameContext";
 import "./GamePlay.css";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -9,15 +9,16 @@ import auth from "../../../utils/auth";
 import ChatList from "../../../components/ChatList/ChatList.js";
 
 function GamePlay() {
-  const { gameState } = useGameContext();
+  const { gameState,gameId } = useGameContext();
   // changeTitle(gameState);
   let game;
-
+  console.log("This game has id:",gameId);
   
- 
+  const [currentScore,changeScore] = useState(0);
+
   switch (gameState) {
     case "Bubble Trouble":
-      game = <Canvas />;
+      game = <Canvas  />;
       break;
     default:
       game = <Canvas />;
@@ -29,7 +30,7 @@ function GamePlay() {
         <h1 className="gamePlayTitle">{gameState}</h1>
         {game}
         <p className="scoreCounter">
-          Current Score: <span className="currentScore"></span>
+          Current Score: <span className="currentScore"> {currentScore}    </span>
         </p>
       </div>
       <div className="highScoreContainer">

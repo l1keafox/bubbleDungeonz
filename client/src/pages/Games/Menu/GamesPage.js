@@ -11,10 +11,10 @@ import { BsJoystick } from "react-icons/bs";
 import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
-  const { toggleGameState } = useGameContext();
+  const { submitGameTitle,submitGameId } = useGameContext();
   const { loading, data,startPolling, stopPolling } = useQuery(GET_GAME_CARDS);
   useEffect(()=>{
-    toggleGameState(null);
+    submitGameTitle(null);
   },[]);
 
 
@@ -26,11 +26,12 @@ function GamesMenu() {
             <Link className="gameViewLink" name={game.title} to="/gameplay">
               <div
                 onClick={() => {
-                  toggleGameState(game.title);
+                  submitGameTitle(game.title);
+                  submitGameId(game._id);
                 }}
                 className="gameViewContainer"
               >
-                <img src={game.image} className="gameComponent" />
+                <img src={bubbleTroubleImg} className="gameComponent" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>
                   <p className="cardText">{game.description}</p>
@@ -40,7 +41,7 @@ function GamesMenu() {
                       href="#"
                       className="playBtn btn"
                       onClick={() => {
-                        toggleGameState(game.title);
+                        submitGameTitle(game.title);
                       }}
                     >
                       Play <BsJoystick />

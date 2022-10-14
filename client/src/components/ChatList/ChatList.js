@@ -33,9 +33,11 @@ export default function ChatList() {
   
     useEffect(()=>{
         startPolling(1000);
-
+        console.log(context.gameState, context.gameId);
         if(context?.gameState && lock){
+          console.log(context.gameState, context.gameId);
             channelNameString = context.gameState;
+            
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
                 lastGameChannelId = newChannel.data.createChannel._id;

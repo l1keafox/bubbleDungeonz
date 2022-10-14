@@ -83,6 +83,7 @@ export const GET_CHANNEL_BY_NAME = gql`
 export const GET_GAME_CARDS = gql`
   query Query {
     gameCards {
+      _id
       title
       scores {
         user {

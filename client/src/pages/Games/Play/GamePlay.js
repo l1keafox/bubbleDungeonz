@@ -32,6 +32,39 @@ function GamePlay() {
     );
     console.log(currentGameCard);
 
+    const allScoresArray = currentGameCard[0].scores
+      .map((score) => ({
+        score: score.score,
+        username: score.user.username,
+      }))
+      .sort((a, b) => a - b);
+
+    console.log(allScoresArray);
+
+    let highScoresArray = [];
+    for (
+      var i = allScoresArray.length - 1;
+      i > allScoresArray.length - 6;
+      i--
+    ) {
+      highScoresArray.push(allScoresArray[i]);
+    }
+
+    function populateHighScores() {
+      if (loading) {
+        return <p>loading</p>;
+      } else {
+        // list items of username - score
+        // map over highScoresArray
+        return highScoresArray.map((score) => (
+          <div className="featuredScore">
+            <span className="featuredUsername">{score.username}</span> -{" "}
+            {score.score}
+          </div>
+        ));
+      }
+    }
+
     return (
       <div className="gamePlayContainer">
         <div className="canvasContainer">
@@ -48,23 +81,7 @@ function GamePlay() {
                 {gameState} High Scores
               </h5>
             </div>
-            <div className="featuredScoresList">
-              <div className="featuredScore">
-                <span className="featuredUsername">username</span> - score
-              </div>
-              <div className="featuredScore">
-                <span className="featuredUsername">username</span> - score
-              </div>
-              <div className="featuredScore">
-                <span className="featuredUsername">username</span> - score
-              </div>
-              <div className="featuredScore">
-                <span className="featuredUsername">username</span> - score
-              </div>
-              <div className="featuredScore">
-                <span className="featuredUsername">username</span> - score
-              </div>
-            </div>
+            <div className="featuredScoresList">{populateHighScores()}</div>
           </div>
         </div>
         {auth.loggedIn() ? <ChatList /> : <div />}

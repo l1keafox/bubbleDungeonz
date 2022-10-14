@@ -69,6 +69,7 @@ function App() {
       {" "}
       <Router>
         <ApolloProvider client={client}>
+        <ExistingUserProvider>
           <GameContextProvider>
             <Header />
           
@@ -76,9 +77,9 @@ function App() {
             <Route
               path="/"
               element={
-                <ExistingUserProvider>
+                
                   <HomePage />
-                </ExistingUserProvider>
+                
               }
             />
             <Route
@@ -99,6 +100,7 @@ function App() {
             ></Route>
           </Routes>
           </GameContextProvider>
+          </ExistingUserProvider>
         </ApolloProvider>
       </Router>
     </>

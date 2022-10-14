@@ -26,7 +26,7 @@ class AuthService {
     console.log(idToken, "LOGGED IN?");
     console.log(decode(idToken));
     localStorage.setItem("id_token", idToken);
-    window.location.assign("/games");
+    //window.location.assign("/games");
   }
 
   logout() {

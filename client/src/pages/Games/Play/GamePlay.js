@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_GAME_CARDS } from "../../../utils/queries";
 import FeaturedScores from "../../../components/FeaturedScores/FeaturedScores";
 
@@ -11,7 +11,8 @@ import ChatList from "../../../components/ChatList/ChatList.js";
 
 function GamePlay() {
   const { gameState } = useGameContext();
-  const { loading, error, data } = useQuery(GET_GAME_CARDS,{
+  const {  data } = useQuery(GET_GAME_CARDS,{
+    //loading, error,
     nextFetchPolicy:"network-only",
   }); //async not functioning
   const [scores, setScore] = useState([]);
@@ -22,13 +23,12 @@ function GamePlay() {
 
 
   useEffect(() => {
-    console.log('update?');
     if (data && data.gameCards) {
       const gameCards = data.gameCards;
       // console.log(data.gameCards);
 
       // Pick a game at random from the list
-      let randomGameIndex = Math.floor(Math.random() * gameCards.length);
+      // let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
 
@@ -40,14 +40,9 @@ function GamePlay() {
         }
       }
 
-      let out = [...featuredGame.scores].sort((a, b) => a.score*-1 - b.score*-1);
+      let out = [...featuredGame.scores].sort((a, b) => a.score*-1 - b.score*-1).slice(0, 5);
 
       setGameTitle(featuredGame.title);
-      let out = [...featuredGame.scores]
-        .sort((a, b) => a.score * -1 - b.score * -1)
-        .slice(0, 5);
-
-      //
       setScore([...out]);
     }
   }, [data]);
@@ -62,9 +57,6 @@ function GamePlay() {
       game = <Canvas />;
       break;
   }
-
-
-  try {
 
     return (
       <div className="gamePlayContainer">

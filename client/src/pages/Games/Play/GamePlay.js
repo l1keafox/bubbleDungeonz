@@ -26,44 +26,44 @@ function GamePlay() {
   const { loading, error, data } = useQuery(GET_GAME_CARDS);
 
   try {
-    const gameCards = data?.gameCards || [];
-    if(gameCards[0]?.scores){
-      var currentGameCard = gameCards.filter(
-        (card) => card.title === gameState
-      );
+    // const gameCards = data?.gameCards || [];
+    // if(gameCards[0]?.scores){
+    //   var currentGameCard = gameCards.filter(
+    //     (card) => card.title === gameState
+    //   );
   
-      var allScoresArray = currentGameCard[0]?.scores
-        .map((score) => ({
-          score: score.score,
-          username: score.user.username,
-        }))
-        .sort((a, b) => a - b);
+    //   var allScoresArray = currentGameCard[0]?.scores
+    //     .map((score) => ({
+    //       score: score.score,
+    //       username: score.user.username,
+    //     }))
+    //     .sort((a, b) => a - b);
   
-      var highScoresArray = [];
-      for (
-        var i = allScoresArray?.length - 1;
-        i > allScoresArray?.length - 6;
-        i--
-      ) {
-        highScoresArray.push(allScoresArray[i]);
-      }
-    }
+    //   var highScoresArray = [];
+    //   for (
+    //     var i = allScoresArray?.length - 1;
+    //     i > allScoresArray?.length - 6;
+    //     i--
+    //   ) {
+    //     highScoresArray.push(allScoresArray[i]);
+    //   }
+    // }
     
 
-    function populateHighScores() {
-      if (loading) {
-        return <p>loading</p>;
-      } else {
-        // list items of username - score
-        // map over highScoresArray
-        return highScoresArray.map((score) => (
-          <div className="featuredScore">
-            <span className="featuredUsername">{score.username}</span> -{" "}
-            {score.score}
-          </div>
-        ));
-      }
-    }
+    // function populateHighScores() {
+    //   if (loading) {
+    //     return <p>loading</p>;
+    //   } else {
+    //     // list items of username - score
+    //     // map over highScoresArray
+    //     return highScoresArray.map((score) => (
+    //       <div className="featuredScore">
+    //         <span className="featuredUsername">{score.username}</span> -{" "}
+    //         {score.score}
+    //       </div>
+    //     ));
+    //   }
+    // }
 
     return (
       <div className="gamePlayContainer">
@@ -74,18 +74,7 @@ function GamePlay() {
             Current Score: <span className="currentScore"></span>
           </p>
         </div>
-        <div className="highScoreContainer">
-          <div className="featuredScoresDiv">
-            <div className="cardBody">
-              <h5 className="featuredGame card-title">
-                {gameState} High Scores
-              </h5>
-            </div>
-            <div className="featuredScoresList">
-              {allScoresArray?.length > 0 ? populateHighScores() : <></>}
-            </div>
-          </div>
-        </div>
+
         {auth.loggedIn() ? <ChatList /> : <div />}
       </div>
     );
@@ -95,3 +84,15 @@ function GamePlay() {
 }
 
 export default GamePlay;
+{/* <div className="highScoreContainer">
+<div className="featuredScoresDiv">
+  <div className="cardBody">
+    <h5 className="featuredGame card-title">
+      {gameState} High Scores
+    </h5>
+  </div>
+  <div className="featuredScoresList">
+    {allScoresArray?.length > 0 ? populateHighScores() : <></>}
+  </div>
+</div>
+</div> */}

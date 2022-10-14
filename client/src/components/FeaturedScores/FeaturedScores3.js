@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import "./FeaturedScores.css";
@@ -7,10 +7,12 @@ import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
 import { GET_GAME_CARDS } from "./../../utils/queries";
 
 function FeaturedScores() {
+  // const [featuredGame, setFeaturedGame] = useState();
+
   // Query for all games
   const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
 
-  useEffect(()=>{
+  try {
     const gameCards = data?.gameCards || [];
 
     // Pick a game at random from the list
@@ -34,14 +36,25 @@ function FeaturedScores() {
       i--
     ) {
       highScoresArray.push(allScoresArray[i]);
-    }    
-  },[data]);
+    }
 
+    function populateHighScores() {
+      if (loading) {
+        return <p>loading</p>;
+      } else {
+        // list items of username - score
+        // map over highScoresArray
+        return highScoresArray.map((score) => (
+          <div className="featuredScore">
+            <span className="featuredUsername">{score.username}</span> -{" "}
+            {score.score}
+          </div>
+        ));
+      }
+    }
 
-  return (
-    <div>
-        {loading ? <p>loading</p> :      
-        <div>
+    return (
+      <div>
         <div className="featuredScoresDiv">
           <img
             className="card-img-top featuredGameImg"
@@ -51,7 +64,7 @@ function FeaturedScores() {
           <div className="cardBody">
             <h5 className="featuredGame card-title">Featured Game:</h5>
             <h5 className="featuredGameTitle card-title">
-
+              {featuredGame.title}
             </h5>
           </div>
           <hr
@@ -66,13 +79,14 @@ function FeaturedScores() {
           />
           <div className="featuredScoresList">
             <h5 className="highScores card-title">High Scores</h5>
-
+            {allScoresArray.length > 0 ? populateHighScores() : <></>}
           </div>
         </div>
-      </div> }
-    </div>
-  );
-
+      </div>
+    );
+  } catch (err) {
+    if (err) console.log(err);
+  }
 }
 
 export default FeaturedScores;

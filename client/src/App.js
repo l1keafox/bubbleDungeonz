@@ -10,13 +10,11 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useCallback, useEffect, useState } from "react";
 // import Particles from "react-particles";
-import { loadFull } from "tsparticles";
+// import { loadFull } from "tsparticles";
 // import particlesOptions from "./particles.json";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
-
-?
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import GamePlay from "./pages/Games/Play/GamePlay.js";
@@ -61,9 +59,9 @@ const client = new ApolloClient({
 
 // const particlesJS = window.particleJS;
 function App() {
-  const particlesInit = useCallback((main) => {
-    loadFull(main);
-  }, []);
+  // const particlesInit = useCallback((main) => {
+  //   loadFull(main);
+  // }, []);
 //          <Particles options={particlesOptions} init={particlesInit} />
 
   return (

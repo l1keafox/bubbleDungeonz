@@ -79,29 +79,6 @@ const resolvers = {
       return channel;
     },
 
-<<<<<<< HEAD
-		//returns the current user id, must be logged in for it to work.
-		me: async (parent, args, context) => {
-			console.log("here");
-			if (context.user) {
-				return User.findOne({ _id: context.user._id });
-			}
-			throw new AuthenticationError("You need to be logged in!");
-		},
-		gameCards: async () => {
-			return GameCard.find().populate({
-				path: "scores",
-				populate: { path: "user", model: "user" },
-			});
-		},
-		gameCard: async (parents, { gameCardId }) => {
-			return GameCard.findById({ _id: gameCardId }).populate({
-				path: "scores",
-				populate: { path: "user", model: "user" },
-			});
-		},
-	},
-=======
     //returns the current user id, must be logged in for it to work.
     me: async (parent, args, context) => {
       console.log(context.user);
@@ -124,7 +101,6 @@ const resolvers = {
       });
     },
   },
->>>>>>> ce362e7f7770481715d6c7e602eca8facf1ddd65
 
   Mutation: {
     //creates a channel, only needs channel name

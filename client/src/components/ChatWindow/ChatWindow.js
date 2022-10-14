@@ -1,5 +1,5 @@
 import "./ChatWindow.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
@@ -11,6 +11,8 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 export default function ChatWindow(props) {
   const [messages, setMessages] = useState([]);
   const [channelId, setChannelId] = useState(props.channelId);
+
+  const bottomRef = useRef();
 
   const { loading, error, data, startPolling, stopPolling } = useQuery(
     GET_CHANNEL_MESSAGES,
@@ -62,7 +64,10 @@ export default function ChatWindow(props) {
       <h1>{props.name}</h1>
       <div className="scrollable-div">
         <a className="loadMore">Load Older Messages</a>
-        <ul className="chatFeed">{chatListItems(channels.messages)}</ul>
+        <ul className="chatFeed">
+          {chatListItems(channels.messages)}
+        </ul>
+        <div></div>
       </div>
       <MessageEditor channelId={props.channelId} />
     </div>

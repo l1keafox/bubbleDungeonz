@@ -5,8 +5,6 @@ import { useMutation } from "@apollo/client";
 
 import bubble from "./../Canvas/bubble.PNG";
 import io from "socket.io-client";
-import color from "./../../utils/colors.css";
-import auth from "./../../utils/auth";
 
 const requestAnimFrame = (function () {
   return (
@@ -16,17 +14,17 @@ const requestAnimFrame = (function () {
     window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame ||
     function (callback) {
-      window.setTimeout(callback, 1000 / 60);
+      window.setTimeout(callback, 1000 / 30);
     }
   );
 })();
 
 const Canvas = () => {
   const [socket, setSocket] = useState(null);
-  const [authUserSession, { error, data }] = useMutation(AUTH_USER_SESSION);
+  const [authUserSession] = useMutation(AUTH_USER_SESSION);
 
   useEffect(() => {
-    const newSocket = io(`http://${window.location.hostname}:3001`);
+    const newSocket = io(); //`http://${window.location.hostname}:3001`
     setSocket(newSocket);
     return () => newSocket.close();
   }, []);
@@ -68,12 +66,10 @@ const Canvas = () => {
     },
 
     render: function () {
-      const gameObjects = GAME.localCache;
       GAME.Draw.rect(0, 0, GAME.WIDTH, GAME.HEIGHT, "#036");
-
       // cycle through all entities and render to canvas
-      if (gameObjects) {
-        for (let gameObj of gameObjects) {
+      if (GAME.localCache) {
+        for (let gameObj of GAME.localCache) {
           GAME.Draw.img(bubble, gameObj.x, gameObj.y, gameObj.r, gameObj.r);
         }
       }
@@ -161,16 +157,11 @@ const Canvas = () => {
 
   const canvas = useRef(null);
   async function authMe(socketd) {
-    console.log(socketd);
     try {
-      console.log(socketd);
-      const {} = await authUserSession({
+      await authUserSession({
         variables: { sessionId: socketd },
       });
-      console.log(socketd);
-      //...formState
     } catch (err) {
-      console.log(err);
     }
   }
   useEffect(() => {

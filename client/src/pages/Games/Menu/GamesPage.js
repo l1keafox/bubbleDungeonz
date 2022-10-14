@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "../../../utils/gameContext.js";
 import { Link } from "react-router-dom";
 import auth from "../../../utils/auth";
@@ -12,7 +11,7 @@ import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
   const { toggleGameState } = useGameContext();
-  const { loading, data,startPolling, stopPolling } = useQuery(GET_GAME_CARDS);
+  const { loading, data } = useQuery(GET_GAME_CARDS);
   useEffect(()=>{
     toggleGameState(null);
   },[]);
@@ -22,15 +21,16 @@ function GamesMenu() {
     <>
     <div className="menuCardsContainer">
       {loading ? <p>loading</p> : auth.loggedIn()
-        ? data.gameCards.map((game) => (
-            <Link className="gameViewLink" name={game.title} to="/gameplay">
+        ? data.gameCards.map((game,index) => (
+            <Link className="gameViewLink" key = {index} name={game.title} to="/gameplay">
               <div
                 onClick={() => {
                   toggleGameState(game.title);
                 }}
                 className="gameViewContainer"
+                
               >
-                <img src={game.image} className="gameComponent" />
+                <img src={bubbleTroubleImg} className="gameComponent" alt="BubbleTrouble" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>
                   <p className="cardText">{game.description}</p>
@@ -50,10 +50,10 @@ function GamesMenu() {
               </div>
             </Link>
           ))
-        : data.gameCards.map((game) => (
-            <Link className="gameViewLink" name={game.title} to="/">
+        : data.gameCards.map((game,index) => (
+            <Link className="gameViewLink" name={game.title} to="/" key = {index}>
               <div className="gameViewContainer">
-                <img src={game.image} className="gameComponent" />
+                <img src={game.image} className="gameComponent" alt="Trouble Double" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>
                   <p className="cardText">{game.description}</p>

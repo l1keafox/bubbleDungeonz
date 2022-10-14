@@ -14,6 +14,7 @@ const messageSchema = new Schema(
             type: String,
             required:true,
         }
+        
     }
 );
 module.exports = messageSchema;

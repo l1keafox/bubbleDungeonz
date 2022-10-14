@@ -50,20 +50,39 @@ export const GET_CHANNEL_MESSAGES = gql`
   }
 `;
 
-export const GET_ME = gql`
-  query Me {
-    username
-    email
-    friends {
-      username
+export const GET_GAME_CARDS = gql`
+  query GameCards {
+    gameCards {
+      _id
+      title
+      description
+      scores {
+        score
+        user {
+          username
+        }
+      }
     }
-    settings {
-      screenTextColor
-      linkTextColor
-      chatTextColor
-      background
-      chatWindow
-      header
+  }
+`;
+export const GET_ME = gql`
+  query Query {
+    me {
+      _id
+      username
+      email
+      settings {
+        screenTextColor
+        linkTextColor
+        chatTextColor
+        background
+        chatWindow
+        header
+      }
+      friends {
+        _id
+        username
+      }
     }
   }
 `;
@@ -79,18 +98,5 @@ export const GET_CHANNEL_BY_NAME = gql`
     }
   }
 `;
-
-export const GET_GAME_CARDS = gql`
-  query Query {
-    gameCards {
-      title
-      scores {
-        user {
-          username
-        }
-        score
-      }
-      description
-    }
-  }
- `;
+// Landing Page - filter scores by value
+// Game Play Page - filter scores by username then value

@@ -34,6 +34,7 @@ const Login = (props) => {
       });
 
       Auth.login(data.login.token);
+      toggleExistingUser(true);
     } catch (e) {
       console.error(e);
     }

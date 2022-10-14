@@ -7,24 +7,8 @@ import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
 import { GET_GAME_CARDS } from "./../../utils/queries";
 
 function FeaturedScores() {
-  let game = "Bubble Trouble";
-  let users = [
-    {
-      username: "feat1",
-      highscore: 34000,
-    },
-    {
-      username: "feat2",
-      highscore: 23000,
-    },
-    {
-      username: "feat3",
-      highscore: 21000,
-    },
-  ];
-
   // Query for all games
-  const { loading, data } = useQuery(GET_GAME_CARDS);
+  const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
   console.log(data);
 
   // Pick a game at random from the list
@@ -35,18 +19,19 @@ function FeaturedScores() {
   // array of all scores from featured game in descending order
   const allScoresArray = featuredGame.scores
     .map((score) => ({
-      score: score.scores,
+      score: score.score,
       username: score.user.username,
     }))
-    .sort();
-  console.log(allScoresArray); //array
+    .sort((a, b) => a - b); //not successfully sorting the array members - they're objects :(
+  console.log(allScoresArray);
 
   // reduced to 5 scores
   let highScoresArray = [];
-  for (var i = 0; i < 5; i++) {
+  for (var i = allScoresArray.length - 1; i > allScoresArray.length - 6; i--) {
     highScoresArray.push(allScoresArray[i]);
   }
   console.log(highScoresArray);
+  console.log(highScoresArray.map((score) => score.score));
 
   function populateHighScores() {
     if (loading) {
@@ -73,9 +58,22 @@ function FeaturedScores() {
         />
         <div className="cardBody">
           <h5 className="featuredGame card-title">Featured Game:</h5>
-          <h5 className="featuredGameTitle card-title">{game}</h5>
+          <h5 className="featuredGameTitle card-title">{featuredGame.title}</h5>
         </div>
-        <div className="featuredScoresList">{() => populateHighScores()}</div>
+        <hr
+          style={{
+            height: "1px",
+            width: "95%",
+            borderWidth: "0",
+            color: "yellow",
+            backgroundColor: "yellow",
+            margin: ".5rem",
+          }}
+        />
+        <div className="featuredScoresList">
+          <h5 className="highScores card-title">High Scores</h5>
+          {populateHighScores()}
+        </div>
       </div>
     </div>
   );

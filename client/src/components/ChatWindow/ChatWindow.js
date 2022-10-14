@@ -18,7 +18,7 @@ export default function ChatWindow(props) {
   );
   useEffect(() => {
     startPolling(1000);
-  });
+  },[]);
 
   const channels = data?.channelMessages || [];
 

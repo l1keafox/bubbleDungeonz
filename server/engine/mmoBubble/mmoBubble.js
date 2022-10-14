@@ -1,3 +1,4 @@
+
 class Bubble {
   constructor() {
     this.type = "bubble";
@@ -17,18 +18,25 @@ class Bubble {
   }
 }
 
+
+const {GameCard,Score} = require("../../models");
+
+
 let bubble = {
-  next: 0, // when the next bubble is spawned.
+  next: -1, // when the next bubble is spawned.
   maxTimer: 40, // what next is set too when it hits 0
   group: [], // this is what holds the bubbles.
 };
-
+let gameCardId;
 module.exports = {
   name: function () {
     return "bubbles";
   },
-  init: function () {
+  init: function (gameSettings) {
     // this is empty
+    console.log(gameSettings.id);//
+    gameCardId = gameSettings.id;
+
     io.on("connection", (socket) => {
       socket.on("click", (msg) => {
         let i = bubble.group.length;
@@ -42,27 +50,47 @@ module.exports = {
             const engine = require("../engine");
             if (bubb.hits <= 0) {
               // console.log(engine.sessionKey);
-              let currentKey = engine.sessionKey;
+              let currentKey = engine.sessionKey();
               // console.log(currentKey[socket.id], currentKey);
-              if (currentKey && currentKey[socket.id]) {
-                if (currentKey[socket.id].points == undefined) {
-                  currentKey[socket.id].points = 0;
+              let findOne = currentKey.filter(
+                (key) => key.sessionId === socket.id
+              );
+              if (findOne.length) {
+                let scorer = findOne[0];
+                /* scorer has these values;
+                username: username,
+        				id:  context.user._id,
+        				sessionId:args.sessionId
+                */
+                if (scorer.points === undefined) {
+                  scorer.points = 0;
                 }
-                // Import model from graphQL
-                // UserID currentKey[socket.id].id
-                // id  - id via graphql
-                // name - username in graphql
-                // sessionID - uniqueID per socket.io session
+                let scorePts = rollDice(1, 6);
+                scorer.points += scorePts;
 
-                currentKey[socket.id].points += rollDice(1, 6);
+
+                async function addScoreToGameCard( gameCardId, score, userId ){
+                  const newScore = await GameCard.findByIdAndUpdate(
+                    { _id: gameCardId },
+                    {
+                      $addToSet: { scores: { user: userId, score: score } },
+                    },
+                    { runValidators: true, new: true }
+                  );
+                  return newScore;
+                };
+                GameCard.findById({ _id: gameCardId }).exec(
+                  async (err, collection) => { 
+//                    console.log(gameCardId, scorer.username, scorer.id); // this is the gameCard
+                   let update = await addScoreToGameCard(gameCardId, scorePts, scorer.id );
+                } 
+                )
                 console.log(
-                  `point scored by: ${currentKey[socket.id].username} has now ${
-                    currentKey[socket.id].points
-                  }`
+                  `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
                 );
-              } else {
-                
+
               }
+
               bubble.group.splice(i, 1);
             }
           }
@@ -72,18 +100,24 @@ module.exports = {
   },
   updateFrame: function () {
     const Engine = require("../engine");
-    bubble.next--;
-    if (bubble.next <= 0) {
-      bubble.next = bubble.maxTimer;
-      let newBubble = new Bubble();
-      bubble.group.push(newBubble);
-    }
-    if (bubble.group.length === 0) {
-      let randomCount = Math.floor(Math.random() * 15) + 10;
+    const createBubs = function(randomCount){
       while (randomCount--) {
         let newBubble = new Bubble();
         bubble.group.push(newBubble);
       }
+    }
+    bubble.next--;
+    if (bubble.next <= 0) {
+      if(bubble.next < 0){
+        createBubs(rollDice(3,4));
+      } else {
+        let newBubble = new Bubble();
+        bubble.group.push(newBubble);
+      }
+      bubble.next = bubble.maxTimer;
+    }
+    if (bubble.group.length === 0) {
+      createBubs(rollDice(2,6));
     }
 
     let index = bubble.group.length;

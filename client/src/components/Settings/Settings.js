@@ -1,11 +1,12 @@
 import "./Settings.css";
 
+import auth from "./../../utils/auth";
 function Settings({ handleClose, show, children }) {
   const showHideClassName = show ? "modal d-block" : "modal d-none";
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
-  console.log(show, showHideClassName);
+  console.log(auth.getUser());
   const colorKeys = [
     "Fuscia",
     "Red",
@@ -33,26 +34,25 @@ function Settings({ handleClose, show, children }) {
       <div className="modal-main">
         <div className="settingsOptions">
           <h3>Change Screen Text Color</h3>
-          {children}
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="screen-text-color"
             defaultValue={"Fuscia"}
           >
             <option>Screen Text Color</option>
             {colorKeys.map((opt) => (
-              <option key={opt}>opt</option>
+              <option key={opt}>{opt}</option>
             ))}
           </select>
         </div>
         <div className="settingsOptions">
-          <h3>Change Typed Text Color</h3>
+          <h3>Link Text Color</h3>
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="link-text-color"
             defaultValue={"Fuscia"}
           >
-            <option>Text Color</option>
+            <option>Link Text Color</option>
             {colorKeys.map((opt) => (
               <option key={opt}>{opt}</option>
             ))}
@@ -62,7 +62,7 @@ function Settings({ handleClose, show, children }) {
           <h3>Change Chat Text Color</h3>
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="chat-text-color"
             defaultValue={"Fuscia"}
           >
             <option>Chat Text Color</option>
@@ -75,7 +75,7 @@ function Settings({ handleClose, show, children }) {
           <h3>Change Background Color</h3>
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="background-color"
             defaultValue={"Fuscia"}
           >
             <option>Background Color</option>
@@ -88,7 +88,7 @@ function Settings({ handleClose, show, children }) {
           <h3>Change Chat Window Color</h3>
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="chat-window-color"
             defaultValue={"Fuscia"}
           >
             <option>Chat Window Color</option>
@@ -101,7 +101,7 @@ function Settings({ handleClose, show, children }) {
           <h3>Change Header Color</h3>
           <select
             className="form-select"
-            aria-label="Screen-text-color"
+            aria-label="header-color"
             defaultValue={"Fuscia"}
           >
             <option>Header Color</option>

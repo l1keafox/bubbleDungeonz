@@ -65,5 +65,34 @@ export const GET_GAME_CARDS = gql`
     }
   }
 `;
+export const GET_ME = gql`
+  query Me {
+    username
+    email
+    friends {
+      username
+    }
+    settings {
+      screenTextColor
+      linkTextColor
+      chatTextColor
+      background
+      chatWindow
+      header
+    }
+  }
+`;
+
+export const GET_CHANNEL_BY_NAME = gql`
+  query GetChannelByName($channelNameString: String) {
+    getChannelByName(channelNameString: $channelNameString) {
+      _id
+      channelName
+      participants {
+        _id
+      }
+    }
+  }
+`;
 // Landing Page - filter scores by value
 // Game Play Page - filter scores by username then value

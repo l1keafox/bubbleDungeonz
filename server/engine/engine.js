@@ -46,7 +46,7 @@ function doGameLoop(){
 }
 
 
-
+const { GameCard } = require("./../models");
 // PUBLIC Functions below
 
 module.exports = { 
@@ -54,11 +54,23 @@ module.exports = {
         gameData = {};
         console.log(`  -ENG> Started Choo Choo loop every ${FramePerLoop} ms`);
         engineIntervalID = setInterval(doGameLoop,FramePerLoop);
+
+        // We need the gameCards
+//        let cards = GameCard.find();
+        GameCard.find({}).exec((err, collection) => { 
+            collection.map(obj =>{
+                console.log(obj);
+                if(obj.gameType === "bubbles"){
+                    mmoBubble.init(obj);
+                    this.addGame(mmoBubble);
+                }
+            });
+        } );
         // THIS IS WHERE WE ADD mmoBUBBLE GAME - WHEN THE ENGINE INIT it starts this game, so it's always running 
         // in the background server.
-        mmoBubble.init();
-        this.addGame(mmoBubble);
-        userSessionsKey = {};
+
+
+        userSessionsKey = [];
     },
     /* The session key is an object that hold values via sessionId of players Example:
         When thinking about 'highscore'

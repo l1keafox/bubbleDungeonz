@@ -2,7 +2,7 @@ const { User, Channel, GameCard } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
-const { SessionKey } = require("./../engine/");
+const { Engine } = require("./../engine/");
 const { populate } = require("../models/User/User");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
@@ -184,7 +184,7 @@ const resolvers = {
 					);
 				}
 			}
-			console.log(user, "token?");
+
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -212,14 +212,15 @@ const resolvers = {
 		},
 
 		authUserSession: async (parent, args, context) => {
-			console.log(context.user._id, args.sessionId);
+
 			const { username } = await User.findById({ _id: context.user._id });
 			// now we send to the engine stuff but I don't really like how this is formatted.
 			// we might want to do this an different way, I'll work on it later.
-			SessionKey[args.sessionId] = {
+			Engine.sessionKey().push( {
 				username: username,
-				id: context.user._id,
-			};
+				id:  context.user._id,
+				sessionId:args.sessionId
+			});
 		},
 		createGameCard: async (parent, { game }) => {
 			const gameCard = await GameCard.create({ game });

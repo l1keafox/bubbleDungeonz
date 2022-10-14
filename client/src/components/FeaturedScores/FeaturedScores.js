@@ -11,19 +11,14 @@ function FeaturedScores() {
 
   // Query for all games
   const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
-  console.log(data);
 
   try {
     const gameCards = data?.gameCards || [];
-    console.log(gameCards);
 
+    // Pick a game at random from the list
     let randomGameIndex = Math.floor(Math.random() * gameCards.length);
     // let featuredGame = gameCards[randomGameIndex];
     let featuredGame = gameCards[0]; //until the system has more than one game
-
-    console.log(featuredGame);
-
-    // Pick a game at random from the list
 
     // array of all scores from featured game in descending order
     const allScoresArray = featuredGame.scores
@@ -32,7 +27,6 @@ function FeaturedScores() {
         username: score.user.username,
       }))
       .sort((a, b) => a - b); //not successfully sorting the array members - they're objects :(
-    console.log(allScoresArray);
 
     // reduced to 5 scores
     let highScoresArray = [];
@@ -43,8 +37,6 @@ function FeaturedScores() {
     ) {
       highScoresArray.push(allScoresArray[i]);
     }
-    console.log(highScoresArray);
-    // console.log(highScoresArray.map((score) => score.score));
 
     function populateHighScores() {
       if (loading) {

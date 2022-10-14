@@ -2,7 +2,7 @@ const { User, Channel, GameCard } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { GraphQLScalarType, Kind } = require("graphql");
 const { signToken } = require("../utils/auth");
-const { SessionKey } = require("./../engine/");
+const { Engine } = require("./../engine/");
 const { populate } = require("../models/User/User");
 //this is a custom decoding strategy for dealing with dates.
 const dateScalar = new GraphQLScalarType({
@@ -58,10 +58,8 @@ const resolvers = {
 		channel: async (parent, { channelId }) => {
 			return Channel.findById({ _id: channelId });
 		},
-		getChannelByName:async (parent,{channelNameString}) =>{
-			console.log("here");
-			const channel = await Channel.findOne({channelName:channelNameString})
-			console.log(channel);
+		getChannelByName: async (parent, { channelNameString }) => {
+			const channel = await Channel.findOne({ channelName: channelNameString });
 			return channel;
 		},
 		//Gets channel with messages limited param limit value.
@@ -80,6 +78,7 @@ const resolvers = {
 			}
 			return channel;
 		},
+
 		//returns the current user id, must be logged in for it to work.
 		me: async (parent, args, context) => {
 			if (context.user) {
@@ -134,32 +133,32 @@ const resolvers = {
 			return task;
 		},
 		//context dependant leave and join channel resolvers make it easier for front end to add people to particular channels.
-		leaveChannel:async (parent,{channelId},context)=>{
+		leaveChannel: async (parent, { channelId }, context) => {
 			console.log("attempting to leave channel");
 			console.log(channelId);
-			if(context.user){
+			if (context.user) {
 				console.log(context.user);
 				const userId = context.user._id;
 				const hold = await Channel.findById({ _id: channelId });
 				let participants = hold.participants;
-				const index=participants.indexOf(userId);
-				if(index>-1){
-					participants.splice(index,1);
+				const index = participants.indexOf(userId);
+				if (index > -1) {
+					participants.splice(index, 1);
 				}
 				const channel = await Channel.findOneAndUpdate(
 					{ _id: channelId },
-					{ participants },
+					{ participants }
 				);
 				return channel;
 			}
 			throw new AuthenticationError("You need to be logged in!");
 		},
-		joinChannel:async (parent,{channelId},context)=>{
-			console.log("joining channel")
-			if(context.user){
+		joinChannel: async (parent, { channelId }, context) => {
+			console.log("joining channel");
+			if (context.user) {
 				console.log(channelId);
-				console.log("User id "+context.user._id)
-				
+				console.log("User id " + context.user._id);
+
 				const userId = context.user._id;
 				const task = await Channel.findOneAndUpdate(
 					{ _id: channelId },
@@ -185,7 +184,7 @@ const resolvers = {
 					);
 				}
 			}
-			console.log(user,"token?");
+
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -201,7 +200,7 @@ const resolvers = {
 			if (!correctPw) {
 				throw new AuthenticationError("Incorrect password!");
 			}
-			console.log(user,"token?");
+			console.log(user, "token?");
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -213,20 +212,21 @@ const resolvers = {
 		},
 
 		authUserSession: async (parent, args, context) => {
-			console.log(context.user._id,args.sessionId);
+
 			const { username } = await User.findById({ _id: context.user._id });
 			// now we send to the engine stuff but I don't really like how this is formatted.
 			// we might want to do this an different way, I'll work on it later.
-			SessionKey[args.sessionId] = {
+			Engine.sessionKey().push( {
 				username: username,
-				id: context.user._id,
-			};
+				id:  context.user._id,
+				sessionId:args.sessionId
+			});
 		},
 		createGameCard: async (parent, { game }) => {
 			const gameCard = await GameCard.create({ game });
 			return gameCard;
 		},
-		addScoreToGameCard: async (parent, { GameCardId, score, userId }) => {
+		addScoreToGameCard: async (parent, { gameCardId, score, userId }) => {
 			const newScore = await GameCard.findByIdAndUpdate(
 				{ _id: gameCardId },
 				{
@@ -250,17 +250,17 @@ const resolvers = {
 		updateSettings: async (
 			parent,
 			{
-				userId,
 				screenTextColor,
 				linkTextColor,
 				chatTextColor,
 				background,
 				chatWindow,
 				header,
-			}
+			},
+			context
 		) => {
 			const settings = await User.findOneAndUpdate(
-				{ _id: userId },
+				{ _id: context.user._id },
 				{
 					$set: {
 						settings: {

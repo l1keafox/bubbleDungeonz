@@ -1,23 +1,23 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_USERS = gql`
-    query allUsers {
-        users{
-            _id
-            username
-            email
-        }
+  query allUsers {
+    users {
+      _id
+      username
+      email
     }
+  }
 `;
 
 export const QUERY_SINGLE_USER = gql`
-    query singleUser($userId:ID!){
-        user(userId:$userId){
-            _id
-            username
-            email
-        }
+  query singleUser($userId: ID!) {
+    user(userId: $userId) {
+      _id
+      username
+      email
     }
+  }
 `;
 
 export const GET_ALL_CHANNELS = gql`
@@ -50,6 +50,25 @@ export const GET_CHANNEL_MESSAGES = gql`
   }
 `;
 
+export const GET_ME = gql`
+  query Me {
+    username
+    email
+    friends {
+      username
+    }
+    settings {
+      screenTextColor
+      linkTextColor
+      chatTextColor
+      background
+      chatWindow
+      header
+    }
+  }
+`;
+
+
 export const GET_CHANNEL_BY_NAME = gql`
   query GetChannelByName($channelNameString: String) {
     getChannelByName(channelNameString: $channelNameString) {
@@ -61,3 +80,4 @@ export const GET_CHANNEL_BY_NAME = gql`
     }
   }
 `;
+

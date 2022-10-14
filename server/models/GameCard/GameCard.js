@@ -6,6 +6,9 @@ const scoreCardSchema = new Schema({
 		type: String,
 		require: true,
 	},
+	gameType:{
+		type:String,
+	},
 	scores: [Score],
 	description: {
 		type: String,

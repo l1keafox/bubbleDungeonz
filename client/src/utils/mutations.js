@@ -66,7 +66,6 @@ export const LEAVE_CHANNEL = gql`
 `;
 export const UPDATE_SETTINGS = gql`
   mutation updateSettings(
-    $userId: ID!
     $screenTextColor: String!
     $linkTextColor: String!
     $chatTextColor: String!
@@ -75,7 +74,6 @@ export const UPDATE_SETTINGS = gql`
     $header: String!
   ) {
     updateSettings(
-      userId: $userId
       screenTextColor: $screenTextColor
       linkTextColor: $linkTextColor
       chatTextColor: $chatTextColor

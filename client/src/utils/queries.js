@@ -68,7 +68,6 @@ export const GET_ME = gql`
   }
 `;
 
-
 export const GET_CHANNEL_BY_NAME = gql`
   query GetChannelByName($channelNameString: String) {
     getChannelByName(channelNameString: $channelNameString) {
@@ -81,3 +80,17 @@ export const GET_CHANNEL_BY_NAME = gql`
   }
 `;
 
+export const GET_GAME_CARDS = gql`
+  query Query {
+    gameCards {
+      title
+      scores {
+        user {
+          username
+        }
+        score
+      }
+      description
+    }
+  }
+ `;

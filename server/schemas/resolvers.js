@@ -226,6 +226,7 @@ const resolvers = {
 			const gameCard = await GameCard.create({ game });
 			return gameCard;
 		},
+		// I'll be using these in mmoBubble!
 		addScoreToGameCard: async (parent, { gameCardId, score, userId }) => {
 			const newScore = await GameCard.findByIdAndUpdate(
 				{ _id: gameCardId },

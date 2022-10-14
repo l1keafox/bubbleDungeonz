@@ -56,7 +56,7 @@ module.exports = {
         engineIntervalID = setInterval(doGameLoop,FramePerLoop);
 
         // We need the gameCards
-        let cards = GameCard.find();
+//        let cards = GameCard.find();
         GameCard.find({}).exec((err, collection) => { 
             collection.map(obj =>{
                 console.log(obj);

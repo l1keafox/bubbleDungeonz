@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { useExistingUserContext } from "../../utils/existingUserContext";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import { FaHamburger } from "react-icons/fa";
@@ -10,11 +11,18 @@ import { GET_ME} from "../../utils/queries";
 
 function Header() {
   const {data,loading} = useQuery(GET_ME);
+  const [userContext, setUserContext] = useState(useExistingUserContext());
   const me = data?._id || [];
   console.log("me: "+me);
   useEffect(()=>{
     console.log("use effect me: "+me);
     console.log(data);
+    if(userContext?.existingUser){
+      console.log("you are here");
+      console.log(userContext);
+    }
+    console.log("user context");
+    console.log(userContext);
   },[data]);
   //state variable to control whether the header has a Login or Logout link
   const [logInOrOut, setLogInOrOut] = useState("Login");

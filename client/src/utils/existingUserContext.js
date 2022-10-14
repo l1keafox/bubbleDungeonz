@@ -9,15 +9,19 @@ export const useExistingUserContext = () => useContext(ExistingUserContext);
 export default function ExistingUserProvider(props) {
   // state variable - does the user have an existing account?
   const [existingUser, setExistingUser] = useState(true);
+  const [loggedIn,setLoggedIn] = useState(false);
 
   // method to update the state variable
   const toggleExistingUser = () => {
     return setExistingUser(!existingUser);
   };
+  const setLogin = (b) => {
+    return setLoggedIn(b);
+  }
 
   return (
     // providing existingUser state variable and toggleExistingUser() method to all child components
-    <ExistingUserContext.Provider value={{ existingUser, toggleExistingUser }}>
+    <ExistingUserContext.Provider value={{ existingUser,loggedIn,setLogin, toggleExistingUser }}>
       {props.children}
     </ExistingUserContext.Provider>
   );

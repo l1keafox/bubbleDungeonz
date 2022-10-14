@@ -18,7 +18,7 @@ class Bubble {
 }
 
 let bubble = {
-  next: 0, // when the next bubble is spawned.
+  next: -1, // when the next bubble is spawned.
   maxTimer: 40, // what next is set too when it hits 0
   group: [], // this is what holds the bubbles.
 };
@@ -62,7 +62,7 @@ module.exports = {
                 }
                 scorer.points += rollDice(1, 6);
                 console.log(
-                  `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points}, id:${scorer.id}`
+                  `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
                 );
 
               }
@@ -76,18 +76,24 @@ module.exports = {
   },
   updateFrame: function () {
     const Engine = require("../engine");
-    bubble.next--;
-    if (bubble.next <= 0) {
-      bubble.next = bubble.maxTimer;
-      let newBubble = new Bubble();
-      bubble.group.push(newBubble);
-    }
-    if (bubble.group.length === 0) {
-      let randomCount = Math.floor(Math.random() * 15) + 10;
+    const createBubs = function(randomCount){
       while (randomCount--) {
         let newBubble = new Bubble();
         bubble.group.push(newBubble);
       }
+    }
+    bubble.next--;
+    if (bubble.next <= 0) {
+      if(bubble.next < 0){
+        createBubs(rollDice(3,4));
+      } else {
+        let newBubble = new Bubble();
+        bubble.group.push(newBubble);
+      }
+      bubble.next = bubble.maxTimer;
+    }
+    if (bubble.group.length === 0) {
+      createBubs(rollDice(2,6));
     }
 
     let index = bubble.group.length;

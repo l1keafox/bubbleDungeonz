@@ -21,24 +21,14 @@ class AuthService {
 		return localStorage.getItem("id_token");
 	}
 
-<<<<<<< HEAD
 	login(idToken) {
 		// Saves user token to localStorage and reloads the application for logged in status to take effect
-		if (!decode(idToken)) {
-			this.logout();
-		}
+
 		console.log(idToken, "LOGGED IN?");
-		// console.log(decode(idToken));
+		console.log(decode(idToken));
 		localStorage.setItem("id_token", idToken);
 		//window.location.assign("/games");
 	}
-=======
-  login(idToken) {
-    // Saves user token to localStorage and reloads the application for logged in status to take effect
-    localStorage.setItem("id_token", idToken);
-    //window.location.assign("/games");
-  }
->>>>>>> main
 
 	logout() {
 		// Clear user token and user data from localStorage

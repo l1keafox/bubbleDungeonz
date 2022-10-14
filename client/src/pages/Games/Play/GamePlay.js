@@ -4,7 +4,6 @@ import { useGameContext } from "./../../../utils/gameContext";
 import "./GamePlay.css";
 import { useMutation, useQuery } from "@apollo/client";
 
-
 import auth from "../../../utils/auth";
 import ChatList from "../../../components/ChatList/ChatList.js";
 
@@ -13,8 +12,6 @@ function GamePlay() {
   // changeTitle(gameState);
   let game;
 
-  
- 
   switch (gameState) {
     case "Bubble Trouble":
       game = <Canvas />;
@@ -56,10 +53,9 @@ function GamePlay() {
           </div>
         </div>
       </div>
-      {auth.loggedIn() ? <ChatList /> : <div />}
+      {auth.loggedIn() ? <ChatList /> : <></>}
     </div>
   );
 }
-
 
 export default GamePlay;

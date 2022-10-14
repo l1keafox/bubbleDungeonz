@@ -79,7 +79,7 @@ function FeaturedScores() {
           />
           <div className="featuredScoresList">
             <h5 className="highScores card-title">High Scores</h5>
-            {populateHighScores()}
+            {allScoresArray.length > 0 ? populateHighScores() : <></>}
           </div>
         </div>
       </div>

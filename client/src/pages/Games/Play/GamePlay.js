@@ -24,13 +24,12 @@ function GamePlay() {
 
   // pulling game card data for game scores
   const { loading, error, data } = useQuery(GET_GAME_CARDS);
-  console.log(data);
+
   try {
     const gameCards = data?.gameCards || [];
     const currentGameCard = gameCards.filter(
       (card) => card.title === gameState
     );
-    console.log(currentGameCard);
 
     const allScoresArray = currentGameCard[0].scores
       .map((score) => ({
@@ -38,8 +37,6 @@ function GamePlay() {
         username: score.user.username,
       }))
       .sort((a, b) => a - b);
-
-    console.log(allScoresArray);
 
     let highScoresArray = [];
     for (
@@ -81,7 +78,9 @@ function GamePlay() {
                 {gameState} High Scores
               </h5>
             </div>
-            <div className="featuredScoresList">{populateHighScores()}</div>
+            <div className="featuredScoresList">
+              {allScoresArray.length > 0 ? populateHighScores() : <></>}
+            </div>
           </div>
         </div>
         {auth.loggedIn() ? <ChatList /> : <div />}

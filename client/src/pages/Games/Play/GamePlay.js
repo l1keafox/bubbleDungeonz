@@ -27,25 +27,28 @@ function GamePlay() {
 
   try {
     const gameCards = data?.gameCards || [];
-    const currentGameCard = gameCards.filter(
-      (card) => card.title === gameState
-    );
-
-    const allScoresArray = currentGameCard[0].scores
-      .map((score) => ({
-        score: score.score,
-        username: score.user.username,
-      }))
-      .sort((a, b) => a - b);
-
-    let highScoresArray = [];
-    for (
-      var i = allScoresArray.length - 1;
-      i > allScoresArray.length - 6;
-      i--
-    ) {
-      highScoresArray.push(allScoresArray[i]);
+    if(gameCards[0]?.scores){
+      var currentGameCard = gameCards.filter(
+        (card) => card.title === gameState
+      );
+  
+      var allScoresArray = currentGameCard[0]?.scores
+        .map((score) => ({
+          score: score.score,
+          username: score.user.username,
+        }))
+        .sort((a, b) => a - b);
+  
+      var highScoresArray = [];
+      for (
+        var i = allScoresArray?.length - 1;
+        i > allScoresArray?.length - 6;
+        i--
+      ) {
+        highScoresArray.push(allScoresArray[i]);
+      }
     }
+    
 
     function populateHighScores() {
       if (loading) {
@@ -79,7 +82,7 @@ function GamePlay() {
               </h5>
             </div>
             <div className="featuredScoresList">
-              {allScoresArray.length > 0 ? populateHighScores() : <></>}
+              {allScoresArray?.length > 0 ? populateHighScores() : <></>}
             </div>
           </div>
         </div>

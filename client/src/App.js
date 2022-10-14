@@ -64,6 +64,7 @@ function App() {
   const particlesInit = useCallback((main) => {
     loadFull(main);
   }, []);
+//          <Particles options={particlesOptions} init={particlesInit} />
 
   return (
     <>
@@ -73,7 +74,6 @@ function App() {
           <GameContextProvider>
             <Header />
           
-          <Particles options={particlesOptions} init={particlesInit} />
           <Routes>
             <Route
               path="/"

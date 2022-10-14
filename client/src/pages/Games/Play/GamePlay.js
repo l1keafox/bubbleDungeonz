@@ -13,6 +13,7 @@ function GamePlay() {
   const { gameState } = useGameContext();
   const { loading, error, data } = useQuery(GET_GAME_CARDS); //async not functioning
   const [scores, setScore] = useState([]);
+  const [myScore, setMyScore] = useState(0);
   useEffect(() => {
     if (data && data.gameCards) {
       const gameCards = data.gameCards;
@@ -22,6 +23,15 @@ function GamePlay() {
       let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
+
+      // here we'll go and see if we can find myself
+      for(let index in featuredGame.scores){
+        if(featuredGame.scores[index].user.username === auth.getUser().data.username ){
+          setMyScore(featuredGame.scores[index].score);
+          break;
+        }
+      }
+
       let out = [...featuredGame.scores].sort((a, b) => a.score*-1 - b.score*-1);
       //
       setScore([...out] );
@@ -47,7 +57,7 @@ function GamePlay() {
           <h1 className="gamePlayTitle">{gameState}</h1>
           {game}
           <p className="scoreCounter">
-            Current Score: <span className="currentScore"></span>
+            {auth.getUser().data.username} Score: <span className="currentScore">{myScore}</span>
           </p>
         </div>
         <FeaturedScores scores = {scores}/>

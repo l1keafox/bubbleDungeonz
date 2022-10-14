@@ -22,15 +22,16 @@ function GamesMenu() {
     <>
     <div className="menuCardsContainer">
       {loading ? <p>loading</p> : auth.loggedIn()
-        ? data.gameCards.map((game) => (
+        ? data.gameCards.map((game,index) => (
             <Link className="gameViewLink" name={game.title} to="/gameplay">
               <div
                 onClick={() => {
                   toggleGameState(game.title);
                 }}
                 className="gameViewContainer"
+                key = {index}
               >
-                <img src={game.image} className="gameComponent" />
+                <img src={bubbleTroubleImg} className="gameComponent" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>
                   <p className="cardText">{game.description}</p>
@@ -50,9 +51,9 @@ function GamesMenu() {
               </div>
             </Link>
           ))
-        : data.gameCards.map((game) => (
+        : data.gameCards.map((game,index) => (
             <Link className="gameViewLink" name={game.title} to="/">
-              <div className="gameViewContainer">
+              <div className="gameViewContainer" key = {index}>
                 <img src={game.image} className="gameComponent" />
                 <div className="cardBody">
                   <h5 className="cardTitle">{game.title}</h5>

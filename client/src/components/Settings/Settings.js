@@ -6,7 +6,6 @@ function Settings({ handleClose, show, children }) {
   const handleFormSubmit = (e) => {
     e.preventDefault();
   };
-  console.log(auth.getUser());
   const colorKeys = [
     "Fuscia",
     "Red",

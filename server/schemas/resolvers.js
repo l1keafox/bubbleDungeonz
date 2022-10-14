@@ -59,7 +59,9 @@ const resolvers = {
 			return Channel.findById({ _id: channelId });
 		},
 		getChannelByName:async (parent,{channelNameString}) =>{
+			console.log("here");
 			const channel = await Channel.findOne({channelName:channelNameString})
+			console.log(channel);
 			return channel;
 		},
 		//Gets channel with messages limited param limit value.

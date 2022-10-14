@@ -70,7 +70,9 @@ function App() {
       {" "}
       <Router>
         <ApolloProvider client={client}>
-          <Header />
+          <GameContextProvider>
+            <Header />
+          
           <Particles options={particlesOptions} init={particlesInit} />
           <Routes>
             <Route
@@ -84,20 +86,21 @@ function App() {
             <Route
               path="/games"
               element={
-                <GameContextProvider>
+
                   <GamesMenu />
-                </GameContextProvider>
+
               }
             />
             <Route
               path="/gameplay"
               element={
-                <GameContextProvider>
+
                   <GamePlay />
-                </GameContextProvider>
+               
               }
             ></Route>
           </Routes>
+          </GameContextProvider>
         </ApolloProvider>
       </Router>
     </>

@@ -72,8 +72,11 @@ export const GET_ME = gql`
 export const GET_CHANNEL_BY_NAME = gql`
   query GetChannelByName($channelNameString: String) {
     getChannelByName(channelNameString: $channelNameString) {
-      channelName
       _id
+      channelName
+      participants {
+        _id
+      }
     }
   }
 `;

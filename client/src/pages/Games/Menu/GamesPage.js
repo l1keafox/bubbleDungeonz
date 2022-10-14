@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Canvas from "../../../components/Canvas/Canvas.js";
 import { useGameContext } from "../../../utils/gameContext.js";
 import { Link } from "react-router-dom";
@@ -10,6 +10,12 @@ import { BsJoystick } from "react-icons/bs";
 import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
+  const { toggleGameState } = useGameContext();
+
+  useEffect(()=>{
+    toggleGameState(null);
+  },[]);
+
   let gameOptions = [
     {
       title: "Bubble Trouble",
@@ -23,7 +29,7 @@ function GamesMenu() {
     },
   ];
 
-  const { toggleGameState } = useGameContext();
+ 
 
   return (
     <div className="menuCardsContainer">

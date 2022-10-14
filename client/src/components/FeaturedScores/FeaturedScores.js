@@ -21,7 +21,7 @@ function FeaturedScores() {
     let featuredGame = gameCards[0]; //until the system has more than one game
 
     // array of all scores from featured game in descending order
-    const allScoresArray = featuredGame.scores
+    const allScoresArray = featuredGame?.scores
       .map((score) => ({
         score: score.score,
         username: score.user.username,
@@ -30,13 +30,16 @@ function FeaturedScores() {
 
     // reduced to 5 scores
     let highScoresArray = [];
-    for (
-      var i = allScoresArray.length - 1;
-      i > allScoresArray.length - 6;
-      i--
-    ) {
-      highScoresArray.push(allScoresArray[i]);
+    if(allScoresArray?.length){
+      for (
+        var i = allScoresArray.length - 1;
+        i > allScoresArray.length - 6;
+        i--
+      ) {
+        highScoresArray.push(allScoresArray[i]);
+      }
     }
+    
 
     function populateHighScores() {
       if (loading) {
@@ -64,7 +67,7 @@ function FeaturedScores() {
           <div className="cardBody">
             <h5 className="featuredGame card-title">Featured Game:</h5>
             <h5 className="featuredGameTitle card-title">
-              {featuredGame.title}
+              {featuredGame?.title}
             </h5>
           </div>
           <hr
@@ -79,7 +82,7 @@ function FeaturedScores() {
           />
           <div className="featuredScoresList">
             <h5 className="highScores card-title">High Scores</h5>
-            {allScoresArray.length > 0 ? populateHighScores() : <></>}
+            {allScoresArray?.length > 0 ? populateHighScores() : <></>}
           </div>
         </div>
       </div>

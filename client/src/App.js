@@ -9,20 +9,20 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useCallback, useEffect, useState } from "react";
-import Particles from "react-particles";
+// import Particles from "react-particles";
 import { loadFull } from "tsparticles";
-import particlesOptions from "./particles.json";
+// import particlesOptions from "./particles.json";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
 
-import CreateAccount from "./components/CreateAccount/CreateAccount";
+?
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import GamePlay from "./pages/Games/Play/GamePlay.js";
 import ExistingUserProvider from "./utils/existingUserContext";
 
-import Settings from "./components/Settings/Settings";
+// import Settings from "./components/Settings/Settings";
 
 import GameContextProvider from "./utils/gameContext";
 

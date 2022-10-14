@@ -12,13 +12,10 @@ import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 
 function GamesMenu() {
   const { toggleGameState } = useGameContext();
-
   const { loading, data,startPolling, stopPolling } = useQuery(GET_GAME_CARDS);
   useEffect(()=>{
-
     toggleGameState(null);
-  }, []);
-
+  },[]);
 
 
   return (
@@ -42,55 +39,22 @@ function GamesMenu() {
                   name={game.title}
                   href="#"
                   className="playBtn btn"
-
                   onClick={() => {
                     toggleGameState(game.title);
                   }}
-                  className="gameViewContainer"
                 >
-                  <img src={game.image} className="gameComponent" />
-                  <div className="cardBody">
-                    <h5 className="cardTitle">{game.title}</h5>
-                    <p className="cardText">{game.description}</p>
-                    <Link to="/gameplay">
-                      <button
-                        name={game.title}
-                        href="#"
-                        className="playBtn btn"
-                        onClick={() => {
-                          toggleGameState(game.title);
-                        }}
-                      >
-                        Play <BsJoystick />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </Link>
-            ))
-          : gameOptions.map((game) => (
-              <Link className="gameViewLink" name={game.title} to="/">
-                <div className="gameViewContainer">
-                  <img src={game.image} className="gameComponent" />
-                  <div className="cardBody">
-                    <h5 className="cardTitle">{game.title}</h5>
-                    <p className="cardText">{game.description}</p>
-                    <Link to="/">
-                      <button
-                        name={game.title}
-                        href="#"
-                        className="playBtn btn"
-                      >
-                        Login to Play <BsJoystick />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </Link>
-            ))}
-      </div>
-      {auth.loggedIn() ? <ChatList /> : <></>}
-    </>
+                  Play <BsJoystick></BsJoystick>
+                </a>
+              </Link> :
+              <div />}
+
+
+              {auth.loggedIn() ? <ChatList /> : <div />}
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 }
 

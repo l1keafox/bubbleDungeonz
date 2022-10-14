@@ -62,6 +62,7 @@ const typeDefs = gql`
 		channelMessages(channelId: ID!, limit: Int): Channel
 		me: User
 		memberChannels: [Channel]
+		getChannelByName(channelNameString:String):Channel
 		gameCards: [GameCard]
 		gameCard(GameCardId: ID!): GameCard
 	}
@@ -72,6 +73,9 @@ const typeDefs = gql`
 		addMessageToChannel(channelId: ID!, messageText: String!): Channel
 		removeUser: User
 		addChannelParticipant(channelId: ID!, userId: ID!): Channel
+
+		leaveChannel(channelId:String):Channel
+		joinChannel(channelId:String):Channel
 		createGameCard(title: String!): GameCard
 		addScoreToGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
 		updateScoreOnGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard

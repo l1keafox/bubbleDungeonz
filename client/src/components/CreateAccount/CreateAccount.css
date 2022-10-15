@@ -11,7 +11,7 @@
 .createUserForm {
   font-family: "Press Start 2P";
   width: 30rem;
-  height: 0rem;
+  height: auto;
   border-top: 15px inset var(--fuscia);
   border-radius: 5px;
   display: flex;
@@ -19,11 +19,6 @@
   align-items: center;
   background-image: linear-gradient(var(--red) 0%, var(--purple) 100%);
   box-shadow: 3px 3px 3px 3px var(--blue2);
-  transition: 1s ease;
-}
-
-.show{
-  height: 40rem;
 }
 
 .createUserCardTitle {

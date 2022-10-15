@@ -67,8 +67,6 @@ button {
   justify-content: center;
   align-items: center;
   margin-bottom: 1.2rem;
-  transition: 1s ease;
-
 }
 
 .messageInput {

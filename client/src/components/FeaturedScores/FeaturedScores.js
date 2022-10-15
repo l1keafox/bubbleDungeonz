@@ -1,16 +1,10 @@
-import React,{useState,useEffect} from "react";
+import React, {  } from "react";
 
 import "./FeaturedScores.css";
 import image from "../../pages/Games/Menu/assets/bubble-trouble-screenshot.png";
 
 function FeaturedScores(props) {
   // Query for all games
-  let [display,changeDisplay] = useState("featuredScoresDiv");
-
-  useEffect( () =>{
-    changeDisplay("featuredScoresDiv show");
-  }, [] );
-  useEffect( () => () => changeDisplay("featuredScoresDiv"), [] );
 
   return (
     <div>
@@ -18,7 +12,7 @@ function FeaturedScores(props) {
         <p>loading</p>
       ) : (
         <div>
-          <div className={display}>
+          <div className="featuredScoresDiv">
             <img
               className="card-img-top featuredGameImg"
               src={image}

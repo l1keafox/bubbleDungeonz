@@ -8,39 +8,6 @@ import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
 import auth from "../../utils/auth";
 // import { useExistingUserContext } from "../../utils/existingUserContext";
 
-//generates and manages the component that the user edits messages with. Takes channel id, and posts messages itself.
-function MessageEditor(props) {
-  const [post] = useMutation(POST_MESSAGE_TO_CHANNEL);
-  const [value, setValue] = useState("");
-  const channelId = props.channelId;
-  function handleChange(e) {
-    setValue(e.target.value);
-  }
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await send(value);
-    setValue("");
-  }
-
-  async function send(messageText) {
-    await post({ variables: { channelId, messageText } });
-  }
-  return (
-    <form className="messageForm" id="form" action="" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        id="input"
-        autoComplete="off"
-        className="messageInput"
-      />
-      <button className="sendBtn">Send</button>
-    </form>
-  );
-}
-
-
 export default function ChatWindow(props) {
   const scrollElement = useRef();
   const bottomTarget = useRef();
@@ -147,5 +114,36 @@ export default function ChatWindow(props) {
       {canScrollDown ? <button onClick={executeScroll}>scroll to bottom</button> : <div></div>}
       <MessageEditor channelId={props.channelId} />
     </div>
+  );
+}
+//generates and manages the component that the user edits messages with. Takes channel id, and posts messages itself.
+function MessageEditor(props) {
+  const [post] = useMutation(POST_MESSAGE_TO_CHANNEL);
+  const [value, setValue] = useState("");
+  const channelId = props.channelId;
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await send(value);
+    setValue("");
+  }
+
+  async function send(messageText) {
+    await post({ variables: { channelId, messageText } });
+  }
+  return (
+    <form className="messageForm" id="form" action="" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={value}
+        onChange={handleChange}
+        id="input"
+        autoComplete="off"
+        className="messageInput"
+      />
+      <button className="sendBtn">Send</button>
+    </form>
   );
 }

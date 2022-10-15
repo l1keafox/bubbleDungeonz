@@ -1,14 +1,13 @@
 import "./Settings.css";
 import { useState, useEffect } from "react";
-import auth from "./../../utils/auth";
 import { GET_ME } from "./../../utils/queries";
 import { UPDATE_SETTINGS } from "./../../utils/mutations";
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
-function Settings({ handleClose, show, children }) {
-	const showHideClassName = show ? "modal d-block" : "modal d-none";
+function Settings({  show }) {
+	const showHideClassName = show ? "modal mainModal d-block show" : "modal mainModal d-block ";
 
-	const [updateSettings, { error }] = useMutation(UPDATE_SETTINGS);
+	const [updateSettings] = useMutation(UPDATE_SETTINGS);
 
 	const { data, loading } = useQuery(GET_ME);
 	let [settings, setSettings] = useState({
@@ -53,7 +52,7 @@ function Settings({ handleClose, show, children }) {
 		"Black",
 	];
 
-	console.log(settings);
+
 	const changeSettings = (e) => {
 		let value = e.target.value;
 		let setting = e.target.name;
@@ -95,10 +94,11 @@ function Settings({ handleClose, show, children }) {
 			let header = settings.header;
 			let linkTextColor = settings.linkTextColor;
 			let screenTextColor = settings.screenTextColor;
-			console.log("background", background);
+			// console.log("background", background);
 
 			// Execute mutation and pass in defined parameter data as variables
-			const { data } = await updateSettings({
+			// const { data } = 
+			await updateSettings({
 				variables: {
 					screenTextColor: screenTextColor,
 					linkTextColor: linkTextColor,

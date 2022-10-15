@@ -151,6 +151,9 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
 
   return (
     <aside className="chatAside">
+      {/* <h3>{openChannelId ? channelName :null}</h3> */}
+      {/* {loadedChannels(openChannelId)} */}
+      {openChannelId ?  <ChatWindow key={openChannelId} channelId={openChannelId} name={channelName} /> : <div></div>} 
       <div className="chatChannelsList">
         {openChannelId ? (
           <p className="collapseChatBtn" onClick={closeChannel}>
@@ -161,8 +164,6 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
         )}
         {channelOptions({ channels })}
       </div>
-      {/* <h3>{openChannelId ? channelName :null}</h3> */}
-      {loadedChannels(openChannelId)}
     </aside>
   );
 }

@@ -59,7 +59,7 @@ const resolvers = {
       return Channel.findById({ _id: channelId });
     },
     getChannelByName: async (parent, { channelNameString }) => {
-		console.log(channelNameString);
+
       const channel = await Channel.findOne({ channelName: channelNameString });
       return channel;
     },

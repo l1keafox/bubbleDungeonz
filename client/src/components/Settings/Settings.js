@@ -24,9 +24,9 @@ function Settings({ handleClose, show, children }) {
 		if (loading) {
 			return;
 		} else {
-			let dataSettings = data.me.settings;
+			let dataSettings = data?.me?.settings;
 
-			if (dataSettings.background !== null) {
+			if (dataSettings?.background !== null) {
 				setSettings(dataSettings);
 			}
 		}
@@ -123,7 +123,7 @@ function Settings({ handleClose, show, children }) {
 						name="screenTextColor"
 						className="form-select"
 						aria-label="screen-text-color"
-						value={settings.screenTextColor}
+						value={settings?.screenTextColor}
 						onChange={changeSettings}
 					>
 						<option>Screen Text Color</option>
@@ -138,7 +138,7 @@ function Settings({ handleClose, show, children }) {
 						name="linkTextColor"
 						className="form-select"
 						aria-label="link-text-color"
-						value={settings.linkTextColor}
+						value={settings?.linkTextColor}
 						onChange={changeSettings}
 					>
 						<option>Link Text Color</option>
@@ -153,7 +153,7 @@ function Settings({ handleClose, show, children }) {
 						name="chatTextColor"
 						className="form-select"
 						aria-label="chat-text-color"
-						value={settings.chatTextColor}
+						value={settings?.chatTextColor}
 						onChange={changeSettings}
 					>
 						<option>Chat Text Color</option>
@@ -168,7 +168,7 @@ function Settings({ handleClose, show, children }) {
 						name="background"
 						className="form-select"
 						aria-label="background-color"
-						value={settings.background}
+						value={settings?.background}
 						onChange={changeSettings}
 					>
 						<option>Background Color</option>
@@ -183,7 +183,7 @@ function Settings({ handleClose, show, children }) {
 						name="chatWindow"
 						className="form-select"
 						aria-label="chat-window-color"
-						value={settings.chatWindow}
+						value={settings?.chatWindow}
 						onChange={changeSettings}
 					>
 						<option>Chat Window Color</option>
@@ -198,7 +198,7 @@ function Settings({ handleClose, show, children }) {
 						name="header"
 						className="form-select"
 						aria-label="header-color"
-						value={settings.header}
+						value={settings?.header}
 						onChange={changeSettings}
 					>
 						<option>Header Color</option>

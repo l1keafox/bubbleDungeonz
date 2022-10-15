@@ -25,8 +25,31 @@ function Header() {
       changeModal(false);
     }
   };
-
   //need logic to conditionally render Login/Logout link based on user objects loggedIn state
+
+  function conditionalLogin(){
+    if(loggedIn){
+      return(<li
+        className="navLink"
+        onClick={() => {
+          auth.logout();
+          setLogin(false);
+          toggleGameState(null);
+        }}
+      >
+        Logout
+      </li>);
+    }else{
+      return(<Link
+        onClick={() => toggleGameState(null)}
+        to={{ pathname: "/" }}
+        className="navLink"
+      >
+        <li>Login</li>
+      </Link>)
+    }
+    
+  }
 
   return (
     <div className="headerDiv">
@@ -48,16 +71,7 @@ function Header() {
         >
           <li>Games</li>
         </Link>
-        <li
-          className={loggedIn ? "navLink" : "navLink hidden"}
-          onClick={() => {
-            auth.logout();
-            setLogin(false);
-            toggleGameState(null);
-          }}
-        >
-          Logout
-        </li>
+        {conditionalLogin()}
         <li className="navLink">
           <FaHamburger onClick={toggleModal}></FaHamburger>
         </li>

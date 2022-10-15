@@ -9,7 +9,7 @@ import { BsJoystick } from "react-icons/bs";
 import { IoMdRocket } from "react-icons/io";
 
 const Login = (props) => {
-  const { toggleExistingUser } = useExistingUserContext();
+  const { toggleExistingUser, setLogin } = useExistingUserContext();
 
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
@@ -27,7 +27,7 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -35,6 +35,7 @@ const Login = (props) => {
 
       Auth.login(data.login.token);
       toggleExistingUser(true);
+      setLogin(true);
     } catch (e) {
       console.error(e);
     }
@@ -71,13 +72,15 @@ const Login = (props) => {
             value={formState.password}
             onChange={handleChange}
           />
-          <button
-            className="loginSubmitBtn"
-            style={{ cursor: "pointer" }}
-            type="submit"
-          >
-            Login <IoMdRocket />
-          </button>
+          <Link to="/games" onClick={handleFormSubmit}>
+            <button
+              className="loginSubmitBtn"
+              style={{ cursor: "pointer" }}
+              type="submit"
+            >
+              Login <IoMdRocket />
+            </button>
+          </Link>
           <hr
             style={{
               height: "1px",

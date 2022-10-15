@@ -6,14 +6,16 @@ import { FaHamburger } from "react-icons/fa";
 import auth from "../../utils/auth";
 import Settings from "../Settings/Settings";
 import { useGameContext } from "../../utils/gameContext";
+import { useExistingUserContext } from "../../utils/existingUserContext";
 
 function Header() {
+  const { loggedIn, setLogin } = useExistingUserContext();
   // const {data} = useQuery(GET_ME);
-//  const [userContext, setUserContext] = useState(useExistingUserContext());
+  //  const [userContext, setUserContext] = useState(useExistingUserContext());
   // const me = data?._id || [];
 
-//state variable to control whether the header has a Login or Logout link
-//  const [logInOrOut, setLogInOrOut] = useState("Login");
+  //state variable to control whether the header has a Login or Logout link
+  //  const [logInOrOut, setLogInOrOut] = useState("Login");
   const [showModal, changeModal] = useState(false);
   const { toggleGameState } = useGameContext();
   const toggleModal = () => {
@@ -32,18 +34,27 @@ function Header() {
       <Settings show={showModal} />
 
       <ul className="navBar">
-        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/" }} className="navLink">
+        <Link
+          onClick={() => toggleGameState(null)}
+          to={{ pathname: "/" }}
+          className="navLink"
+        >
           <li>Home</li>
         </Link>
-        <Link onClick={()=>toggleGameState(null)} to={{ pathname: "/games" }} className="navLink">
+        <Link
+          onClick={() => toggleGameState(null)}
+          to={{ pathname: "/games" }}
+          className="navLink"
+        >
           <li>Games</li>
         </Link>
         <li
-          className={auth.loggedIn() ? "navLink" : "navLink hidden"}
-          onClick={()=>{
+          className={loggedIn ? "navLink" : "navLink hidden"}
+          onClick={() => {
             auth.logout();
-            toggleGameState(null);}
-          }
+            setLogin(false);
+            toggleGameState(null);
+          }}
         >
           Logout
         </li>

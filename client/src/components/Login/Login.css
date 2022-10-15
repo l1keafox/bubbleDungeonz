@@ -38,7 +38,7 @@
   width: 100%;
   /* background-color: var(--white); */
   border-radius: 5px;
-  color: var(--navy);
+  color: var(--fuscia);
 }
 
 .loginSubmitBtn {
@@ -48,6 +48,10 @@
   border-radius: 5px;
   margin: 1rem;
 }
+.loginSubmitBtn:hover {
+  color: var(--fuscia);
+  box-shadow: 0 0 10px var(--red);
+}
 
 .createNewAccountBtn {
   background-color: var(--orange1);
@@ -55,4 +59,9 @@
   color: var(--purple);
   border-radius: 5px;
   margin: 1rem;
+}
+
+.createNewAccountBtn:hover {
+  color: var(--fuscia);
+  box-shadow: 0 0 10px var(--red);
 }

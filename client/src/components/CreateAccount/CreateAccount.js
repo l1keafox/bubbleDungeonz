@@ -13,7 +13,7 @@ function CreateAccount() {
   const [reTypePassWord, setReTypePassword] = useState("");
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { toggleExistingUser } = useExistingUserContext();
+  const { toggleExistingUser, setLogin } = useExistingUserContext();
   const [signUp, { error, data }] = useMutation(ADD_USER);
 
   const handleInputChange = (e) => {
@@ -41,12 +41,13 @@ function CreateAccount() {
     if (!username) {
       setErrorMessage("Username can not be blank.");
     }
-    try{
+    try {
       const { data } = await signUp({
-        variables: { username,email,password },
+        variables: { username, email, password },
       });
       Auth.login(data.addUser.token);
-    }catch (e){
+      setLogin(true);
+    } catch (e) {
       console.error(e);
     }
 
@@ -110,7 +111,7 @@ function CreateAccount() {
           ></input>
         </div>
         <button
-          className="submitButton"
+          className="createNewAccountBtn"
           type="button"
           onClick={handleFormSubmit}
         >

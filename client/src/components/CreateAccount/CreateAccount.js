@@ -1,5 +1,5 @@
 import "./CreateAccount.css";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import { BsJoystick } from "react-icons/bs";
 import { IoMdRocket } from "react-icons/io";
@@ -15,6 +15,8 @@ function CreateAccount() {
   const [errorMessage, setErrorMessage] = useState("");
   const { toggleExistingUser, setLogin } = useExistingUserContext();
   const [signUp, { error, data }] = useMutation(ADD_USER);
+  const [anime, setAnime] = useState("createUserForm");
+  useEffect( () => setAnime("createUserForm show "), [] );
 
   const handleInputChange = (e) => {
     const { target } = e;
@@ -58,7 +60,7 @@ function CreateAccount() {
   };
 
   return (
-    <div className="createUserForm">
+    <div className={anime}>
       <h4 className="createUserCardTitle">Create Account</h4>
 
       <div className="formContainer">

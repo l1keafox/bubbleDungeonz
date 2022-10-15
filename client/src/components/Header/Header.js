@@ -26,6 +26,11 @@ function Header() {
     }
   };
   //need logic to conditionally render Login/Logout link based on user objects loggedIn state
+  function delayNav(pathname){
+    // what we do is take the arrays and arrange it in that 
+    // settings ecs it triggers
+  
+  }
 
   function conditionalLogin(){
     if(loggedIn || auth.loggedIn()){
@@ -41,8 +46,10 @@ function Header() {
       </li>);
     }else{
       return(<Link
-        onClick={() => toggleGameState(null)}
-        to={{ pathname: "/" }}
+        onClick={() => {
+          
+          toggleGameState(null)
+        }}
         className="navLink"
       >
         <li>Login</li>
@@ -76,8 +83,12 @@ function Header() {
           <li>Home</li>
         </Link>
         <Link
-          onClick={() => toggleGameState(null)}
-          to={{ pathname: "/games" }}
+          onClick={() => {
+            toggleGameState(null)
+          }}
+          to={{ 
+            pathname: "/games" 
+          }}
           className="navLink"
         >
           <li>Games</li>

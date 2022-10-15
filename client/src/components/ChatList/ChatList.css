@@ -9,6 +9,7 @@
   position: fixed;
   right: 0;
   bottom: 0;
+  transition: 1s ease;
 }
 .chatAside:hover {
   box-shadow: 0 0 10px var(--fuscia);
@@ -47,6 +48,6 @@
 }
 
 .channelLink:hover {
-  color: var(--yellow);
-  box-shadow: 0 0 10px var(--yellow);
+  color: var(--fuscia);
+  box-shadow: 0 0 10px var(--blue2);
 }

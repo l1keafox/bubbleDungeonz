@@ -9,6 +9,9 @@ import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 
 export default function ChatWindow(props) {
+
+  const [limit,setLimit] = useState(3)
+  const { loggedIn, setLogin } = useExistingUserContext();
   const [messages, setMessages] = useState([]);
   const [channelId, setChannelId] = useState(props.channelId);
   const [channelNameString,setChannelName] = useState(props?.channelName);
@@ -16,10 +19,10 @@ export default function ChatWindow(props) {
 
   //TODO scroll to bottom of div.
   const bottomRef = useRef();
-
+  const currentUser = auth.getUser().data.username;
   const { loading, error, data, startPolling, stopPolling } = useQuery(
     GET_CHANNEL_MESSAGES,
-    { variables: { channelId } }
+    { variables: { channelId, limit } }
   );
 
   useEffect(() => {
@@ -49,19 +52,38 @@ export default function ChatWindow(props) {
   }
 
     //generates container element for each message, shows username. todo, add logic to assign class name and formatting based on whether the username matches current user.
-  function chatListItems(messages) {
+  function chatListItems(messages,userMatch) {
     if (loading) {
       return <p>loading</p>;
     } else {
       return messages?.map((message) => {
-        return (
-          <li key={message._id}>
-            <span className="displayedUsername">{message.username}</span>:{" "}
-            {parseLinkInText(message.messageText)}
-          </li>
-        );
+        if(message.username == userMatch){
+          return (
+            <div>
+              <li className="ownMessage" key={message._id}>
+                {parseLinkInText(message.messageText)}{" "}|<span className="displayedOwnUsername">{message.username}</span>
+              </li>
+              <br></br>
+            </div>
+          );
+        }else{
+          return (
+            <div>
+              <li className="otherMessage" key={message._id}>
+                  <span className="displayedUsername">{message.username}</span>|{" "}{parseLinkInText(message.messageText)}
+              </li>
+              <br></br>
+            </div>
+          );
+        }
+        
       });
     }
+  }
+
+  //increases the number of messages fetched when "load older messages" is clicked.
+  function incrementLimit(){
+    setLimit((limit+3));
   }
 
   //generates element for the scrollable div
@@ -70,9 +92,9 @@ export default function ChatWindow(props) {
       {/* no name is being handed down here */}
       <h1>{props.name}</h1>
       <div className="scrollable-div">
-        <a className="loadMore">Load Older Messages</a>
+        <a className="loadMore" onClick={incrementLimit}>Load Older Messages</a>
         <ul className="chatFeed">
-          {chatListItems(channels.messages)}
+          {chatListItems(channels.messages,currentUser)}
         </ul>
         <div></div>
       </div>

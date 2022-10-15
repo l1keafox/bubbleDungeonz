@@ -37,6 +37,17 @@
   color: var(--fuscia);
   font-weight: bolder;
 }
+.displayedOwnUsername {
+  color: var(--darkgreen);
+  font-weight: bolder;
+  text-align: right;
+}
+.ownMessage{
+  float: right;
+}
+.otherMessage{
+  float: left;
+}
 
 /* new message form elements */
 .messageForm {

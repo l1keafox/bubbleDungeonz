@@ -144,6 +144,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
     function loadedChannels(item) {
 
         if(item){
+            //name required for window styling
             return  <ChatWindow key={item} channelId={item} name={channelName} />;
         }else{
             return <div></div>;

@@ -14,20 +14,16 @@ export default function ChatWindow(props) {
   const [channelNameString,setChannelName] = useState(props?.channelName);
   const { l, dat } = useQuery(GET_CHANNEL_BY_NAME,{variables:{channelNameString}});
 
+  //TODO scroll to bottom of div.
   const bottomRef = useRef();
 
   const { loading, error, data, startPolling, stopPolling } = useQuery(
     GET_CHANNEL_MESSAGES,
     { variables: { channelId } }
   );
+
   useEffect(() => {
-    startPolling(1000);
-  },[]);
-  useEffect(()=>{
-    console.log("checking channel by name")
-    console.log(props.channelName);
-    console.log(l);
-    console.log(dat);
+    startPolling(300);
   },[]);
 
   const channels = data?.channelMessages || [];
@@ -84,7 +80,7 @@ export default function ChatWindow(props) {
     </div>
   );
 }
-
+//generates and manages the component that the user edits messages with. Takes channel id, and posts messages itself.
 function MessageEditor(props) {
   const [post, { error, info }] = useMutation(POST_MESSAGE_TO_CHANNEL);
   const [value, setValue] = useState("");

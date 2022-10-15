@@ -27,10 +27,12 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
+
 .navLink:hover,
 .nav {
   color: var(--fuscia);
   text-decoration: none;
+  text-shadow: 100px 100px 100px var(--red);
 }
 
 .hidden {

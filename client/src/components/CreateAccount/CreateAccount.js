@@ -111,7 +111,7 @@ function CreateAccount() {
           ></input>
         </div>
         <button
-          className="submitButton"
+          className="createNewAccountBtn"
           type="button"
           onClick={handleFormSubmit}
         >

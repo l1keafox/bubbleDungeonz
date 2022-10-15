@@ -1,5 +1,5 @@
 import "./ChatWindow.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
 import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
@@ -8,9 +8,12 @@ import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
 import auth from "../../utils/auth";
 // import { useExistingUserContext } from "../../utils/existingUserContext";
 
-export default function ChatWindow(props) {
 
-  const [limit,setLimit] = useState(3)
+export default function ChatWindow(props) {
+  const scrollElement = useRef();
+  const bottomTarget = useRef();
+  const [canScrollDown,setCanScrollDown] = useState(true);
+  const [limit,setLimit] = useState(10)
   // const [messages, setMessages] = useState([]);
   const [channelId] = useState(props.channelId);
   // const [channelNameString,setChannelName] = useState(props?.channelName);
@@ -24,9 +27,20 @@ export default function ChatWindow(props) {
     { variables: { channelId, limit } }
   );
 
+  const executeScroll = () => {
+    bottomTarget.current.scrollIntoView();
+    setCanScrollDown(false);
+  };
+
   useEffect(() => {
     startPolling(300);
+    executeScroll();
   },[]);
+  useEffect(()=>{
+    if(!canScrollDown){
+      executeScroll();
+    }
+  })
 
   const channels = data?.channelMessages || [];
 
@@ -82,6 +96,7 @@ export default function ChatWindow(props) {
 
   //increases the number of messages fetched when "load older messages" is clicked.
   function incrementLimit(){
+    setCanScrollDown(true);
     setLimit((limit+3));
   }
 
@@ -90,13 +105,14 @@ export default function ChatWindow(props) {
     <div className="channelFeedFormContainer">
       {/* no name is being handed down here */}
       <h1>{props.name}</h1>
-      <div className="scrollable-div">
+      <div className="scrollable-div" ref={scrollElement}>
         <p className="loadMore" onClick={incrementLimit}>Load Older Messages</p>
         <ul className="chatFeed">
           {chatListItems(channels.messages,currentUser)}
         </ul>
-        <div></div>
+        <div ref={bottomTarget}></div>
       </div>
+      {canScrollDown ? <button onClick={executeScroll}>scroll to bottom</button> : <div></div>}
       <MessageEditor channelId={props.channelId} />
     </div>
   );

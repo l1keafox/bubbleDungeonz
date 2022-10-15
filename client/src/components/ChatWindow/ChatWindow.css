@@ -20,6 +20,17 @@
   text-align: justify;
   padding: 0.5rem;
 }
+button {
+  font-family: "Source Code Pro", monospace;
+  color: var(--darkgreen);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  padding-bottom: 5%;
+}
 
 .scrollable-div a {
   align-self: center;

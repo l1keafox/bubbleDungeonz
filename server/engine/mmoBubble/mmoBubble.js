@@ -34,7 +34,6 @@ module.exports = {
   },
   init: function (gameSettings) {
     // this is empty
-    console.log(gameSettings.id);//
     gameCardId = gameSettings.id;
 
     io.on("connection", (socket) => {
@@ -109,9 +108,9 @@ module.exports = {
                     }
                 } 
                 )
-                console.log(
-                  `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
-                );
+                // console.log(
+                //   `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
+                // );
 
               }
 

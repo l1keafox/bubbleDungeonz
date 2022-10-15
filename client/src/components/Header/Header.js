@@ -50,6 +50,17 @@ function Header() {
     }
     
   }
+  function conditionalSettings(){
+    if(loggedIn || auth.loggedIn()){
+      return ( 
+        <li className="navLink">
+          <FaHamburger onClick={toggleModal}></FaHamburger>
+        </li>
+      )
+    }else{
+      return (<div></div>)
+    }
+  }
 
   return (
     <div className="headerDiv">
@@ -72,9 +83,7 @@ function Header() {
           <li>Games</li>
         </Link>
         {conditionalLogin()}
-        <li className="navLink">
-          <FaHamburger onClick={toggleModal}></FaHamburger>
-        </li>
+        {conditionalSettings()}
       </ul>
     </div>
   );

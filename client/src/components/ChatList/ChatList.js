@@ -9,100 +9,153 @@ import auth from "../../utils/auth";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 import { useGameContext, } from "../../utils/gameContext";
 
-let lock = true;
+let locked = false;
 let lastGameChannelId = null;
+let lastGameState = "";
 
 export default function ChatList() {
+const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
   const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
-  const [openChannelIds, setOpenChannelIds] = useState([]);
+  const [openChannelId, setOpenChannelId] = useState(null);
   const { toggleGameState } = useGameContext();
   const [context, setContext] = useState(useGameContext());
   const [getChannel,{ l, dat }] = useLazyQuery(GET_CHANNEL_BY_NAME);
   const [create,{e,d}] = useMutation(CREATE_CHANNEL);
   const [join,{joinError,joinData}] = useMutation(JOIN_CHANNEL);
   const [leave,{leaveError,leaveData}]=useMutation(LEAVE_CHANNEL);
+  const [channelName,setChannelNameString] = useState("");
   let location = useLocation();
 
-
-  let channelNameString = "Global"
+    //attempts to add the current user to the participants list in the channel.
     const attemptJoin = async (channelId) => {
     await join({variables:{channelId}});
     }
+    //attempts to remove the current user from the participants list of the channel
     const attemptLeave = async (channelId) => {
-    await leave({variables:{channelId}});
+    const test = await leave({variables:{channelId}});
+    console.log(test);
     }
 
-  const channels = data?.memberChannels || [];
+    //master list of available channels, this is mapped onto the channel tabs.
+  const [channels,setChannels] = useState(data?.memberChannels || []);
   
     useEffect(()=>{
-        startPolling(1000);
-        if(context?.gameState && lock && location.pathname=="/gameplay"){
-            channelNameString = context.gameState;
+        startPolling(300);
+        //trigger while in game
+        if(location.pathname=="/gameplay"){
+
+            //tracks the previous game state to be able to reference the last focused location.
+            lastGameState=context.gameState;
+
+            //creates a chat channel for the current context if none exists.
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
                 lastGameChannelId = newChannel.data.createChannel._id;
-                await attemptJoin(newChannel.data.createChannel._id);
+                attemptJoin(newChannel.data.createChannel._id);
             };
-            const load = async () => {
-                const test = await getChannel({variables:{channelNameString}});
-                if(test.data.getChannelByName){
-                    lastGameChannelId = test.data.getChannelByName._id
-                    //join channel
-                    attemptJoin(lastGameChannelId);
-                }else{
-                    //create and join channel
-                    attemptCreate(channelNameString);
+
+            //attempts to load and joins the current game state's channel
+            const attemptLoad = async (gs) => {
+                //sets the channel name to be displayed.
+                setChannelNameString(gs);
+                const channelNameString = gs;
+
+                //fetches all, network policy ignores the already cached data.
+                const all = await getAll({fetchPolicy: 'network-only'});
+
+                //checks for existing channel for current game state.
+                let match = false;
+                for (const channel of all.data.channels){
+                    console.log(channel.channelName);
+                    if(channel.channelName == gs){
+                        match=true;
+                        attemptJoin(channel._id);
+                    }
                 }
-                
+
+                //Creates a new channel if one doesn't exist yet.
+                if(!match && !locked){
+                    //no match found
+                    attemptCreate(gs);
+                    locked = true;
+                }
             }
-            load();
-            lock=false;
+            attemptLoad(context.gameState);
           }
-          if(!context?.gameState || location.pathname!='/gameplay'){
-            if(lastGameChannelId){
-                //leave channel
-                attemptLeave(lastGameChannelId);
-                lastGameChannelId = null;
+          //When not in game
+          if(location.pathname!='/gameplay'){
+
+            //search current channels for the one matching the last focused area and remove it.
+            let hold = [];
+            for(const item of channels){
+                if(item.channelName!=lastGameState){
+                    hold.push(item);
+                    console.log(item);
+                }else{
+                    attemptLeave(item._id);
+                }
             }
-            lock = true;
+            //set new channel list
+            setChannels(hold);
+            //close chat window if navigating away from a game.
+            if(channelName==lastGameState){
+                setOpenChannelId(null);
+            }
+            //allow creation of a new channel when entering a novel context.
+            locked = false;
           }
     },[]);
+    useEffect(()=>{
+        if(data?.memberChannels){
+            setChannels(data.memberChannels);
+        }
+    },[data])
 
-
+    //generates the tab list of available channels the user can switch between.
   function channelOptions({ channels }) {
     if (loading) {
       return <p>loading</p>;
     } else {
       return channels.map((item) => (
         <p
-          onClick={() => openChannel(item._id, item.channelName)}
-          key={item._id}
+          onClick={() => openChannel(item?._id, item?.channelName)}
+          key={item?._id}
           className="channelLink"
         >
-          {item.channelName}
+          {item?.channelName}
         </p>
       ));
     }
   }
+
   // openChannel called on click for channel buttons
   function openChannel(id, name) {
-    console.log(openChannelIds);
-    if (!openChannelIds.includes(id)) {
-      setOpenChannelIds([id]);
-    }
-  }
-  function closeChannel() {
-    setOpenChannelIds([]);
+    //sets the heading of whichever channel the user selects
+    setChannelNameString(name);
+    //queues up the channel to be opened
+    setOpenChannelId(id);
   }
 
-  function loadedChannels(list) {
-    return list.map((item) => <ChatWindow key={item} channelId={item} />);
+  function closeChannel() {
+    setOpenChannelId(null);
   }
+
+    //generates a chat window for the open channel
+    function loadedChannels(item) {
+
+        if(item){
+            //name required for window styling
+            return  <ChatWindow key={item} channelId={item} name={channelName} />;
+        }else{
+            return <div></div>;
+        }
+        
+    }
 
   return (
     <aside className="chatAside">
       <div className="chatChannelsList">
-        {openChannelIds.length === 1 ? (
+        {openChannelId ? (
           <p className="collapseChatBtn" onClick={closeChannel}>
             X
           </p>
@@ -111,7 +164,8 @@ export default function ChatList() {
         )}
         {channelOptions({ channels })}
       </div>
-      {loadedChannels(openChannelIds)}
+      {/* <h3>{openChannelId ? channelName :null}</h3> */}
+      {loadedChannels(openChannelId)}
     </aside>
   );
 }

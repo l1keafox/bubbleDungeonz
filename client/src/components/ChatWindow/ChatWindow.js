@@ -1,25 +1,25 @@
 import "./ChatWindow.css";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 
-import { GET_CHANNEL_MESSAGES,GET_CHANNEL_BY_NAME } from "../../utils/queries";
+import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
 import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
 
 import auth from "../../utils/auth";
-import { useExistingUserContext } from "../../utils/existingUserContext";
+// import { useExistingUserContext } from "../../utils/existingUserContext";
 
 export default function ChatWindow(props) {
 
   const [limit,setLimit] = useState(3)
-  const [messages, setMessages] = useState([]);
-  const [channelId, setChannelId] = useState(props.channelId);
-  const [channelNameString,setChannelName] = useState(props?.channelName);
-  const { l, dat } = useQuery(GET_CHANNEL_BY_NAME,{variables:{channelNameString}});
+  // const [messages, setMessages] = useState([]);
+  const [channelId] = useState(props.channelId);
+  // const [channelNameString,setChannelName] = useState(props?.channelName);
+  // const { l, dat } = useQuery(GET_CHANNEL_BY_NAME,{variables:{channelNameString}});
 
   //TODO scroll to bottom of div.
-  const bottomRef = useRef();
+  // const bottomRef = useRef();
   const currentUser = auth.getUser().data.username;
-  const { loading, error, data, startPolling, stopPolling } = useQuery(
+  const { loading,  data, startPolling, } = useQuery(
     GET_CHANNEL_MESSAGES,
     { variables: { channelId, limit } }
   );
@@ -56,7 +56,7 @@ export default function ChatWindow(props) {
       return <p>loading</p>;
     } else {
       return messages?.map((message) => {
-        if(message.username == userMatch){
+        if(message.username === userMatch){
           return (
             <div>
               <li className="ownMessage" key={message._id}>
@@ -91,7 +91,7 @@ export default function ChatWindow(props) {
       {/* no name is being handed down here */}
       <h1>{props.name}</h1>
       <div className="scrollable-div">
-        <a className="loadMore" onClick={incrementLimit}>Load Older Messages</a>
+        <p className="loadMore" onClick={incrementLimit}>Load Older Messages</p>
         <ul className="chatFeed">
           {chatListItems(channels.messages,currentUser)}
         </ul>
@@ -103,7 +103,7 @@ export default function ChatWindow(props) {
 }
 //generates and manages the component that the user edits messages with. Takes channel id, and posts messages itself.
 function MessageEditor(props) {
-  const [post, { error, info }] = useMutation(POST_MESSAGE_TO_CHANNEL);
+  const [post] = useMutation(POST_MESSAGE_TO_CHANNEL);
   const [value, setValue] = useState("");
   const channelId = props.channelId;
   function handleChange(e) {
@@ -111,12 +111,12 @@ function MessageEditor(props) {
   }
   async function handleSubmit(e) {
     e.preventDefault();
-    const test = await send(value);
+    await send(value);
     setValue("");
   }
 
   async function send(messageText) {
-    const { info } = await post({ variables: { channelId, messageText } });
+    await post({ variables: { channelId, messageText } });
   }
   return (
     <form className="messageForm" id="form" action="" onSubmit={handleSubmit}>

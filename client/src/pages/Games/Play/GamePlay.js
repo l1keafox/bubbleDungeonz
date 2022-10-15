@@ -13,6 +13,7 @@ function GamePlay() {
   const { gameState } = useGameContext();
   const {  data } = useQuery(GET_GAME_CARDS,{
     //loading, error,
+    pollInterval: 500,
     nextFetchPolicy:"network-only",
   }); //async not functioning
   const [scores, setScore] = useState([]);

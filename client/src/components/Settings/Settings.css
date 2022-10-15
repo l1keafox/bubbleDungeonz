@@ -1,6 +1,6 @@
 @import "../../utils/colors.css";
 
-#mainModal {
+.mainModal {
   width: 25rem;
   height: fit-content;
   display: flex;
@@ -13,11 +13,16 @@
   border: solid 2px var(--fuscia);
   border-radius: 5px;
   position: absolute;
-  transition: 2s ease;
-
+  opacity: 0;
+  transition: 1s ease;
+  left: -30rem;
   box-shadow: 3px 3px 3px 3px var(--blue2);
 }
 
+.show {
+  opacity: 100;
+  left: 0rem;
+}
 /* font-family "play" is just a placeholder */
 h3 {
   font-size: 1rem;

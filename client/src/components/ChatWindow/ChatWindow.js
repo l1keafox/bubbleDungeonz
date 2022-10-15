@@ -11,7 +11,6 @@ import { useExistingUserContext } from "../../utils/existingUserContext";
 export default function ChatWindow(props) {
 
   const [limit,setLimit] = useState(3)
-  const { loggedIn, setLogin } = useExistingUserContext();
   const [messages, setMessages] = useState([]);
   const [channelId, setChannelId] = useState(props.channelId);
   const [channelNameString,setChannelName] = useState(props?.channelName);

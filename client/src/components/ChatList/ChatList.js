@@ -19,10 +19,10 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
   const [openChannelId, setOpenChannelId] = useState(null);
   const { toggleGameState } = useGameContext();
   const [context, setContext] = useState(useGameContext());
-  const [getChannel,{ l, dat }] = useLazyQuery(GET_CHANNEL_BY_NAME);
-  const [create,{e,d}] = useMutation(CREATE_CHANNEL);
-  const [join,{joinError,joinData}] = useMutation(JOIN_CHANNEL);
-  const [leave,{leaveError,leaveData}]=useMutation(LEAVE_CHANNEL);
+  const [getChannel] = useLazyQuery(GET_CHANNEL_BY_NAME);
+  const [create] = useMutation(CREATE_CHANNEL);
+  const [join] = useMutation(JOIN_CHANNEL);
+  const [leave]=useMutation(LEAVE_CHANNEL);
   const [channelName,setChannelNameString] = useState("");
   let location = useLocation();
 
@@ -32,8 +32,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
     }
     //attempts to remove the current user from the participants list of the channel
     const attemptLeave = async (channelId) => {
-    const test = await leave({variables:{channelId}});
-    console.log(test);
+     const test = await leave({variables:{channelId}});
     }
 
     //master list of available channels, this is mapped onto the channel tabs.
@@ -66,7 +65,6 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
                 //checks for existing channel for current game state.
                 let match = false;
                 for (const channel of all.data.channels){
-                    console.log(channel.channelName);
                     if(channel.channelName == gs){
                         match=true;
                         attemptJoin(channel._id);
@@ -90,7 +88,6 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             for(const item of channels){
                 if(item.channelName!=lastGameState){
                     hold.push(item);
-                    console.log(item);
                 }else{
                     attemptLeave(item._id);
                 }

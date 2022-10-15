@@ -28,7 +28,7 @@ function Header() {
   //need logic to conditionally render Login/Logout link based on user objects loggedIn state
 
   function conditionalLogin(){
-    if(loggedIn){
+    if(loggedIn || auth.loggedIn()){
       return(<li
         className="navLink"
         onClick={() => {

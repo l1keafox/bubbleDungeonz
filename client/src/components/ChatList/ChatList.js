@@ -144,7 +144,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
     function loadedChannels(item) {
 
         if(item){
-            return  <ChatWindow key={item} channelId={item} />;
+            return  <ChatWindow key={item} channelId={item} name={channelName} />;
         }else{
             return <div></div>;
         }
@@ -163,7 +163,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
         )}
         {channelOptions({ channels })}
       </div>
-      <h3>{openChannelId ? channelName :null}</h3>
+      {/* <h3>{openChannelId ? channelName :null}</h3> */}
       {loadedChannels(openChannelId)}
     </aside>
   );

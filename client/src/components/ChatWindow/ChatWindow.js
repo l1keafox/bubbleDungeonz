@@ -32,7 +32,7 @@ export default function ChatWindow(props) {
 
   const channels = data?.channelMessages || [];
 
-  //recursive
+  //recursive link text parser, splits on first valid link, wraps <a> around it, and then splits next chunk of text, returns when no link is found.
   function parseLinkInText(text) {
     let validLink = new RegExp(
       "([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+"
@@ -52,6 +52,7 @@ export default function ChatWindow(props) {
     }
   }
 
+    //generates container element for each message, shows username. todo, add logic to assign class name and formatting based on whether the username matches current user.
   function chatListItems(messages) {
     if (loading) {
       return <p>loading</p>;
@@ -67,6 +68,7 @@ export default function ChatWindow(props) {
     }
   }
 
+  //generates element for the scrollable div
   return (
     <div className="channelFeedFormContainer">
       {/* no name is being handed down here */}

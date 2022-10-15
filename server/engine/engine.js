@@ -59,7 +59,6 @@ module.exports = {
 //        let cards = GameCard.find();
         GameCard.find({}).exec((err, collection) => { 
             collection.map(obj =>{
-                console.log(obj);
                 if(obj.gameType === "bubbles"){
                     mmoBubble.init(obj);
                     this.addGame(mmoBubble);

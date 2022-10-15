@@ -78,7 +78,7 @@ function GamePlay() {
             {auth.getUser().data.username} Score: <span className="currentScore">{myScore}</span>
           </p>
         </div>
-        <FeaturedScores scores={scores} title={gameTitle} />
+        <FeaturedScores scores={scores} title={gameTitle} featured="false"/>
 
         {auth.loggedIn() ? <ChatList /> : <div />}
       </div>

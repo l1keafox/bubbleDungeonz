@@ -9,7 +9,7 @@ import { BsJoystick } from "react-icons/bs";
 import { IoMdRocket } from "react-icons/io";
 
 const Login = (props) => {
-  const { toggleExistingUser } = useExistingUserContext();
+  const { toggleExistingUser, setLogin } = useExistingUserContext();
 
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
@@ -35,6 +35,7 @@ const Login = (props) => {
 
       Auth.login(data.login.token);
       toggleExistingUser(true);
+      setLogin(true);
     } catch (e) {
       console.error(e);
     }

@@ -14,6 +14,7 @@ let lastGameChannelId = null;
 let lastGameState = "";
 
 export default function ChatList() {
+const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
   const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
   const [openChannelId, setOpenChannelId] = useState(null);
   const { toggleGameState } = useGameContext();
@@ -22,58 +23,69 @@ export default function ChatList() {
   const [create,{e,d}] = useMutation(CREATE_CHANNEL);
   const [join,{joinError,joinData}] = useMutation(JOIN_CHANNEL);
   const [leave,{leaveError,leaveData}]=useMutation(LEAVE_CHANNEL);
-  const [channelNameString,setChannelNameString] = useState("");
+  const [channelName,setChannelNameString] = useState("");
   let location = useLocation();
 
-
+    //attempts to add the current user to the participants list in the channel.
     const attemptJoin = async (channelId) => {
     await join({variables:{channelId}});
     }
+    //attempts to remove the current user from the participants list of the channel
     const attemptLeave = async (channelId) => {
     const test = await leave({variables:{channelId}});
     console.log(test);
     }
 
+    //master list of available channels, this is mapped onto the channel tabs.
   const [channels,setChannels] = useState(data?.memberChannels || []);
   
     useEffect(()=>{
         startPolling(300);
-        //on logout doesn't leave channel. needs to check at all times to leave all channels but global
+        //trigger while in game
         if(location.pathname=="/gameplay"){
-            console.log(location.pathname);
-            console.log(context.gameState);
+
+            //tracks the previous game state to be able to reference the last focused location.
             lastGameState=context.gameState;
+
+            //creates a chat channel for the current context if none exists.
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
                 lastGameChannelId = newChannel.data.createChannel._id;
-                await attemptJoin(newChannel.data.createChannel._id);
+                attemptJoin(newChannel.data.createChannel._id);
             };
-            const attemptLoad = async () => {
-                const channelNameString = context.gameState;
-                console.log("loading");
-                console.log(channelNameString);
-                const gameChannel = await getChannel({variables:{channelNameString}})
-                console.log(gameChannel.data.getChannelByName);
-                if(gameChannel.data.getChannelByName){
-                    attemptJoin(gameChannel.data.getChannelByName._id);
-                    setChannels([...channels,gameChannel.data.getChannelByName])
-                }else{
-                    console.log("no channel found");
-                    if(!locked){
-                        attemptCreate(channelNameString);
-                        locked = true;
+
+            //attempts to load and joins the current game state's channel
+            const attemptLoad = async (gs) => {
+                //sets the channel name to be displayed.
+                setChannelNameString(gs);
+                const channelNameString = gs;
+
+                //fetches all, network policy ignores the already cached data.
+                const all = await getAll({fetchPolicy: 'network-only'});
+
+                //checks for existing channel for current game state.
+                let match = false;
+                for (const channel of all.data.channels){
+                    console.log(channel.channelName);
+                    if(channel.channelName == gs){
+                        match=true;
+                        attemptJoin(channel._id);
                     }
-                    
                 }
-                
+
+                //Creates a new channel if one doesn't exist yet.
+                if(!match && !locked){
+                    //no match found
+                    attemptCreate(gs);
+                    locked = true;
+                }
             }
-            attemptLoad();
-            // lock=false;
+            attemptLoad(context.gameState);
           }
+          //When not in game
           if(location.pathname!='/gameplay'){
-            console.log("navigated away");
-            console.log(lastGameState);
-            console.log(channels)
+
+            //search current channels for the one matching the last focused area and remove it.
             let hold = [];
             for(const item of channels){
                 if(item.channelName!=lastGameState){
@@ -83,11 +95,14 @@ export default function ChatList() {
                     attemptLeave(item._id);
                 }
             }
+            //set new channel list
             setChannels(hold);
-            if(channelNameString==lastGameState){
+            //close chat window if navigating away from a game.
+            if(channelName==lastGameState){
                 setOpenChannelId(null);
             }
-            // lock = true;
+            //allow creation of a new channel when entering a novel context.
+            locked = false;
           }
     },[]);
     useEffect(()=>{
@@ -96,7 +111,7 @@ export default function ChatList() {
         }
     },[data])
 
-
+    //generates the tab list of available channels the user can switch between.
   function channelOptions({ channels }) {
     if (loading) {
       return <p>loading</p>;
@@ -112,28 +127,29 @@ export default function ChatList() {
       ));
     }
   }
+
   // openChannel called on click for channel buttons
   function openChannel(id, name) {
-    //console.log("opening channel");
-    //console.log(id);
+    //sets the heading of whichever channel the user selects
     setChannelNameString(name);
+    //queues up the channel to be opened
     setOpenChannelId(id);
   }
+
   function closeChannel() {
     setOpenChannelId(null);
   }
 
-function loadedChannels(item) {
+    //generates a chat window for the open channel
+    function loadedChannels(item) {
 
-    //console.log(channelNameString);
-    //console.log(item);
-    if(item){
-        return  <ChatWindow key={item} channelId={item} />;
-    }else{
-        return <div></div>;
+        if(item){
+            return  <ChatWindow key={item} channelId={item} />;
+        }else{
+            return <div></div>;
+        }
+        
     }
-    
-}
 
   return (
     <aside className="chatAside">
@@ -147,7 +163,7 @@ function loadedChannels(item) {
         )}
         {channelOptions({ channels })}
       </div>
-      <h3>{openChannelId ? channelNameString :null}</h3>
+      <h3>{openChannelId ? channelName :null}</h3>
       {loadedChannels(openChannelId)}
     </aside>
   );

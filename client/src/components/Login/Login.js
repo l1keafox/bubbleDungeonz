@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
@@ -14,9 +14,6 @@ const Login = (props) => {
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
-  const [anime, setAnime] = useState("loginCard");
-  useEffect( () => setAnime("loginCard show "), [] );
-  // useEffect( () => () =>  setAnime("loginCard"), [] );
   // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -51,7 +48,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className={anime}>
+    <div className="loginCard">
       <h4 className="loginCardTitle">User Login</h4>
       {data ? (
         <p>

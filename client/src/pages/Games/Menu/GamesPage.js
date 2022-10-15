@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect } from "react";
 import { useGameContext } from "../../../utils/gameContext.js";
 import { Link } from "react-router-dom";
 import auth from "../../../utils/auth";
@@ -12,9 +12,6 @@ import bubbleTroubleImg from "./assets/bubble-trouble-screenshot.png";
 function GamesMenu() {
   const { toggleGameState } = useGameContext();
   const { loading, data } = useQuery(GET_GAME_CARDS);
-  const [anime, setAnime] = useState("menuCardsContainer");
-  useEffect( () => setAnime("menuCardsContainer show "), [] );
-
   useEffect(()=>{
     toggleGameState(null);
   },[]);
@@ -22,7 +19,7 @@ function GamesMenu() {
 
   return (
     <>
-    <div className={anime}>
+    <div className="menuCardsContainer">
       {loading ? <p>loading</p> : auth.loggedIn()
         ? data.gameCards.map((game,index) => (
             <Link className="gameViewLink" key = {index} name={game.title} to="/gameplay">

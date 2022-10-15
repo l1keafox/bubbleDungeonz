@@ -6,12 +6,6 @@
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  opacity: 0;
-  transition: 1s ease;
-}
-
-.show{
-  opacity: 100;
 }
 
 /* individual game option cards */

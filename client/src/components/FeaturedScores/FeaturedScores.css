@@ -7,6 +7,12 @@
   background-image: linear-gradient(var(--red) 0%, var(--fuscia) 100%);
   color: var(--white);
   box-shadow: 3px 3px 3px 3px var(--blue2);
+  opacity: 0;
+  transition: 1s ease;
+}
+
+.show{
+  opacity: 100;
 }
 
 .featuredGameImg {

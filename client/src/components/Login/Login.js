@@ -72,15 +72,14 @@ const Login = (props) => {
             value={formState.password}
             onChange={handleChange}
           />
-          <Link to="/games" onClick={handleFormSubmit}>
-            <button
-              className="loginSubmitBtn"
-              style={{ cursor: "pointer" }}
-              type="submit"
-            >
-              Login <IoMdRocket />
-            </button>
-          </Link>
+          <button
+            onClick={handleFormSubmit}
+            className="loginSubmitBtn"
+            style={{ cursor: "pointer" }}
+            type="submit"
+          >
+            Login <IoMdRocket />
+          </button>
           <hr
             style={{
               height: "1px",

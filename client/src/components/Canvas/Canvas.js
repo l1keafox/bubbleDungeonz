@@ -183,8 +183,8 @@ const Canvas = () => {
           set: function (data) {
             var offsetTop = GAME.canvas.offsetTop,
               offsetLeft = GAME.canvas.offsetLeft;
-            this.x = data.pageX - offsetLeft;
-            this.y = data.pageY - offsetTop;
+            this.x = data.pageX - offsetLeft -5;
+            this.y = data.pageY - offsetTop -5;
             
             this.tapped = true;
             if( !GAME.localObjects ){

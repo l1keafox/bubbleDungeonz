@@ -11,8 +11,8 @@ import auth from "../../utils/auth";
 export default function ChatWindow(props) {
   const scrollElement = useRef();
   const bottomTarget = useRef();
-  const [canScrollDown,setCanScrollDown] = useState(true);
-  const [limit,setLimit] = useState(10)
+  const [canScrollDown, setCanScrollDown] = useState(true);
+  const [limit, setLimit] = useState(10);
   // const [messages, setMessages] = useState([]);
   const [channelId] = useState(props.channelId);
   // const [channelNameString,setChannelName] = useState(props?.channelName);
@@ -21,10 +21,9 @@ export default function ChatWindow(props) {
   //TODO scroll to bottom of div.
   // const bottomRef = useRef();
   const currentUser = auth.getUser().data.username;
-  const { loading,  data, startPolling, } = useQuery(
-    GET_CHANNEL_MESSAGES,
-    { variables: { channelId, limit } }
-  );
+  const { loading, data, startPolling } = useQuery(GET_CHANNEL_MESSAGES, {
+    variables: { channelId, limit },
+  });
 
   const executeScroll = () => {
     bottomTarget.current.scrollIntoView();
@@ -34,12 +33,12 @@ export default function ChatWindow(props) {
   useEffect(() => {
     startPolling(300);
     executeScroll();
-  },[]);
-  useEffect(()=>{
-    if(!canScrollDown){
+  }, []);
+  useEffect(() => {
+    if (!canScrollDown) {
       executeScroll();
     }
-  })
+  });
 
   const channels = data?.channelMessages || [];
 
@@ -63,55 +62,64 @@ export default function ChatWindow(props) {
     }
   }
 
-    //generates container element for each message, shows username. todo, add logic to assign class name and formatting based on whether the username matches current user.
-  function chatListItems(messages,userMatch) {
+  //generates container element for each message, shows username. todo, add logic to assign class name and formatting based on whether the username matches current user.
+  function chatListItems(messages, userMatch) {
     if (loading) {
       return <p>loading</p>;
     } else {
       return messages?.map((message) => {
-        if(message.username === userMatch){
+        if (message.username === userMatch) {
           return (
             <div>
               <li className="ownMessage" key={message._id}>
-                {parseLinkInText(message.messageText)}{" "}|<span className="displayedOwnUsername">{message.username}</span>
+                {parseLinkInText(message.messageText)} |
+                <span className="displayedOwnUsername">{message.username}</span>
               </li>
               <br></br>
             </div>
           );
-        }else{
+        } else {
           return (
             <div>
               <li className="otherMessage" key={message._id}>
-                  <span className="displayedUsername">{message.username}</span>|{" "}{parseLinkInText(message.messageText)}
+                <span className="displayedUsername">{message.username}</span>|{" "}
+                {parseLinkInText(message.messageText)}
               </li>
               <br></br>
             </div>
           );
         }
-        
       });
     }
   }
 
   //increases the number of messages fetched when "load older messages" is clicked.
-  function incrementLimit(){
+  function incrementLimit() {
     setCanScrollDown(true);
-    setLimit((limit+3));
+    setLimit(limit + 3);
   }
 
   //generates element for the scrollable div
   return (
     <div className="channelFeedFormContainer">
       {/* no name is being handed down here */}
-      <h1>{props.name}</h1>
+      <h1 className="channelTitle">{props.name}</h1>
       <div className="scrollable-div" ref={scrollElement}>
-        <p className="loadMore" onClick={incrementLimit}>Load Older Messages</p>
+        <p className="loadMore" onClick={incrementLimit}>
+          Load Older Messages
+        </p>
         <ul className="chatFeed">
-          {chatListItems(channels.messages,currentUser)}
+          {chatListItems(channels.messages, currentUser)}
         </ul>
         <div ref={bottomTarget}></div>
       </div>
-      {canScrollDown ? <button onClick={executeScroll}>scroll to bottom</button> : <div></div>}
+      {canScrollDown ? (
+        <button className="scrollBtn" onClick={executeScroll}>
+          scroll to bottom
+        </button>
+      ) : (
+        <div></div>
+      )}
       <MessageEditor channelId={props.channelId} />
     </div>
   );

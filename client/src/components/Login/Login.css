@@ -46,7 +46,12 @@
   border: solid 2px var(--green);
   color: var(--navy);
   border-radius: 5px;
+  width: auto;
   margin: 1rem;
+  font-family: "Press Start 2P";
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .loginSubmitBtn:hover {
   color: var(--fuscia);

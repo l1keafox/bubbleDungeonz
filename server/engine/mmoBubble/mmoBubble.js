@@ -74,16 +74,16 @@ module.exports = {
                 return newScore;
               }
 
-              async function updateScoreOnGameCard(gameCardId, score, userId) {
-                const newScore = await GameCard.findByIdAndUpdate(
-                  { _id: gameCardId, "scores.user": userId },
-                  {
-                    $set: { "scores.$.score": score },
-                  },
-                  { runValidators: true, new: true }
-                );
-                return newScore;
-              }
+              // async function updateScoreOnGameCard(gameCardId, score, userId) {
+              //   const newScore = await GameCard.findByIdAndUpdate(
+              //     { _id: gameCardId, "scores.user": userId },
+              //     {
+              //       $set: { "scores.$.score": score },
+              //     },
+              //     { runValidators: true, new: true }
+              //   );
+              //   return newScore;
+              // }
 
               GameCard.findById({ _id: gameCardId }).exec(
                 async (err, collection) => {

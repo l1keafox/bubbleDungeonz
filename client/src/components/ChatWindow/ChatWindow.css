@@ -37,6 +37,17 @@
   outline: none;
   padding-bottom: 5%;
 }
+ul{
+  word-wrap: break-word;
+  display: inline-block;
+}
+li{
+  white-space: normal;
+    float: left;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+}
 
 .scrollable-div a {
   align-self: center;
@@ -61,9 +72,11 @@
 }
 .ownMessage {
   float: right;
+  text-align: right;
 }
 .otherMessage {
   float: left;
+  text-align: left;
 }
 
 /* new message form elements */
@@ -73,6 +86,7 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1.2rem;
+  word-wrap: break-word;
 }
 
 .messageInput {

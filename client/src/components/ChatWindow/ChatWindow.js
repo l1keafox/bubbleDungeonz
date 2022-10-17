@@ -70,23 +70,26 @@ export default function ChatWindow(props) {
       return messages?.map((message) => {
         if (message.username === userMatch) {
           return (
-            <div>
+            
               <li className="ownMessage" key={message._id}>
+                <div>
                 {parseLinkInText(message.messageText)} |
                 <span className="displayedOwnUsername">{message.username}</span>
+                </div>
               </li>
-              <br></br>
-            </div>
+              
+            
           );
         } else {
           return (
-            <div>
+            
               <li className="otherMessage" key={message._id}>
+                <div>
                 <span className="displayedUsername">{message.username}</span>|{" "}
                 {parseLinkInText(message.messageText)}
+                </div>
               </li>
-              <br></br>
-            </div>
+            
           );
         }
       });

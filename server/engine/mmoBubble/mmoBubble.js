@@ -40,7 +40,7 @@ module.exports = {
         while (i--) {
           let bubb = bubble.group[i];
           if (
-            distance(bubb.x + bubb.r, bubb.y + bubb.r, msg.x, msg.y) < bubb.r
+            distance(bubb.x , bubb.y , msg.x, msg.y) < bubb.r
           ) {
             bubb.hits--;
             let scorePts = 1;

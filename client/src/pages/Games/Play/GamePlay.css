@@ -45,8 +45,11 @@
   .gamePlayContainer {
     flex-direction: column;
   }
+  .canvasContainer {
+    max-width: 95vw;
+  }
   .highScoreContainer {
     align-self: center;
-    margin-top: 1.5rem;
+    margin: 1.5rem;
   }
 }

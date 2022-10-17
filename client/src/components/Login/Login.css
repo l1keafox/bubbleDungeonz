@@ -70,3 +70,9 @@
   color: var(--fuscia);
   box-shadow: 0 0 10px var(--red);
 }
+
+@media screen and (max-width: 650px) {
+  .loginCard {
+    max-width: 95vw;
+  }
+}

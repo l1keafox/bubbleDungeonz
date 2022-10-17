@@ -68,3 +68,9 @@
   border-radius: 5px;
   margin: 1rem;
 }
+
+@media screen and (max-width: 650px) {
+  .createUserForm {
+    max-width: 95vw;
+  }
+}

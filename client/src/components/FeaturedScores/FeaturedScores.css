@@ -46,3 +46,9 @@
 .featuredUsername {
   color: var(--yellow);
 }
+
+@media screen and (max-width: 650px) {
+  .featuredScoresDiv {
+    max-width: 95vw;
+  }
+}

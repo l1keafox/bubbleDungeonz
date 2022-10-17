@@ -52,44 +52,23 @@ function App() {
   // const particlesInit = useCallback((main) => {
   //   loadFull(main);
   // }, []);
-//          <Particles options={particlesOptions} init={particlesInit} />
+  //          <Particles options={particlesOptions} init={particlesInit} />
 
   return (
     <>
       {" "}
       <Router>
         <ApolloProvider client={client}>
-        <ExistingUserProvider>
-          <GameContextProvider>
-            <Header />
-          
-          <Routes>
-            <Route
-              path="/"
-              element={
-                
-                  <HomePage />
-                
-              }
-            />
-            <Route
-              path="/games"
-              element={
+          <ExistingUserProvider>
+            <GameContextProvider>
+              <Header />
 
-                  <GamesMenu />
-
-              }
-            />
-            <Route
-              path="/gameplay"
-              element={
-
-                  <GamePlay />
-               
-              }
-            ></Route>
-          </Routes>
-          </GameContextProvider>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/games" element={<GamesMenu />} />
+                <Route path="/gameplay" element={<GamePlay />}></Route>
+              </Routes>
+            </GameContextProvider>
           </ExistingUserProvider>
         </ApolloProvider>
       </Router>

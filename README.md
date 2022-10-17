@@ -65,7 +65,7 @@
   <a href="mailto:tate.j.foster@gmail.com">Email :tate.j.foster@gmail.com</a>
 
   <a href='https://github.com/madrodgerflynn'>Tyler Anderson github.</a>  :🐧🐧🐧🐧:
-  <a href="mailto: @gmail.com">Email Tyler@gmail.com</a>
+  <a href="mailto: madrodgerflynn@gmail.com">Email madrodgerflynn@gmail.com</a>
 
   ## License
   [MIT](https://choosealicense.com/licenses/mit/)

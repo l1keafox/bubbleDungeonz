@@ -59,10 +59,10 @@
   <a href="mailto: relero90@gmail.com">Email :relero90@gmail.com</a>
 
   <a href='https://github.com/jamesyoungGHusername'>James Young github.</a> :🦉🦉:
-  <a href="mailto: @gmail.com">Email :James@gmail.com</a>
+  <a href="mailto: jamesyoungwrites@gmail.com">Email :jamesyoungwrites@gmail.com</a>
 
   <a href='https://github.com/TateFoster'>Tate Foster github.</a> :🐹🐹🐹🐹🐹:
-  <a href="mailto:@gmail.com">Email :Tate@gmail.com</a>
+  <a href="mailto:tate.j.foster@gmail.com">Email :tate.j.foster@gmail.com</a>
 
   <a href='https://github.com/madrodgerflynn'>Tyler Anderson github.</a>  :🐧🐧🐧🐧:
   <a href="mailto: @gmail.com">Email Tyler@gmail.com</a>

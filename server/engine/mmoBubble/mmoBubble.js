@@ -78,7 +78,7 @@ module.exports = {
                 const newScore = await GameCard.findByIdAndUpdate(
                   { _id: gameCardId, "scores.user": userId },
                   {
-                    $set: { "scores.0.score": score },
+                    $set: { "scores.$.score": score },
                   },
                   { runValidators: true, new: true }
                 );
@@ -92,11 +92,11 @@ module.exports = {
                     for (let i in collection.scores) {
                       if (collection.scores[i].user == scorer.id) {
                         foundSelf = true;
-                        scorePts += collection.scores[i].score;
+                        collection.scores[i].score += scorePts;
+                        let dtz = await collection.save();
                       }
                     }
                     if (foundSelf) {
-                      updateScoreOnGameCard(gameCardId, scorePts, scorer.id);
                     } else {
                       addScoreToGameCard(gameCardId, scorePts, scorer.id);
                     }

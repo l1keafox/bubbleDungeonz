@@ -34,8 +34,9 @@
   
 ## Installation 
     1. Download repo 
-    2. Run "npm i" in the root folder.
-    3. run "npm run develop"
+    2. Run "npm i" in the root folder.\
+    3. Run "Npm run seed" to seed the database for gameplays.
+    4. run "npm run develop"
   
   
   ## Contributing 

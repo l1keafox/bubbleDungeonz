@@ -7,12 +7,12 @@
   Arcade website where you can create an account pick games to play, make friends, send messages and chat. Keeps track of score that players scored in the games they play. Customized avatar and settings.
 
   Technologies used:
-  1. MongoDB
+  1. MongoDB, Mongoose, GraphQL with Apollo server
   2. Express server
   3. React front end
   4. Node.js 
   5. Socket.io
-  6. Mongoose, GraphQL with Apollo server
+  6. Canvas API
 
   
   
@@ -55,8 +55,8 @@
   <a href='https://github.com/l1keafox'>Raymond Lewis github.</a>  :🐱: 
   <a href="mailto: raymond.ed.lewis@gmail.com">Email :raymond.ed.lewis@gmail.com</a>
     
-  <a href='https://github.com/relero90'>Becca Roberts github.</a> :🐕🐕🐱:
-  <a href="mailto: sdfa@gmail.com">Email :Becca@gmail.com</a>
+  <a href='https://github.com/relero90'>Becca Roberts github.</a> :🐕🐱🐱:
+  <a href="mailto: relero90@gmail.com">Email :relero90@gmail.com</a>
 
   <a href='https://github.com/jamesyoungGHusername'>James Young github.</a> :🦉🦉:
   <a href="mailto: @gmail.com">Email :James@gmail.com</a>

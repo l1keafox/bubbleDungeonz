@@ -40,7 +40,7 @@ module.exports = {
         while (i--) {
           let bubb = bubble.group[i];
           if (
-            distance(bubb.x + bubb.r, bubb.y + bubb.r, msg.x, msg.y) < bubb.r
+            distance(bubb.x , bubb.y , msg.x, msg.y) < bubb.r
           ) {
             bubb.hits--;
             let scorePts = 1;
@@ -74,16 +74,16 @@ module.exports = {
                 return newScore;
               }
 
-              async function updateScoreOnGameCard(gameCardId, score, userId) {
-                const newScore = await GameCard.findByIdAndUpdate(
-                  { _id: gameCardId, "scores.user": userId },
-                  {
-                    $set: { "scores.0.score": score },
-                  },
-                  { runValidators: true, new: true }
-                );
-                return newScore;
-              }
+              // async function updateScoreOnGameCard(gameCardId, score, userId) {
+              //   const newScore = await GameCard.findByIdAndUpdate(
+              //     { _id: gameCardId, "scores.user": userId },
+              //     {
+              //       $set: { "scores.$.score": score },
+              //     },
+              //     { runValidators: true, new: true }
+              //   );
+              //   return newScore;
+              // }
 
               GameCard.findById({ _id: gameCardId }).exec(
                 async (err, collection) => {
@@ -92,11 +92,11 @@ module.exports = {
                     for (let i in collection.scores) {
                       if (collection.scores[i].user == scorer.id) {
                         foundSelf = true;
-                        scorePts += collection.scores[i].score;
+                        collection.scores[i].score += scorePts;
+                        let dtz = await collection.save();
                       }
                     }
                     if (foundSelf) {
-                      updateScoreOnGameCard(gameCardId, scorePts, scorer.id);
                     } else {
                       addScoreToGameCard(gameCardId, scorePts, scorer.id);
                     }

@@ -32,11 +32,13 @@ function HomePage() {
       // let randomGameIndex = Math.floor(Math.random() * gameCards.length);
       // let featuredGame = gameCards[randomGameIndex];
       let featuredGame = gameCards[0]; //until the system has more than one game
-      setGameTitle(featuredGame.title);
-      let out = [...featuredGame.scores]
-        .sort((a, b) => a.score * -1 - b.score * -1)
-        .slice(0, 5);
-      setScore([...out]);
+      if(featuredGame){
+        setGameTitle(featuredGame.title);
+        let out = [...featuredGame.scores]
+          .sort((a, b) => a.score * -1 - b.score * -1)
+          .slice(0, 5);
+          setScore([...out]);
+      }
     }
   }, [data]);
 

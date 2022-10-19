@@ -5,10 +5,12 @@
   background-image: linear-gradient(var(--orange1) 0%, var(--yellow) 100%);
   border-top: 15px inset var(--fuscia);
   border-radius: 5px;
-  width: 20rem;
+  width: 30rem;
   position: fixed;
   right: 0;
   bottom: 0;
+  resize: vertical;
+  overflow: auto;
 }
 .chatAside:hover {
   box-shadow: 0 0 10px var(--fuscia);

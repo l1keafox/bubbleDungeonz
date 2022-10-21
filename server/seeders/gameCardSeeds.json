@@ -2,9 +2,4 @@
     "title": "Bubble Trouble",
     "description": "How many bubbles can you pop before the time is up?",
     "gameType": "bubbles"
-  },
-  {
-    "title": "Double Trouble",
-    "description": "Bubbles AGAIN!?!?",
-    "gameType": "bubbles2"
   }]

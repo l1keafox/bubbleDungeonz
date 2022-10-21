@@ -10,6 +10,7 @@ export default function ExistingUserProvider(props) {
   // state variable - does the user have an existing account?
   const [existingUser, setExistingUser] = useState(true);
   const [loggedIn,setLoggedIn] = useState(false);
+  const [userSettings, setUserSetting] = useState({});
 
   // method to update the state variable
   const toggleExistingUser = () => {
@@ -17,6 +18,10 @@ export default function ExistingUserProvider(props) {
   };
   const setLogin = (b) => {
     return setLoggedIn(b);
+  }
+  
+  const setSetting = () =>{
+
   }
 
   return (

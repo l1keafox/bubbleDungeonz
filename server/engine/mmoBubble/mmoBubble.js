@@ -87,6 +87,8 @@ module.exports = {
 
               GameCard.findById({ _id: gameCardId }).exec(
                 async (err, collection) => {
+
+                  
                   if (collection) {
                     let foundSelf = false;
                     for (let i in collection.scores) {

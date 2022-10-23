@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import {
   ApolloClient,
@@ -8,10 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useCallback, useEffect, useState } from "react";
-import Particles from "react-particles";
-import { loadFull } from "tsparticles";
-import particlesOptions from "./particles.json";
+import React from "react";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
@@ -47,18 +43,12 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const particlesJS = window.particleJS;
 function App() {
-  const particlesInit = useCallback((main) => {
-    loadFull(main);
-  }, []);
 
 
   return (
     <>
-      {" "}
       <Router>
-        <Particles options={particlesOptions} init={particlesInit} />
         <ApolloProvider client={client}>
           <ExistingUserProvider>
             <GameContextProvider>

@@ -58,27 +58,20 @@ const typeDefs = gql`
 		users: [User]
 		user(userId: ID!): User
 		channels: [Channel]
-		channel(channelId: ID!): Channel
-		channelMessages(channelId: ID!, limit: Int): Channel
-		me: User
 		memberChannels: [Channel]
-		getChannelByName(channelNameString: String): Channel
+		channelMessages(channelId: ID!, limit: Int): Channel
 		gameCards: [GameCard]
-		gameCard(GameCardId: ID!): GameCard
+		me: User
+		getChannelByName(channelNameString: String): Channel
 	}
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
+		authUserSession(sessionId: ID!): User
 		login(username: String!, password: String!): Auth
-		createChannel(channelName: String!): Channel
 		addMessageToChannel(channelId: ID!, messageText: String!): Channel
-		removeUser: User
-		addChannelParticipant(channelId: ID!, userId: ID!): Channel
-
-		leaveChannel(channelId: String): Channel
+		createChannel(channelName: String!): Channel
 		joinChannel(channelId: String): Channel
-		createGameCard(title: String!): GameCard
-		addScoreToGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
-		updateScoreOnGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
+		leaveChannel(channelId: String): Channel
 		updateSettings(
 			screenTextColor: String!
 			linkTextColor: String!
@@ -87,10 +80,18 @@ const typeDefs = gql`
 			chatWindow: String!
 			header: String!
 		): User
-		authUserSession(sessionId: ID!): User
+
 	}
 	type Subscription {
 		messageAdded(channelId: ID!): Channel
 	}
 `;
 module.exports = typeDefs;
+// createGameCard(title: String!): GameCard
+// addScoreToGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
+// updateScoreOnGameCard(gameCardId: ID!, score: Int, userId: ID!): GameCard
+// addChannelParticipant(channelId: ID!, userId: ID!): Channel
+// removeUser: User
+
+// channel(channelId: ID!): Channel
+// gameCard(GameCardId: ID!): GameCard

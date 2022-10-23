@@ -2,24 +2,21 @@ import "./ChatList.css";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
-import { GET_USER_CHANNELS, GET_ALL_CHANNELS, GET_CHANNEL_BY_NAME } from "../../utils/queries";
+import { GET_USER_CHANNELS, GET_ALL_CHANNELS } from "../../utils/queries";
 import { CREATE_CHANNEL,JOIN_CHANNEL,LEAVE_CHANNEL } from "../../utils/mutations.js";
 import ChatWindow from "../ChatWindow/ChatWindow";
-import auth from "../../utils/auth";
-import { useExistingUserContext } from "../../utils/existingUserContext";
 import { useGameContext, } from "../../utils/gameContext";
 
 let locked = false;
-let lastGameChannelId = null;
+
+
 let lastGameState = "";
 
 export default function ChatList() {
-const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
-  const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
+const [getAll] = useLazyQuery(GET_ALL_CHANNELS);
+  const { loading, data,startPolling } = useQuery(GET_USER_CHANNELS);
   const [openChannelId, setOpenChannelId] = useState(null);
-  const { toggleGameState } = useGameContext();
-  const [context, setContext] = useState(useGameContext());
-  const [getChannel] = useLazyQuery(GET_CHANNEL_BY_NAME);
+  const [context] = useState(useGameContext());
   const [create] = useMutation(CREATE_CHANNEL);
   const [join] = useMutation(JOIN_CHANNEL);
   const [leave]=useMutation(LEAVE_CHANNEL);
@@ -32,7 +29,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
     }
     //attempts to remove the current user from the participants list of the channel
     const attemptLeave = async (channelId) => {
-     const test = await leave({variables:{channelId}});
+     await leave({variables:{channelId}});
     }
 
     //master list of available channels, this is mapped onto the channel tabs.
@@ -41,7 +38,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
     useEffect(()=>{
         startPolling(300);
         //trigger while in game
-        if(location.pathname=="/gameplay"){
+        if(location.pathname === "/gameplay"){
 
             //tracks the previous game state to be able to reference the last focused location.
             lastGameState=context.gameState;
@@ -49,7 +46,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             //creates a chat channel for the current context if none exists.
             const attemptCreate = async (channelName) => {
                 const newChannel = await create({variables:{channelName}});
-                lastGameChannelId = newChannel.data.createChannel._id;
+                
                 attemptJoin(newChannel.data.createChannel._id);
             };
 
@@ -57,7 +54,6 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             const attemptLoad = async (gs) => {
                 //sets the channel name to be displayed.
                 setChannelNameString(gs);
-                const channelNameString = gs;
 
                 //fetches all, network policy ignores the already cached data.
                 const all = await getAll({fetchPolicy: 'network-only'});
@@ -65,7 +61,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
                 //checks for existing channel for current game state.
                 let match = false;
                 for (const channel of all.data.channels){
-                    if(channel.channelName == gs){
+                    if(channel.channelName === gs){
                         match=true;
                         attemptJoin(channel._id);
                     }
@@ -81,12 +77,12 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             attemptLoad(context.gameState);
           }
           //When not in game
-          if(location.pathname!='/gameplay'){
+          if(location.pathname !=='/gameplay'){
 
             //search current channels for the one matching the last focused area and remove it.
             let hold = [];
             for(const item of channels){
-                if(item.channelName!=lastGameState){
+                if(item.channelName !== lastGameState){
                     hold.push(item);
                 }else{
                     attemptLeave(item._id);
@@ -95,7 +91,7 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             //set new channel list
             setChannels(hold);
             //close chat window if navigating away from a game.
-            if(channelName==lastGameState){
+            if(channelName === lastGameState){
                 setOpenChannelId(null);
             }
             //allow creation of a new channel when entering a novel context.

@@ -61,10 +61,10 @@ function GamePlay() {
   }
 
   async function getScores(){
-    const updatedCards = await getAllCards({fetchPolicy: 'network-only'});
-    if(updatedCards?.data?.gameCards[0]){
-      let featuredGame = updatedCards.data.gameCards[0]
-    }
+    // const updatedCards = await getAllCards({fetchPolicy: 'network-only'});
+    // if(updatedCards?.data?.gameCards[0]){
+    //   let featuredGame = updatedCards.data.gameCards[0]
+    // }
   }
 
     return (

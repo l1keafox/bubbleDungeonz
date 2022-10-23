@@ -8,6 +8,7 @@ import ChatWindow from "../ChatWindow/ChatWindow";
 import { useGameContext, } from "../../utils/gameContext";
 
 let locked = false;
+let lastGameChannelId = null;
 let lastGameState = "";
 
 export default function ChatList() {

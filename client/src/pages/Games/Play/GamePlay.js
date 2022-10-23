@@ -10,7 +10,6 @@ import auth from "../../../utils/auth";
 import ChatList from "../../../components/ChatList/ChatList.js";
 
 function GamePlay() {
-  const [getAllCards] = useLazyQuery(GET_GAME_CARDS);
   const { gameState } = useGameContext();
   const {  data } = useQuery(GET_GAME_CARDS,{
     //loading, error,

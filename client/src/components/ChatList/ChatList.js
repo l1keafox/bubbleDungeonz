@@ -5,21 +5,16 @@ import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { GET_USER_CHANNELS, GET_ALL_CHANNELS, GET_CHANNEL_BY_NAME } from "../../utils/queries";
 import { CREATE_CHANNEL,JOIN_CHANNEL,LEAVE_CHANNEL } from "../../utils/mutations.js";
 import ChatWindow from "../ChatWindow/ChatWindow";
-import auth from "../../utils/auth";
-import { useExistingUserContext } from "../../utils/existingUserContext";
 import { useGameContext, } from "../../utils/gameContext";
 
 let locked = false;
-let lastGameChannelId = null;
 let lastGameState = "";
 
 export default function ChatList() {
-const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
-  const { loading, data,startPolling, stopPolling } = useQuery(GET_USER_CHANNELS);
+const [getAll] = useLazyQuery(GET_ALL_CHANNELS);
+  const { loading, data,startPolling } = useQuery(GET_USER_CHANNELS);
   const [openChannelId, setOpenChannelId] = useState(null);
-  const { toggleGameState } = useGameContext();
-  const [context, setContext] = useState(useGameContext());
-  const [getChannel] = useLazyQuery(GET_CHANNEL_BY_NAME);
+  const [context] = useState(useGameContext());
   const [create] = useMutation(CREATE_CHANNEL);
   const [join] = useMutation(JOIN_CHANNEL);
   const [leave]=useMutation(LEAVE_CHANNEL);
@@ -57,7 +52,6 @@ const [getAll,{listLoading,listData,refetch}] = useLazyQuery(GET_ALL_CHANNELS);
             const attemptLoad = async (gs) => {
                 //sets the channel name to be displayed.
                 setChannelNameString(gs);
-                const channelNameString = gs;
 
                 //fetches all, network policy ignores the already cached data.
                 const all = await getAll({fetchPolicy: 'network-only'});

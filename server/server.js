@@ -56,6 +56,6 @@ const startApolloServer = async (typeDefs, resolvers) => {
   };
   
 // Call the async function to start the server
-setTimeout(startApolloServer(typeDefs, resolvers),5000);
+  startApolloServer(typeDefs, resolvers);
   Engine.init();
   

@@ -6,19 +6,9 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import React from "react";
 
-import Header from "./components/Header/Header.js";
-import HomePage from "./pages/Home/HomePage.js";
-
-import GamesMenu from "./pages/Games/Menu/GamesPage.js";
-import GamePlay from "./pages/Games/Play/GamePlay.js";
-import ExistingUserProvider from "./utils/existingUserContext";
-
-// import Settings from "./components/Settings/Settings";
-
-import GameContextProvider from "./utils/gameContext";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -50,17 +40,7 @@ function App() {
     <>
       <Router>
         <ApolloProvider client={client}>
-          <ExistingUserProvider>
-            <GameContextProvider>
-              <Header />
 
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/games" element={<GamesMenu />} />
-                <Route path="/gameplay" element={<GamePlay />}></Route>
-              </Routes>
-            </GameContextProvider>
-          </ExistingUserProvider>
         </ApolloProvider>
       </Router>
     </>

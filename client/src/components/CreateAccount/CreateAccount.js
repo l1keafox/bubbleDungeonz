@@ -1,8 +1,6 @@
 import "./CreateAccount.css";
 import React, { useState } from "react";
 import { useExistingUserContext } from "../../utils/existingUserContext";
-import { BsJoystick } from "react-icons/bs";
-import { IoMdRocket } from "react-icons/io";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";

@@ -1,9 +1,9 @@
 import "./App.css";
 import {
-	ApolloClient,
-	InMemoryCache,
-	ApolloProvider,
-	createHttpLink,
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,72 +14,58 @@ import HomePage from "./pages/Home/HomePage.js";
 
 import GamesMenu from "./pages/Games/Menu/GamesPage.js";
 import GamePlay from "./pages/Games/Play/GamePlay.js";
-import ExistingUserProvider from "./utils/existingUserContext";
 
 // import Settings from "./components/Settings/Settings";
 
 import GameContextProvider from "./utils/gameContext";
-
+import { useExistingUserContext } from "./utils/existingUserContext";
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
-	uri: "/graphql",
+  uri: "/graphql",
 });
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
-	// get the authentication token from local storage if it exists
-	const token = localStorage.getItem("id_token");
-	// return the headers to the context so httpLink can read them
-	return {
-		headers: {
-			...headers,
-			authorization: token ? `Bearer ${token}` : "",
-		},
-	};
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("id_token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
 });
 
 const client = new ApolloClient({
-	// Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-	link: authLink.concat(httpLink),
-	cache: new InMemoryCache(),
+  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
-const styles = {
-	body: {
-		margin: 0,
-		fontFamily:
-			"-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif",
-		webkitFontSmoothing: "antialiased",
-		mozOsxFontSmoothing: "grayscale",
-		backgroundImage: "linear-gradient(blue 0%, green 100%)",
-		minHeight: "100vh",
-	},
-
-	code: {
-		fontFamily:
-			"source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace",
-	},
-};
-
 function App() {
-	return (
-		<div style={styles.body}>
-			<Router>
-				<ApolloProvider client={client}>
-					<ExistingUserProvider>
-						<GameContextProvider>
-							<Header />
+  const { settings } = useExistingUserContext();
+  const styles = {
+    body: {
+      backgroundImage: `linear-gradient(${settings.background} 0%, green 100%)`,
+    },
+  };
+  return (
+    <div style={styles.body}>
+      <Router>
+        <ApolloProvider client={client}>
+          <GameContextProvider>
+            <Header />
 
-							<Routes>
-								<Route path="/" element={<HomePage />} />
-								<Route path="/games" element={<GamesMenu />} />
-								<Route path="/gameplay" element={<GamePlay />}></Route>
-							</Routes>
-						</GameContextProvider>
-					</ExistingUserProvider>
-				</ApolloProvider>
-			</Router>
-		</div>
-	);
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/games" element={<GamesMenu />} />
+              <Route path="/gameplay" element={<GamePlay />}></Route>
+            </Routes>
+          </GameContextProvider>
+        </ApolloProvider>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

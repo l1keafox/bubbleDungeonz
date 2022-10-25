@@ -7,7 +7,7 @@ import auth from "../../utils/auth";
 import Settings from "../Settings/Settings";
 import { useGameContext } from "../../utils/gameContext";
 import { useExistingUserContext } from "../../utils/existingUserContext";
-
+import "../../utils/colors.css";
 function Header() {
   const { loggedIn, setLogin, settings } = useExistingUserContext();
   // const {data} = useQuery(GET_ME);
@@ -44,12 +44,15 @@ function Header() {
       );
     } else {
       return (
-        <Link
-          onClick={() => toggleGameState(null)}
-          to={{ pathname: "/" }}
-          className="navLink"
-        >
-          <li style={{ color: `${settings.linkTextColor}` }}>Login</li>
+        <Link onClick={() => toggleGameState(null)} to={{ pathname: "/" }}>
+          <li
+            // onMouseOver="this.style.color = 'black'"
+            // onMouseOut="`this.style.color = ${settings.linkTextColor}`"
+            className="navLink"
+            style={{ color: `${settings.linkTextColor}` }}
+          >
+            Login
+          </li>
         </Link>
       );
     }
@@ -57,7 +60,7 @@ function Header() {
   function conditionalSettings() {
     if (loggedIn || auth.loggedIn()) {
       return (
-        <li className="navLink">
+        <li style={{ color: `${settings.linkTextColor}` }} className="navLink">
           <FaHamburger onClick={toggleModal}></FaHamburger>
         </li>
       );

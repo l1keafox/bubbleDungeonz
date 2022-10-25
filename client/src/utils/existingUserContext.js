@@ -12,7 +12,7 @@ export default function ExistingUserProvider(props) {
   const [loggedIn, setLoggedIn] = useState(false);
   // const [userSettings, setUserSetting] = useState({});
   let [settings, setSettings] = useState({
-    // background: "Fuscia",
+    background: "Red",
     // chatTextColor: "Red",
     // chatWindow: "Orange",
     // header: "Tangerine",

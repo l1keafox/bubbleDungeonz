@@ -37,16 +37,16 @@
   outline: none;
   padding-bottom: 5%;
 }
-ul{
+ul {
   word-wrap: break-word;
   display: inline-block;
 }
-li{
+li {
   white-space: normal;
-    float: left;
-    width: 100%;
-    height: auto;
-    word-wrap: break-word;
+  float: left;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
 }
 
 .scrollable-div a {

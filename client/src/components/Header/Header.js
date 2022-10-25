@@ -9,7 +9,7 @@ import { useGameContext } from "../../utils/gameContext";
 import { useExistingUserContext } from "../../utils/existingUserContext";
 
 function Header() {
-  const { loggedIn, setLogin } = useExistingUserContext();
+  const { loggedIn, setLogin, settings } = useExistingUserContext();
   // const {data} = useQuery(GET_ME);
   //  const [userContext, setUserContext] = useState(useExistingUserContext());
   // const me = data?._id || [];
@@ -27,38 +27,42 @@ function Header() {
   };
   //need logic to conditionally render Login/Logout link based on user objects loggedIn state
 
-  function conditionalLogin(){
-    if(loggedIn || auth.loggedIn()){
-      return(<li
-        className="navLink"
-        onClick={() => {
-          auth.logout();
-          setLogin(false);
-          toggleGameState(null);
-        }}
-      >
-        Logout
-      </li>);
-    }else{
-      return(<Link
-        onClick={() => toggleGameState(null)}
-        to={{ pathname: "/" }}
-        className="navLink"
-      >
-        <li>Login</li>
-      </Link>)
+  function conditionalLogin() {
+    if (loggedIn || auth.loggedIn()) {
+      return (
+        <li
+          style={{ color: `${settings.linkTextColor}` }}
+          className="navLink"
+          onClick={() => {
+            auth.logout();
+            setLogin(false);
+            toggleGameState(null);
+          }}
+        >
+          Logout
+        </li>
+      );
+    } else {
+      return (
+        <Link
+          onClick={() => toggleGameState(null)}
+          to={{ pathname: "/" }}
+          className="navLink"
+        >
+          <li style={{ color: `${settings.linkTextColor}` }}>Login</li>
+        </Link>
+      );
     }
-    
   }
-  function conditionalSettings(){
-    if(loggedIn || auth.loggedIn()){
-      return ( 
+  function conditionalSettings() {
+    if (loggedIn || auth.loggedIn()) {
+      return (
         <li className="navLink">
           <FaHamburger onClick={toggleModal}></FaHamburger>
         </li>
-      )
-    }else{
-      return (<div></div>)
+      );
+    } else {
+      return <div></div>;
     }
   }
 
@@ -73,14 +77,14 @@ function Header() {
           to={{ pathname: "/" }}
           className="navLink"
         >
-          <li>Home</li>
+          <li style={{ color: `${settings.linkTextColor}` }}>Home</li>
         </Link>
         <Link
           onClick={() => toggleGameState(null)}
           to={{ pathname: "/games" }}
           className="navLink"
         >
-          <li>Games</li>
+          <li style={{ color: `${settings.linkTextColor}` }}>Games</li>
         </Link>
         {conditionalLogin()}
         {conditionalSettings()}

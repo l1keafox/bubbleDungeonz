@@ -1,4 +1,3 @@
-
 class Bubble {
   constructor() {
     this.type = "bubble";
@@ -6,7 +5,7 @@ class Bubble {
     this.x = Math.floor(Math.random() * 320);
     this.y = 480 + rollDice(2, 4); // make sure it starts off screen
     let rando = Math.floor(Math.random() * 5) + 1;
-    this.speed = Math.random()+Math.random();
+    this.speed = Math.random() + Math.random();
     this.hits = rando;
     this.score = rando;
   }
@@ -18,9 +17,7 @@ class Bubble {
   }
 }
 
-
-const {GameCard,Score} = require("../../models");
-
+const { GameCard, Score } = require("../../models");
 
 let bubble = {
   next: -1, // when the next bubble is spawned.
@@ -43,78 +40,74 @@ module.exports = {
         while (i--) {
           let bubb = bubble.group[i];
           if (
-            distance(bubb.x + bubb.r, bubb.y + bubb.r, msg.x, msg.y) < bubb.r
+            distance(bubb.x , bubb.y , msg.x, msg.y) < bubb.r
           ) {
             bubb.hits--;
-            const engine = require("../engine");
+            let scorePts = 1;
+
             if (bubb.hits <= 0) {
-              // console.log(engine.sessionKey);
-              let currentKey = engine.sessionKey();
-              // console.log(currentKey[socket.id], currentKey);
-              let findOne = currentKey.filter(
-                (key) => key.sessionId === socket.id
-              );
-              if (findOne.length) {
-                let scorer = findOne[0];
-                /* scorer has these values;
-                username: username,
-        				id:  context.user._id,
-        				sessionId:args.sessionId
-                */
-                if (scorer.points === undefined) {
-                  scorer.points = 0;
-                }
-                let scorePts = rollDice(1, 6);
-                scorer.points += scorePts;
+              scorePts += rollDice(bubb.score, bubb.score);
+              bubble.group.splice(i, 1);
+            }
 
+            const engine = require("../engine");
+            let currentKey = engine.sessionKey();
+            let findOne = currentKey.filter(
+              (key) => key.sessionId === socket.id
+            );
+            if (findOne.length) {
+              let scorer = findOne[0];
+              /* scorer has these values;
+              username: username,
+              id:  context.user._id,
+              sessionId:args.sessionId
+              */
 
-                async function addScoreToGameCard( gameCardId, score, userId ){
-                  const newScore = await GameCard.findByIdAndUpdate(
-                    { _id: gameCardId },
-                    {
-                      $addToSet: { scores: { user: userId, score: score } },
-                    },
-                    { runValidators: true, new: true }
-                  );
-                  return newScore;
-                };
-
-                async function updateScoreOnGameCard ( gameCardId, score, userId ){
-                  const newScore = await GameCard.findByIdAndUpdate(
-                    { _id: gameCardId, "scores.user": userId },
-                    {
-                      $set: { "scores.0.score": score },
-                    },
-                    { runValidators: true, new: true }
-                  );
-                  return newScore;
-                };
-                
-                GameCard.findById({ _id: gameCardId }).exec(
-                  async (err, collection) => { 
-//                    console.log(gameCardId, scorer.username, scorer.id); // this is the gameCard
-                    // So we need to get the collection
-                    let foundSelf = false;
-                    for(let i in collection.scores){
-                      if(collection.scores[i].user == scorer.id){
-                        foundSelf = true;
-                        scorePts+= collection.scores[i].score
-                      }
-                    }
-                    if(foundSelf){
-                      updateScoreOnGameCard(gameCardId, scorePts, scorer.id);
-                    } else {
-                      addScoreToGameCard(gameCardId, scorePts, scorer.id );
-                    }
-                } 
-                )
-                // console.log(
-                //   `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
-                // );
-
+              async function addScoreToGameCard(gameCardId, score, userId) {
+                const newScore = await GameCard.findByIdAndUpdate(
+                  { _id: gameCardId },
+                  {
+                    $addToSet: { scores: { user: userId, score: score } },
+                  },
+                  { runValidators: true, new: true }
+                );
+                return newScore;
               }
 
-              bubble.group.splice(i, 1);
+              // async function updateScoreOnGameCard(gameCardId, score, userId) {
+              //   const newScore = await GameCard.findByIdAndUpdate(
+              //     { _id: gameCardId, "scores.user": userId },
+              //     {
+              //       $set: { "scores.$.score": score },
+              //     },
+              //     { runValidators: true, new: true }
+              //   );
+              //   return newScore;
+              // }
+
+              GameCard.findById({ _id: gameCardId }).exec(
+                async (err, collection) => {
+
+                  
+                  if (collection) {
+                    let foundSelf = false;
+                    for (let i in collection.scores) {
+                      if (collection.scores[i].user == scorer.id) {
+                        foundSelf = true;
+                        collection.scores[i].score += scorePts;
+                        let dtz = await collection.save();
+                      }
+                    }
+                    if (foundSelf) {
+                    } else {
+                      addScoreToGameCard(gameCardId, scorePts, scorer.id);
+                    }
+                  }
+                }
+              );
+              // console.log(
+              //   `IN game: ${gameCardId} point scored by: ${scorer.username} has now ${scorer.points} id:${scorer.id}`
+              // );
             }
           }
         }
@@ -123,17 +116,17 @@ module.exports = {
   },
   updateFrame: function () {
     const Engine = require("../engine");
-    const createBubs = function(randomCount){
+    const createBubs = function (randomCount) {
       while (randomCount--) {
         let newBubble = new Bubble();
         bubble.group.push(newBubble);
       }
-    }
-    
+    };
+
     bubble.next--;
     if (bubble.next <= 0) {
-      if(bubble.next < 0){
-        createBubs(rollDice(1,2));
+      if (bubble.next < 0) {
+        createBubs(rollDice(1, 2));
       } else {
         let newBubble = new Bubble();
         bubble.group.push(newBubble);
@@ -141,7 +134,7 @@ module.exports = {
       bubble.next = bubble.maxTimer;
     }
     if (bubble.group.length === 0) {
-      createBubs(rollDice(1,6));
+      createBubs(rollDice(1, 6));
     }
 
     let index = bubble.group.length;

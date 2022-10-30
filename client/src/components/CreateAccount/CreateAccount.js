@@ -14,7 +14,7 @@ function CreateAccount() {
   const [email, setEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { toggleExistingUser, setLogin } = useExistingUserContext();
-  const [signUp, { error, data }] = useMutation(ADD_USER);
+  const [signUp] = useMutation(ADD_USER);
 
   const handleInputChange = (e) => {
     const { target } = e;

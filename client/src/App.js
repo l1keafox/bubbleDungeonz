@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import {
   ApolloClient,
@@ -8,10 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useCallback, useEffect, useState } from "react";
-// import Particles from "react-particles";
-// import { loadFull } from "tsparticles";
-// import particlesOptions from "./particles.json";
+import React from "react";
 
 import Header from "./components/Header/Header.js";
 import HomePage from "./pages/Home/HomePage.js";
@@ -47,49 +43,23 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// const particlesJS = window.particleJS;
 function App() {
-  // const particlesInit = useCallback((main) => {
-  //   loadFull(main);
-  // }, []);
-//          <Particles options={particlesOptions} init={particlesInit} />
+
 
   return (
     <>
-      {" "}
       <Router>
         <ApolloProvider client={client}>
-        <ExistingUserProvider>
-          <GameContextProvider>
-            <Header />
-          
-          <Routes>
-            <Route
-              path="/"
-              element={
-                
-                  <HomePage />
-                
-              }
-            />
-            <Route
-              path="/games"
-              element={
+          <ExistingUserProvider>
+            <GameContextProvider>
+              <Header />
 
-                  <GamesMenu />
-
-              }
-            />
-            <Route
-              path="/gameplay"
-              element={
-
-                  <GamePlay />
-               
-              }
-            ></Route>
-          </Routes>
-          </GameContextProvider>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/games" element={<GamesMenu />} />
+                <Route path="/gameplay" element={<GamePlay />}></Route>
+              </Routes>
+            </GameContextProvider>
           </ExistingUserProvider>
         </ApolloProvider>
       </Router>

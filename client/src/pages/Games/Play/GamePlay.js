@@ -10,7 +10,6 @@ import auth from "../../../utils/auth";
 import ChatList from "../../../components/ChatList/ChatList.js";
 
 function GamePlay() {
-  const [getAllCards,{refetch}] = useLazyQuery(GET_GAME_CARDS);
   const { gameState } = useGameContext();
   const {  data } = useQuery(GET_GAME_CARDS,{
     //loading, error,
@@ -61,10 +60,10 @@ function GamePlay() {
   }
 
   async function getScores(){
-    const updatedCards = await getAllCards({fetchPolicy: 'network-only'});
-    if(updatedCards?.data?.gameCards[0]){
-      let featuredGame = updatedCards.data.gameCards[0]
-    }
+    // const updatedCards = await getAllCards({fetchPolicy: 'network-only'});
+    // if(updatedCards?.data?.gameCards[0]){
+    //   let featuredGame = updatedCards.data.gameCards[0]
+    // }
   }
 
     return (

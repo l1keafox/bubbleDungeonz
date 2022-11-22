@@ -14,7 +14,7 @@ export default function ExistingUserProvider(props) {
   let [settings, setSettings] = useState({
     background: "Red",
     // chatTextColor: "Red",
-    // chatWindow: "Orange",
+    chatWindow: "Orange",
     // header: "Tangerine",
     linkTextColor: "Lime",
     // screenTextColor: "Purple",

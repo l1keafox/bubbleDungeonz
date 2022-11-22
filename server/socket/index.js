@@ -7,10 +7,10 @@
 const initIo = (app) => {
   const http = require("http");
   const ioServer = http.createServer(app);
-  const {Server} = require("socket.io");
+  const { Server } = require("socket.io");
   const cors = require("cors"); // This is used for socket.io
 
-  // This is cheating, I wish there was an way
+  // This is cheating, I wish there was a way
   // to grab this server that is created.
   global.io = new Server(ioServer, {
     cors: {
@@ -32,4 +32,4 @@ const initIo = (app) => {
   return ioServer;
 };
 
-module.exports = { initIo }; // was trying to make it so io can be exported and used else where, but for waht ever reason this fails.
+module.exports = { initIo }; // was trying to make it so io can be exported and used else where, but for what ever reason this fails.

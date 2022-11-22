@@ -4,11 +4,11 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { GET_CHANNEL_MESSAGES } from "../../utils/queries";
 import { POST_MESSAGE_TO_CHANNEL } from "../../utils/mutations";
-
+import { useExistingUserContext } from "../../utils/existingUserContext";
 import auth from "../../utils/auth";
-// import { useExistingUserContext } from "../../utils/existingUserContext";
 
 export default function ChatWindow(props) {
+  const { settings } = useExistingUserContext();
   const scrollElement = useRef();
   const bottomTarget = useRef();
   const [canScrollDown, setCanScrollDown] = useState(true);
@@ -70,26 +70,21 @@ export default function ChatWindow(props) {
       return messages?.map((message) => {
         if (message.username === userMatch) {
           return (
-            
-              <li className="ownMessage" key={message._id}>
-                <div>
+            <li className="ownMessage" key={message._id}>
+              <div>
                 {parseLinkInText(message.messageText)} |
                 <span className="displayedOwnUsername">{message.username}</span>
-                </div>
-              </li>
-              
-            
+              </div>
+            </li>
           );
         } else {
           return (
-            
-              <li className="otherMessage" key={message._id}>
-                <div>
+            <li className="otherMessage" key={message._id}>
+              <div>
                 <span className="displayedUsername">{message.username}</span>|{" "}
                 {parseLinkInText(message.messageText)}
-                </div>
-              </li>
-            
+              </div>
+            </li>
           );
         }
       });
@@ -104,10 +99,17 @@ export default function ChatWindow(props) {
 
   //generates element for the scrollable div
   return (
-    <div className="channelFeedFormContainer">
+    <div
+      className="channelFeedFormContainer"
+      // style={{ color: `${settings.ChatWindow}` }}
+    >
       {/* no name is being handed down here */}
       <h1 className="channelTitle">{props.name}</h1>
-      <div className="scrollable-div" ref={scrollElement}>
+      <div
+        className="scrollable-div"
+        style={{ color: `${settings.ChatWindow}` }}
+        ref={scrollElement}
+      >
         <p className="loadMore" onClick={incrementLimit}>
           Load Older Messages
         </p>
@@ -132,6 +134,7 @@ function MessageEditor(props) {
   const [post] = useMutation(POST_MESSAGE_TO_CHANNEL);
   const [value, setValue] = useState("");
   const channelId = props.channelId;
+  const { settings } = useExistingUserContext();
   function handleChange(e) {
     setValue(e.target.value);
   }
